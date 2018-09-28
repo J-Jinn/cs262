@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">SimpleCalculator</string>
+    <string name="error_invalid_number">Please enter valid numbers!</string>
     <string-array name="op_array">
         <item>add</item>
         <item>subtract</item>

@@ -89,7 +89,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                     int addition = Integer.parseInt(number1) + Integer.parseInt(number2);
                     result.setText(String.valueOf(addition));
                 } catch (Exception excpt) {
-                    result.setText("Please enter valid numbers!");
+                    result.setText(R.string.error_invalid_number);
                 }
                 break;
             case "subtract":
@@ -97,7 +97,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                     int subtraction = Integer.parseInt(number1) - Integer.parseInt(number2);
                     result.setText(String.valueOf(subtraction));
                 } catch (Exception excpt) {
-                    result.setText("Please enter valid numbers!");
+                    result.setText(R.string.error_invalid_number);
                 }
                 break;
             case "multiply":
@@ -105,7 +105,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                     int multiplication = Integer.parseInt(number1) * Integer.parseInt(number2);
                     result.setText(String.valueOf(multiplication));
                 } catch (Exception except) {
-                    result.setText("Please enter valid numbers!");
+                    result.setText(R.string.error_invalid_number);
                 }
                 break;
             case "divide":
@@ -113,7 +113,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                     int division = Integer.parseInt(number1) / Integer.parseInt(number2);
                     result.setText(String.valueOf(division));
                 } catch (Exception except) {
-                    result.setText("Please enter valid numbers!");
+                    result.setText(R.string.error_invalid_number);
                 }
                 break;
             default:
