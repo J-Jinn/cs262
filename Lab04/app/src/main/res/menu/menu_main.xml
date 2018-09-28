@@ -3,8 +3,23 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="jj47.cs262.calvin.edu.lab04.MainActivity">
     <item
-        android:id="@+id/action_settings"
+        android:id="@+id/action_contact"
         android:orderInCategory="100"
-        android:title="@string/action_settings"
+        android:title="@string/action_contact"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_order"
+        android:title="@string/action_order"
+        android:orderInCategory="10"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_status"
+        android:title="@string/action_status"
+        android:orderInCategory="20"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_favorites"
+        android:title="@string/action_favorites"
+        android:orderInCategory="40"
         app:showAsAction="never" />
 </menu>
