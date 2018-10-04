@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">Lab05</string>
+    <string name="instructions">Enter a book name, or part of a
+book name, or just some text from a book to find
+the full book title and who wrote the book!</string>
+    <string name="button_text">Search Books</string>
+    <string name="input_hint">Enter a Book Title</string>
+    <string name="no_results_found">No Results Found</string>
+    <string name="loading_in_process">Loading in process</string>
+    <string name="no_search_term">Please enter a search term</string>
+    <string name="no_connection">Please check your network connection and try again.</string>
+</resources>
