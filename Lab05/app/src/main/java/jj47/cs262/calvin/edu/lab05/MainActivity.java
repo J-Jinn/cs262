@@ -75,7 +75,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         // Check connection is available, we are connected, and query string is not empty.
         if (networkInfo != null && networkInfo.isConnected() && queryString.length() != 0) {
 
-            // FIXME: Fetbook.java is now deprecated.  Can remove.
+            // FIXME: Fetchbook.java is now deprecated.  Can remove.
             // Initiate the search.
             //new Fetchbook(title, author).execute(queryString);
 
