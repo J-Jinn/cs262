@@ -1,4 +1,14 @@
-﻿using System;
+﻿/// <summary>
+/// Project 2: Babble (pseudo-randomized text generation)
+/// CS-212 Data Structures and Algorithms
+/// Section: A
+/// Instructor: Professor Plantinga
+/// Date: 10-4-18
+/// </summary>
+/// Babble framework
+/// Starter code for CS212 Babble assignment
+/// 
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
@@ -8,21 +18,16 @@ using System.Windows.Controls;
 namespace Babble
 {
     /// <summary>
-    /// Project 2: Babble (pseudo-randomized text generation)
-    /// CS-212 Data Structures and Algorithms
-    /// Section: A
-    /// Instructor: Professor Plantinga
-    /// Date: 10-4-18
+    /// Class for MainWindow.xaml.
+    /// Contains all relevant code for UI components and Babble algorithm.
     /// </summary>
-    /// Babble framework
-    /// Starter code for CS212 Babble assignment
     public partial class MainWindow : Window
     {
         // Class members.
-        private bool debug1 = false;        // For debug purposes.
+        private bool debug1 = false;         // For debug purposes.
         private bool debug2 = false;         // For debug purposes.
-        private bool debug3 = true;         // For debug purposes.
-        private bool debug4 = true;         // For debug purposes.
+        private bool debug3 = false;         // For debug purposes.
+        private bool debug4 = false;         // For debug purposes.
 
         private string input;               // input file
         private string[] words;             // input file broken into array of words
@@ -33,6 +38,9 @@ namespace Babble
 
         //// Hash table to store occurence frequencies of each word.
         //private Dictionary<string, int> wordDuplicate = new Dictionary<string, int>();
+        
+        /////////////////////////////////////////////////////////////////////////////////////////////
+        /////////////////////////////////////////////////////////////////////////////////////////////
 
         /// <summary>
         /// Method initializes the GUI from MainWindows.xaml
@@ -41,6 +49,9 @@ namespace Babble
         {
             InitializeComponent();
         }
+
+        /////////////////////////////////////////////////////////////////////////////////////////////
+        /////////////////////////////////////////////////////////////////////////////////////////////
 
         /// <summary>
         /// Method shows open file dialog box upon clicking the load file button.
@@ -78,6 +89,9 @@ namespace Babble
             }
         }
 
+        /////////////////////////////////////////////////////////////////////////////////////////////
+        /////////////////////////////////////////////////////////////////////////////////////////////
+
         /// <summary>
         /// Method displays a MessageBox showing the selected Order N.
         /// </summary>
@@ -90,6 +104,9 @@ namespace Babble
             }
         }
 
+        /////////////////////////////////////////////////////////////////////////////////////////////
+        /////////////////////////////////////////////////////////////////////////////////////////////
+
         /// <summary>
         /// Method tracks user selection of the Order N in the ComboBox widget.
         /// Passes the index value to the analyzeInput(int order) method.
@@ -100,6 +117,9 @@ namespace Babble
         {
             analyzeInput(orderComboBox.SelectedIndex);
         }
+
+        /////////////////////////////////////////////////////////////////////////////////////////////
+        /////////////////////////////////////////////////////////////////////////////////////////////
 
         /// <summary>
         /// Method responds to  Babble button click and displays the randomized text.
@@ -981,10 +1001,14 @@ namespace Babble
             //    }
             //}
         }
+
+        /////////////////////////////////////////////////////////////////////////////////////////////
+        /////////////////////////////////////////////////////////////////////////////////////////////
     }
 
     /// <summary>
     /// Class Hash hashes the string[] containing the contents of the input file.
+    /// Note: This is the template example code provided by Professor Plantinga
     /// </summary>
     //class Hash
     //{
