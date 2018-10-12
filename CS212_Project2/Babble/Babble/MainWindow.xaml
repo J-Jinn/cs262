@@ -13,12 +13,12 @@
         <ComboBox Height="26" HorizontalAlignment="Left" Margin="25,103,0,0" 
 		Name="orderComboBox" VerticalAlignment="Top" Width="103" 
 		SelectionChanged="orderComboBox_SelectionChanged" SelectedIndex="0">
-            <ComboBoxItem>Order 0</ComboBoxItem>
             <ComboBoxItem>Order 1</ComboBoxItem>
             <ComboBoxItem>Order 2</ComboBoxItem>
             <ComboBoxItem>Order 3</ComboBoxItem>
             <ComboBoxItem>Order 4</ComboBoxItem>
             <ComboBoxItem>Order 5</ComboBoxItem>
+            <ComboBoxItem>Order 6</ComboBoxItem>
         </ComboBox>
         <Button Content="Babble" Height="35" HorizontalAlignment="Left" 
 		Margin="26,235,0,0" Name="babbleButton" VerticalAlignment="Top" 

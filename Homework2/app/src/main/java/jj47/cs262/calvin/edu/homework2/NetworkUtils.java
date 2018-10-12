@@ -16,9 +16,10 @@ public class NetworkUtils {
 
     // Player URI for Homework 2
     private static final String PLAYER_LIST_URL = "https://hello-endpoints-207818.appspot.com/monopoly/v1/players";
-    private static final String PLAYER_ID_URL = "https://hello-endpoints-207818.appspot.com/monopoly/v1/player/ID";
+    private static final String PLAYER_ID_URL = "https://hello-endpoints-207818.appspot.com/monopoly/v1/player/";
 
-    private static final String QUERY_PARAM = "q"; // Parameter for the search string
+    private static final String QUERY_PARAM1 = "query"; // Parameter for the search string
+    private static final String QUERY_PARAM2 = "id"; // Parameter for the search string
 
     /**
      * Method queries specified URI.
@@ -37,7 +38,7 @@ public class NetworkUtils {
         try {
             //Build up your query URI.
             Uri builtURI = Uri.parse(PLAYER_LIST_URL).buildUpon()
-                    .appendQueryParameter(QUERY_PARAM, queryString)
+                    .appendQueryParameter(QUERY_PARAM1, queryString)
                     .build();
 
             // Convert URI to URL
@@ -108,7 +109,7 @@ public class NetworkUtils {
         try {
             //Build up your query URI.
             Uri builtURI = Uri.parse(PLAYER_ID_URL).buildUpon()
-                    .appendQueryParameter(QUERY_PARAM, queryString)
+                    .appendQueryParameter(QUERY_PARAM1, queryString)
                     .build();
 
             // Convert URI to URL
@@ -156,7 +157,9 @@ public class NetworkUtils {
                     e.printStackTrace();
                 }
             }
-            Log.e(LOG_TAG, playerIDJSONString);
+            if(playerIDJSONString != null) {
+                Log.e(LOG_TAG, playerIDJSONString);
+            }
             return playerIDJSONString;
         }
     }

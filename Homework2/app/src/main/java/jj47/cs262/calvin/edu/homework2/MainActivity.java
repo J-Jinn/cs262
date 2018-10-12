@@ -1,5 +1,6 @@
 package jj47.cs262.calvin.edu.homework2;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
@@ -159,6 +160,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
      * @param loader loader object.
      * @param s
      */
+    @SuppressLint("SetTextI18n")
     @Override
     public void onLoadFinished(@NonNull Loader<String> loader, String s) {
 
@@ -176,20 +178,22 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
             //Iterate through the results
             for (int i = 0; i < itemsArray.length(); i++) {
                 JSONObject player = itemsArray.getJSONObject(i); //Get the current item
-                String titles = null;
-                String authors = null;
-                JSONObject volumeInfo = player.getJSONObject("volumeInfo");
+                String id = "id";
+                String email = "email";
+                String name = "default";
+                JSONObject info = player.getJSONObject("items");
 
                 try {
-                    titles = volumeInfo.getString("title");
-                    authors = volumeInfo.getString("authors");
+                    id = info.getString("id");
+                    email = info.getString("emailAddress");
+                    name = info.getString("name");
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
 
                 //If information field requested exists, update the TextViews and return
-                if (titles != null && authors != null) {
-                    textViewSearchResults.setText(titles);
+                if (id != null && email != null) {
+                    textViewSearchResults.setText("id: " + id + "\n" + "email: " + email + "\n" + "name: " + name + "\n");
                     return;
                 }
             }

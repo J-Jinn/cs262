@@ -354,8 +354,10 @@ namespace Babble
             // Display the # of words in the input file.
             textBlock1.Text += "\n" + "Number of words in input file: \n" + words.Length;
 
+            int order = orderComboBox.SelectedIndex + 1;
+
             // Display the # of distinct words or word sequences in the input file depending on order selected.
-            textBlock1.Text += "\n" + "Currently selected order is: " + orderComboBox.SelectedIndex;
+            textBlock1.Text += "\n" + "Currently selected order is: " + order;
             textBlock1.Text += "\n" + "Number of unique words or word sequences in input file based on current order is: " + distinctWords;
         }
 
@@ -371,7 +373,7 @@ namespace Babble
         {
             if (order > 0)
             {
-                MessageBox.Show("Analyzing at order: " + order);
+                MessageBox.Show("Analyzing at order: " + (order + 1));
             }
         }
 
@@ -422,6 +424,9 @@ namespace Babble
             // Stores the current key being operated on.
             String wordkey;
 
+            // Store the randomized text before outputting to textBlock.
+            String babble = "";
+
             // Create random number generator for word selection based on keys.
             Random random = new Random();
 
@@ -445,7 +450,7 @@ namespace Babble
                     {
                         wordkey = words[s % words.Length];
                     }
-                    // Use previous word in file to determine ArrayList of following words.
+                    // Use successive word in file to determine ArrayList of following words.
                     else if (i <= words.Length)
                     {
                         wordkey = words[i - 1];
@@ -566,6 +571,139 @@ namespace Babble
                     return;
                 }
 
+                ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                // Different way of generating random text - deprecated in favor of the above.
+                ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+                //if (orderComboBox.SelectedIndex == 0)
+                //{
+                //    // Condition for first word of the file.
+                //    // Because we can't look at the previous word at this index.
+                //    if (i == 0)
+                //    {
+                //        wordkey = words[s % words.Length];
+                //    }
+                //    // Use successive word in file to determine ArrayList of following words.
+                //    else if (i <= words.Length)
+                //    {
+                //        wordkey = words[i - 1];
+                //    }
+                //    // We have exceeded original length of input file, start over.
+                //    else
+                //    {
+                //        wordkey = words[(i - 1) % words.Length];
+                //    }
+                //}
+                //else if (orderComboBox.SelectedIndex == 1)
+                //{
+                //    // Condition for first and second words of the file.
+                //    // Because we can't look at the previous two words at these indices.
+                //    if (i == 0 || i == 1)
+                //    {
+                //        wordkey = words[s % words.Length] + " " + words[(s + 1) % words.Length];
+                //    }
+                //    // Use previous two words in file to determine key to use.
+                //    else if (i <= words.Length)
+                //    {
+                //        wordkey = words[i - 2] + " " + words[i - 1];
+                //    }
+                //    // We have exceeded original length of input file, start over.
+                //    else
+                //    {
+                //        wordkey = words[(i - 2) % words.Length] + " " + words[(i - 1) % words.Length];
+                //    }
+                //}
+                //else if (orderComboBox.SelectedIndex == 2)
+                //{
+                //    // Condition for first, second, and third words of the file.
+                //    // Because we can't look at the previous three words at these indices.
+                //    if (i == 0 || i == 1 || i == 2)
+                //    {
+                //        wordkey = words[s % words.Length] + " " + words[(s + 1) % words.Length]
+                //            + " " + words[(s + 2) % words.Length];
+                //    }
+                //    // Use previous three words in file to determine key to use.
+                //    else if (i <= words.Length)
+                //    {
+                //        wordkey = words[i - 3] + " " + words[i - 2] + " " + words[i - 1];
+                //    }
+                //    // We have exceeded original length of input file, start over.
+                //    else
+                //    {
+                //        wordkey = words[(i - 3) % words.Length] + " " + words[(i - 2) % words.Length] + " " + words[(i - 1) % words.Length];
+                //    }
+                //}
+                //else if (orderComboBox.SelectedIndex == 3)
+                //{
+                //    // Condition for first, second, third, and fourth words of the file.
+                //    // Because we can't look at the previous four words at these indices.
+                //    if (i == 0 || i == 1 || i == 2 || i == 3)
+                //    {
+                //        wordkey = words[s % words.Length] + " " + words[(s + 1) % words.Length]
+                //            + " " + words[(s + 2) % words.Length] + " " + words[(s + 3) % words.Length];
+                //    }
+                //    // Use previous four words in file to determine key to use.
+                //    else if (i <= words.Length)
+                //    {
+                //        wordkey = words[i - 4] + " " + words[i - 3] + " " + words[i - 2] + " " + words[i - 1];
+                //    }
+                //    // We have exceeded original length of input file, start over.
+                //    else
+                //    {
+                //        wordkey = words[(i - 4) % words.Length] + " " + words[(i - 3) % words.Length] + " " + words[(i - 2) % words.Length] + " "
+                //            + words[(i - 1) % words.Length];
+                //    }
+                //}
+                //else if (orderComboBox.SelectedIndex == 4)
+                //{
+                //    // Condition for first, second, third, fourth, and fifth words of the file.
+                //    // Because we can't look at the previous five words at these indices.
+                //    if (i == 0 || i == 1 || i == 2 || i == 3 || i == 4)
+                //    {
+                //        wordkey = words[s % words.Length] + " " + words[(s + 1) % words.Length]
+                //            + " " + words[(s + 2) % words.Length] + " " + words[(s + 3) % words.Length]
+                //            + " " + words[(s + 4) % words.Length];
+                //    }
+                //    // Use previous five words in file to determine key to use.
+                //    else if (i <= words.Length)
+                //    {
+                //        wordkey = words[i - 5] + " " + words[i - 4] + " " + words[i - 3] + " " + words[i - 2] + " " + words[i - 1];
+                //    }
+                //    // We have exceeded original length of input file, start over.
+                //    else
+                //    {
+                //        wordkey = words[(i - 5) % words.Length] + " " + words[(i - 4) % words.Length] + " " + words[(i - 3) % words.Length] + " "
+                //            + words[(i - 2) % words.Length] + " " + words[(i - 1) % words.Length];
+                //    }
+                //}
+                //else if (orderComboBox.SelectedIndex == 5)
+                //{
+                //    // Condition for first, second, third, fourth, fifth, and sixth words of the file.
+                //    // Because we can't look at the previous six words at these indices.
+                //    if (i == 0 || i == 1 || i == 2 || i == 3 || i == 4 || i == 5)
+                //    {
+                //        wordkey = words[s % words.Length] + " " + words[(s + 1) % words.Length]
+                //            + " " + words[(s + 2) % words.Length] + " " + words[(s + 3) % words.Length]
+                //            + " " + words[(s + 4) % words.Length] + " " + words[(s + 5) % words.Length];
+                //    }
+                //    // Use previous six words in file to determine key to use.
+                //    else if (i <= words.Length)
+                //    {
+                //        wordkey = words[i - 6] + " " + words[i - 5] + " " + words[i - 4] + " " + words[i - 3] + " " + words[i - 2] + " " + words[i - 1];
+                //    }
+                //    // We have exceeded original length of input file, start over.
+                //    else
+                //    {
+                //        wordkey = words[(i - 6) % words.Length] + " " + words[(i - 5) % words.Length] + " " + words[(i - 4) % words.Length] + " "
+                //            + words[(i - 3) % words.Length] + " " + words[(i - 2) % words.Length] + " " + words[(i - 1) % words.Length];
+                //    }
+                //}
+                //else
+                //{
+                //    Console.WriteLine("Something funky happened!");
+                //    return;
+                //}
+
                 // Get the ArrayList corresponding to the current key.
                 ArrayList list = hashTable[wordkey];
 
@@ -580,9 +718,12 @@ namespace Babble
                 // Get the ArrayList associated with that key.
                 ArrayList items = hashTable[wordkey];
 
-                // Add the randomly selected word to the textblock object in GUI.
-                textBlock1.Text += " " + items[r];
+                // Add the randomly selected word to the string variable.
+                babble += " " + items[r];
             }
+
+            // Display the randomized text to the textblock object in GUI>
+            textBlock1.Text = babble;
         }
     }
 }
