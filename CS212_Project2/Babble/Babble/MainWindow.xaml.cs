@@ -11,6 +11,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
@@ -36,9 +37,6 @@ namespace Babble
         // Hash table to store the word keys and succeeding words used to randomize text.
         private Dictionary<string, ArrayList> hashTable = new Dictionary<string, ArrayList>();
 
-        //// Hash table to store occurence frequencies of each word.
-        //private Dictionary<string, int> wordDuplicate = new Dictionary<string, int>();
-        
         /////////////////////////////////////////////////////////////////////////////////////////////
         /////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -56,6 +54,9 @@ namespace Babble
         /// <summary>
         /// Method shows open file dialog box upon clicking the load file button.
         /// Parses the selected file upon clicking open in file dialog box.
+        /// 
+        /// Also generates statistics for currently selected order.
+        /// 
         /// </summary>
         /// <param name="sender">sender</param>
         /// <param name="e">e</param>
@@ -72,6 +73,12 @@ namespace Babble
                 textBlock1.Text = "Loading file " + ofd.FileName + "\n";
                 input = System.IO.File.ReadAllText(ofd.FileName);  // read file
                 words = Regex.Split(input, @"\s+");       // split into array of words
+
+                // Clear hash table everytime we load a new file and compute statistics.
+                hashTable.Clear();
+
+                // Method call to compute statistics upon loading a file with currently selected order.
+                computeStatistics();
             }
 
             // Debug statement.  Shows content of parsed input file in textBlock1.
@@ -89,52 +96,28 @@ namespace Babble
             }
         }
 
-        /////////////////////////////////////////////////////////////////////////////////////////////
-        /////////////////////////////////////////////////////////////////////////////////////////////
-
         /// <summary>
-        /// Method displays a MessageBox showing the selected Order N.
+        /// Method compute N-th order statistics.
+        /// 
+        /// There's probably a better way to do this than manual string concatenation for each
+        /// of the cases I have to take into account, but....I'm out of fresh ideas. So, please
+        /// forgive the length of my code-base and the # of nested if, else ifs, and other 
+        /// conditional checks/statements.
+        /// 
+        /// Hopefully, this isn't making grading too difficult.
+        /// 
         /// </summary>
-        /// <param name="order">index value</param>
-        private void analyzeInput(int order)
+        private void computeStatistics()
         {
-            if (order > 0)
-            {
-                MessageBox.Show("Analyzing at order: " + order);
-            }
-        }
+            // Clear hash table everytime we compute new statistics.
+            hashTable.Clear();
 
-        /////////////////////////////////////////////////////////////////////////////////////////////
-        /////////////////////////////////////////////////////////////////////////////////////////////
-
-        /// <summary>
-        /// Method tracks user selection of the Order N in the ComboBox widget.
-        /// Passes the index value to the analyzeInput(int order) method.
-        /// </summary>
-        /// <param name="sender">sender</param>
-        /// <param name="e">e</param>
-        private void orderComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            analyzeInput(orderComboBox.SelectedIndex);
-        }
-
-        /////////////////////////////////////////////////////////////////////////////////////////////
-        /////////////////////////////////////////////////////////////////////////////////////////////
-
-        /// <summary>
-        /// Method responds to  Babble button click and displays the randomized text.
-        /// Adds each elements of the string[] array to the TextBlock object in the GUI.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void babbleButton_Click(object sender, RoutedEventArgs e)
-        {
             // Stores the current key being operated on.
             String wordkey;
 
             //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
             // The for loop creates keys, adds them to hash table, and adds words as elements of those keys to the hash table.
-            // Based on the entirety of the input file or wordCount, if the input file is longer than the imposed limit.
+            // Based on the entirety of the input file.
             //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
             for (int i = 0; i < words.Length; i++)
@@ -231,6 +214,9 @@ namespace Babble
 
                 ///////////////////////////////////////////////////////////////////////////////////////
                 // Add key to hash table if not already found in table.
+
+                // Note: side-benefit of this is that all keys are unique and thus allows us to
+                // determine the # of unique words or word sequences based on the selected order.
                 ///////////////////////////////////////////////////////////////////////////////////////
 
                 if (!hashTable.ContainsKey(wordkey))
@@ -242,6 +228,10 @@ namespace Babble
                 ///////////////////////////////////////////////////////////////////////////////////////
                 // If key already exists, simply add the word as part of that key's ArrayList.
                 // This is based on the selected order.
+                //
+                // Note: side-benefit of this is that it allows addition of duplicate elements in the
+                // ArrayList associated with each key.  Thus, random selection of a successor is based
+                // on the weighted frequencey of occurence of the successor(s)
                 ///////////////////////////////////////////////////////////////////////////////////////
 
                 if (orderComboBox.SelectedIndex == 0)
@@ -353,39 +343,84 @@ namespace Babble
 
                     Console.WriteLine("\n");
                 }
-
-                //// Add word to ArrayList only if it doesn't already exist.
-                //if (!hashTable[wordkey].Contains(words[i + 1]))
-                //{
-                //    if (i + 1 < Math.Min(wordCount, words.Length))
-                //    {
-                //        // Add word following key as the value attached to the key.
-                //        hashTable[wordkey].Add(words[i + 1]);
-                //    }
-                //    else
-                //    {
-                //        // Add word at beginning of file as we have reached end of file.
-                //        hashTable[wordkey].Add(words[0]);
-                //    }
-                //}
-                //// Track the occurence of duplicate words.
-                //else if (hashTable[wordkey].Contains(words[i + 1]))
-                //{
-                //    // Add word to hash table tracking duplicates if not already in table.
-                //    if (!wordDuplicate.ContainsKey(words[i + 1]))
-                //    {
-                //        wordDuplicate.Add(words[i + 1], 1);
-                //    }
-                //    // If word is already in hash table tracking duplicates, simply increments its occurence value.
-                //    else
-                //    {
-                //        wordDuplicate[words[i + 1]]++;
-                //        Console.WriteLine("Word we are keeping track of: {0}", words[i + 1]);
-                //        Console.WriteLine("Value of wordDuplicate counter: {0}", wordDuplicate[words[i + 1]]);
-                //    }
-                //}
-
             }
+
+            // Get number of keys in hash table (corresponds to unique elements since I don't allow entry of duplicate keys)
+            int distinctWords = hashTable.Count;
+
+            // Clear textBlock each time.
+            textBlock1.Text = "";
+
+            // Display the # of words in the input file.
+            textBlock1.Text += "\n" + "Number of words in input file: \n" + words.Length;
+
+            // Display the # of distinct words or word sequences in the input file depending on order selected.
+            textBlock1.Text += "\n" + "Currently selected order is: " + orderComboBox.SelectedIndex;
+            textBlock1.Text += "\n" + "Number of unique words or word sequences in input file based on current order is: " + distinctWords;
+        }
+
+        /////////////////////////////////////////////////////////////////////////////////////////////
+        /////////////////////////////////////////////////////////////////////////////////////////////
+
+        /// <summary>
+        /// Method displays a MessageBox showing the selected Order N.
+        /// </summary>
+        /// 
+        /// <param name="order">selected index value of orderComboBox UI widget.</param>
+        private void analyzeInput(int order)
+        {
+            if (order > 0)
+            {
+                MessageBox.Show("Analyzing at order: " + order);
+            }
+        }
+
+        /////////////////////////////////////////////////////////////////////////////////////////////
+        /////////////////////////////////////////////////////////////////////////////////////////////
+
+        /// <summary>
+        /// Method tracks user selection of the Order N in the ComboBox widget.
+        /// Passes the index value to the analyzeInput(int order) method.
+        /// </summary>
+        /// 
+        /// <param name="sender">sender</param>
+        /// <param name="e">e</param>
+        private void orderComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            // Event handler fires during creation, so make sure string[] words is not null befor attempt to compute statistics.
+            if (words != null)
+            {
+                // Method call to compute statistics.
+                computeStatistics();
+            }
+
+            // Method call to display a message box showing the currently selected order.
+            analyzeInput(orderComboBox.SelectedIndex);
+        }
+
+        /////////////////////////////////////////////////////////////////////////////////////////////
+        /////////////////////////////////////////////////////////////////////////////////////////////
+
+        /// <summary>
+        /// Method responds to Babble button click, computes, and displays the randomized text.
+        /// 
+        /// Randomization is achieved via a random number generator in the range of the ArrayList
+        /// associated with the key in the Hash Table.
+        /// </summary>
+        /// 
+        /// <param name="sender">sender</param>
+        /// <param name="e">e</param>
+        private void babbleButton_Click(object sender, RoutedEventArgs e)
+        {
+            // Condition for user clicking Babble without loading a input file first.
+            if (words == null)
+            {
+                textBlock1.Text = "Please load an input file first before attempting to generate text!";
+                return;
+            }
+
+            // Stores the current key being operated on.
+            String wordkey;
 
             // Create random number generator for word selection based on keys.
             Random random = new Random();
@@ -394,12 +429,10 @@ namespace Babble
             textBlock1.Text = " ";
 
             ////////////////////////////////////////////////////////////////////////////////////////////////////
-            // Generate randomized text up to the # of words in the input file or the wordCount limit.
+            // Generate randomized text up to the # of words specified in the wordCount limit variable.
             ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-            // TODO : randomize the special cases more randomly!!!!!
-
-            for (int i = 0; i < Math.Min(wordCount, words.Length); i++)
+            for (int i = 0; i < wordCount; i++)
             {
                 // Random number for the special cases at the beginning of each input file.
                 int s = random.Next(0, words.Length - 1);
@@ -413,9 +446,14 @@ namespace Babble
                         wordkey = words[s % words.Length];
                     }
                     // Use previous word in file to determine ArrayList of following words.
-                    else
+                    else if (i <= words.Length)
                     {
                         wordkey = words[i - 1];
+                    }
+                    // We have exceeded original length of input file, start over.
+                    else
+                    {
+                        wordkey = words[(i - 1) % words.Length];
                     }
                 }
                 else if (orderComboBox.SelectedIndex == 1)
@@ -427,9 +465,14 @@ namespace Babble
                         wordkey = words[s % words.Length] + " " + words[(s + 1) % words.Length];
                     }
                     // Use previous two words in file to determine key to use.
-                    else
+                    else if (i <= words.Length)
                     {
                         wordkey = words[i - 2] + " " + words[i - 1];
+                    }
+                    // We have exceeded original length of input file, start over.
+                    else
+                    {
+                        wordkey = words[(i - 2) % words.Length] + " " + words[(i - 1) % words.Length];
                     }
                 }
                 else if (orderComboBox.SelectedIndex == 2)
@@ -442,9 +485,14 @@ namespace Babble
                             + " " + words[(s + 2) % words.Length];
                     }
                     // Use previous three words in file to determine key to use.
-                    else
+                    else if (i <= words.Length)
                     {
                         wordkey = words[i - 3] + " " + words[i - 2] + " " + words[i - 1];
+                    }
+                    // We have exceeded original length of input file, start over.
+                    else
+                    {
+                        wordkey = words[(i - 3) % words.Length] + " " + words[(i - 2) % words.Length] + " " + words[(i - 1) % words.Length];
                     }
                 }
                 else if (orderComboBox.SelectedIndex == 3)
@@ -457,9 +505,15 @@ namespace Babble
                             + " " + words[(s + 2) % words.Length] + " " + words[(s + 3) % words.Length];
                     }
                     // Use previous four words in file to determine key to use.
-                    else
+                    else if (i <= words.Length)
                     {
                         wordkey = words[i - 4] + " " + words[i - 3] + " " + words[i - 2] + " " + words[i - 1];
+                    }
+                    // We have exceeded original length of input file, start over.
+                    else
+                    {
+                        wordkey = words[(i - 4) % words.Length] + " " + words[(i - 3) % words.Length] + " " + words[(i - 2) % words.Length] + " " 
+                            + words[(i - 1) % words.Length];
                     }
                 }
                 else if (orderComboBox.SelectedIndex == 4)
@@ -473,9 +527,15 @@ namespace Babble
                             + " " + words[(s + 4) % words.Length];
                     }
                     // Use previous five words in file to determine key to use.
-                    else
+                    else if (i <= words.Length)
                     {
                         wordkey = words[i - 5] + " " + words[i - 4] + " " + words[i - 3] + " " + words[i - 2] + " " + words[i - 1];
+                    }
+                    // We have exceeded original length of input file, start over.
+                    else
+                    {
+                        wordkey = words[(i-5) % words.Length] + " " + words[(i - 4) % words.Length] + " " + words[(i - 3) % words.Length] + " " 
+                            + words[(i - 2) % words.Length] + " " + words[(i - 1) % words.Length];
                     }
                 }
                 else if (orderComboBox.SelectedIndex == 5)
@@ -489,9 +549,15 @@ namespace Babble
                             + " " + words[(s + 4) % words.Length] + " " + words[(s + 5) % words.Length];
                     }
                     // Use previous six words in file to determine key to use.
-                    else
+                    else if (i <= words.Length)
                     {
                         wordkey = words[i - 6] + " " + words[i - 5] + " " + words[i - 4] + " " + words[i - 3] + " " + words[i - 2] + " " + words[i - 1];
+                    }
+                    // We have exceeded original length of input file, start over.
+                    else
+                    {
+                        wordkey = words[(i - 6) % words.Length] + " " + words[(i - 5) % words.Length] + " " + words[(i - 4) % words.Length] + " " 
+                            + words[(i - 3) % words.Length] + " " + words[(i - 2) % words.Length] + " " + words[(i - 1) % words.Length];
                     }
                 }
                 else
@@ -517,534 +583,6 @@ namespace Babble
                 // Add the randomly selected word to the textblock object in GUI.
                 textBlock1.Text += " " + items[r];
             }
-
-            // Clear hash table after every randomization.
-            hashTable.Clear();
-
-            ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
-            ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
-            // Ignore everything below this line.  It's code that was experimental/failed and of a previous iteration.
-            // Ignore everything below this line.  It's code that was experimental/failed and of a previous iteration.
-            // Ignore everything below this line.  It's code that was experimental/failed and of a previous iteration.
-            ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
-            ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-            //// Order 1 - two words
-            //if (orderComboBox.SelectedIndex == 1)
-            //{
-            //    //for (int i = 0; i < Math.Min(wordCount, words.Length); i++)
-            //    //{
-            //    //    //// Current two successive elements of the string[] array to consider.
-            //    //    //if (i + 1 < Math.Min(wordCount, words.Length))
-            //    //    //{
-            //    //    //    wordkey = words[i] + " " + words[i + 1];
-            //    //    //}
-            //    //    //else
-            //    //    //{
-            //    //    //    wordkey = words[i] + " " + words[(i + 1) % Math.Min(wordCount, words.Length)];
-            //    //    //}
-
-            //    //    //// Debug statement.
-            //    //    //Console.WriteLine("value of wordkey: {0}", wordkey);
-
-            //    //    // Add key to hash table if not already found in table.
-            //    //    if (!hashTable.ContainsKey(wordkey))
-            //    //    {
-            //    //        //// Add key to hash table.
-            //    //        //hashTable.Add(wordkey, new ArrayList());
-            //    //        //if (i + 2 < Math.Min(wordCount, words.Length))
-            //    //        //{
-            //    //        //    // Add word following key as the value attached to the key.
-            //    //        //    hashTable[wordkey].Add(words[i + 2]);
-            //    //        //}
-            //    //        //else
-            //    //        //{
-            //    //        //    // Add word based on modulus as we have reached end of file.
-            //    //        //    hashTable[wordkey].Add(words[i % words.Length]);
-            //    //        //}
-            //    //    }
-            //    //    // If key already exists, simply add the word as part of that key's ArrayList
-            //    //    else
-            //    //    {
-            //    //        //// Add word following key as the value attached to the key.
-            //    //        //hashTable[wordkey].Add(words[i + 2]);
-
-            //    //        //// Add word to ArrayList only if it doesn't already exist.
-            //    //        //if (!hashTable[wordkey].Contains(words[i + 2]))
-            //    //        //{
-            //    //        //    if (i + 2 < Math.Min(wordCount, words.Length))
-            //    //        //    {
-            //    //        //        // Add word following key as the value attached to the key.
-            //    //        //        hashTable[wordkey].Add(words[i + 2]);
-            //    //        //    }
-            //    //        //    else
-            //    //        //    {
-            //    //        //        // Add word based on modulus as we have reached end of file.
-            //    //        //        hashTable[wordkey].Add(words[i % words.Length]);
-            //    //        //    }
-            //    //        //}
-            //    //    }
-            //    //}
-
-            //    Random random = new Random();
-
-            //    // Clear textBlock of previous text.
-            //    textBlock1.Text = "";
-
-            //    for (int i = 0; i < Math.Min(wordCount, words.Length); i++)
-            //    {
-            //        //// TODO: randomize these cases.
-            //        //// Condition for first and second words of the file.
-            //        //if (i == 0 || i == 1)
-            //        //{
-            //        //    wordkey = words[i % Math.Min(wordCount, words.Length)] + " " + words[i + 1 % Math.Min(wordCount, words.Length)];
-            //        //}
-            //        //// Use previous two words in file to determine key to use.
-            //        //else
-            //        //{
-            //        //    wordkey = words[i - 2] + " " + words[i - 1];
-            //        //}
-
-            //        // Get the ArrayList corresponding to the current key.
-            //        ArrayList list = hashTable[wordkey];
-
-            //        // Determine the # of items in the ArrayList.
-            //        int numItems = list.Count;
-
-            //        // Randomly select an item from the ArrayList.
-            //        int r = random.Next(numItems);
-
-            //        // Get the ArrayList associated with that key.
-            //        ArrayList items = hashTable[wordkey];
-
-            //        // Add the randomly selected word to the textblock object in GUI.
-            //        textBlock1.Text += " " + items[r];
-            //    }
-            //}
-
-            //// Order 2 - three words
-            //if (orderComboBox.SelectedIndex == 2)
-            //{
-            //    //for (int i = 0; i < Math.Min(wordCount, words.Length); i++)
-            //    //{
-            //    //    //// Current three successive elements of the string[] array to consider.
-            //    //    //if (i + 2 < Math.Min(wordCount, words.Length))
-            //    //    //{
-            //    //    //    wordkey = words[i] + " " + words[i + 1] + " " + words[i + 2];
-            //    //    //}
-            //    //    //else
-            //    //    //{
-            //    //    //    wordkey = words[i] + " " + words[(i + 1) % Math.Min(wordCount, words.Length)] + " " + words[(i + 2) % Math.Min(wordCount, words.Length)];
-            //    //    //}
-
-            //    //    //// Debug statement.
-            //    //    //Console.WriteLine("value of wordkey: {0}", wordkey);
-
-            //    //    // Add key to hash table if not already found in table.
-            //    //    if (!hashTable.ContainsKey(wordkey))
-            //    //    {
-            //    //        //// Add key to hash table.
-            //    //        //hashTable.Add(wordkey, new ArrayList());
-            //    //        //if (i + 3 < Math.Min(wordCount, words.Length))
-            //    //        //{
-            //    //        //    // Add word following key as the value attached to the key.
-            //    //        //    hashTable[wordkey].Add(words[i + 3]);
-            //    //        //}
-            //    //        //else
-            //    //        //{
-            //    //        //    // Add word based on modulus as we have reached end of file.
-            //    //        //    hashTable[wordkey].Add(words[i % words.Length]);
-            //    //        //}
-            //    //    }
-            //    //    // If key already exists, simply add the word as part of that key's ArrayList
-            //    //    else
-            //    //    {
-
-            //    //        //// Add word following key as the value attached to the key.
-            //    //        //hashTable[wordkey].Add(words[i + 3]);
-
-            //    //        //// Add word to ArrayList only if it doesn't already exist.
-            //    //        //if (!hashTable[wordkey].Contains(words[i + 3]))
-            //    //        //{
-            //    //        //    if (i + 3 < Math.Min(wordCount, words.Length))
-            //    //        //    {
-            //    //        //        // Add word following key as the value attached to the key.
-            //    //        //        hashTable[wordkey].Add(words[i + 3]);
-            //    //        //    }
-            //    //        //    else
-            //    //        //    {
-            //    //        //        // Add word based on modulus as we have reached end of file.
-            //    //        //        hashTable[wordkey].Add(words[i % words.Length]);
-            //    //        //    }
-            //    //        //}
-            //    //    }
-            //    //}
-
-            //    Random random = new Random();
-
-            //    // Clear textBlock of previous text.
-            //    textBlock1.Text = "";
-
-            //    for (int i = 0; i < Math.Min(wordCount, words.Length); i++)
-            //    {
-            //        //// Condition for first, second, and third words of the file.
-            //        //if (i == 0 || i == 1 || i == 2)
-            //        //{
-            //        //    wordkey = words[i % Math.Min(wordCount, words.Length)] + " " + words[i + 1 % Math.Min(wordCount, words.Length)]
-            //        //        + " " + words[i + 2 % Math.Min(wordCount, words.Length)];
-            //        //}
-            //        //// Use previous three words in file to determine key to use.
-            //        //else
-            //        //{
-            //        //    wordkey = words[i - 3] + " " + words[i - 2] + " " + words[i - 1];
-            //        //}
-
-            //        // Get the ArrayList corresponding to the current key.
-            //        ArrayList list = hashTable[wordkey];
-
-            //        // Determine the # of items in the ArrayList.
-            //        int numItems = list.Count;
-
-            //        // Randomly select an item from the ArrayList.
-            //        int r = random.Next(numItems);
-
-            //        // Get the ArrayList associated with that key.
-            //        ArrayList items = hashTable[wordkey];
-
-            //        // Add the randomly selected word to the textblock object in GUI.
-            //        textBlock1.Text += " " + items[r];
-            //    }
-            //}
-
-            //// Order 3 - four words
-            //if (orderComboBox.SelectedIndex == 3)
-            //{
-            //    //for (int i = 0; i < Math.Min(wordCount, words.Length); i++)
-            //    //{
-            //    //    //// Current four successive elements of the string[] array to consider.
-            //    //    //if (i + 3 < Math.Min(wordCount, words.Length))
-            //    //    //{
-            //    //    //    wordkey = words[i] + " " + words[i + 1] + " " + words[i + 2] + " " + words[i + 3];
-            //    //    //}
-            //    //    //else
-            //    //    //{
-            //    //    //    wordkey = words[i] + " " + words[(i + 1) % Math.Min(wordCount, words.Length)] + " " + words[(i + 2) % Math.Min(wordCount, words.Length)]
-            //    //    //        + " " + words[(i + 3) % Math.Min(wordCount, words.Length)];
-            //    //    //}
-
-            //    //    //// Debug statement.
-            //    //    //Console.WriteLine("value of wordkey: {0}", wordkey);
-
-            //    //    // Add key to hash table if not already found in table.
-            //    //    if (!hashTable.ContainsKey(wordkey))
-            //    //    {
-            //    //        //// Add key to hash table.
-            //    //        //hashTable.Add(wordkey, new ArrayList());
-            //    //        //if (i + 4 < Math.Min(wordCount, words.Length))
-            //    //        //{
-            //    //        //    // Add word following key as the value attached to the key.
-            //    //        //    hashTable[wordkey].Add(words[i + 4]);
-            //    //        //}
-            //    //        //else
-            //    //        //{
-            //    //        //    // Add word based on modulus as we have reached end of file.
-            //    //        //    hashTable[wordkey].Add(words[i % words.Length]);
-            //    //        //}
-            //    //    }
-            //    //    // If key already exists, simply add the word as part of that key's ArrayList
-            //    //    else
-            //    //    {
-            //    //        //// Add word following key as the value attached to the key.
-            //    //        //hashTable[wordkey].Add(words[i + 4]);
-
-            //    //        //// Add word to ArrayList only if it doesn't already exist.
-            //    //        //if (!hashTable[wordkey].Contains(words[i + 4]))
-            //    //        //{
-            //    //        //    if (i + 4 < Math.Min(wordCount, words.Length))
-            //    //        //    {
-            //    //        //        // Add word following key as the value attached to the key.
-            //    //        //        hashTable[wordkey].Add(words[i + 4]);
-            //    //        //    }
-            //    //        //    else
-            //    //        //    {
-            //    //        //        // Add word based on modulus as we have reached end of file.
-            //    //        //        hashTable[wordkey].Add(words[i % words.Length]);
-            //    //        //    }
-            //    //        //}
-            //    //    }
-            //    //}
-
-            //    Random random = new Random();
-
-            //    // Clear textBlock of previous text.
-            //    textBlock1.Text = "";
-
-            //    for (int i = 0; i < Math.Min(wordCount, words.Length); i++)
-            //    {
-            //        //// Condition for first, second, and third words of the file.
-            //        //if (i == 0 || i == 1 || i == 2 || i == 3)
-            //        //{
-            //        //    wordkey = words[i % Math.Min(wordCount, words.Length)] + " " + words[i + 1 % Math.Min(wordCount, words.Length)]
-            //        //        + " " + words[i + 2 % Math.Min(wordCount, words.Length)] + " " + words[i + 3 % Math.Min(wordCount, words.Length)];
-            //        //}
-            //        //// Use previous four words in file to determine key to use.
-            //        //else
-            //        //{
-            //        //    wordkey = words[i - 4] + " " + words[i - 3] + " " + words[i - 2] + " " + words[i - 1];
-            //        //}
-
-            //        // Get the ArrayList corresponding to the current key.
-            //        ArrayList list = hashTable[wordkey];
-
-            //        // Determine the # of items in the ArrayList.
-            //        int numItems = list.Count;
-
-            //        // Randomly select an item from the ArrayList.
-            //        int r = random.Next(numItems);
-
-            //        // Get the ArrayList associated with that key.
-            //        ArrayList items = hashTable[wordkey];
-
-            //        // Add the randomly selected word to the textblock object in GUI.
-            //        textBlock1.Text += " " + items[r];
-            //    }
-            //}
-
-            //// Order 4 - five words
-            //if (orderComboBox.SelectedIndex == 4)
-            //{
-            //    //for (int i = 0; i < Math.Min(wordCount, words.Length); i++)
-            //    //{
-            //    //    //// Current five successive elements of the string[] array to consider.
-            //    //    //if (i + 4 < Math.Min(wordCount, words.Length))
-            //    //    //{
-            //    //    //    wordkey = words[i] + " " + words[i + 1] + " " + words[i + 2] + " " + words[i + 3] + " " + words[i + 4];
-            //    //    //}
-            //    //    //else
-            //    //    //{
-            //    //    //    wordkey = words[i] + " " + words[(i + 1) % Math.Min(wordCount, words.Length)] + " " + words[(i + 2) % Math.Min(wordCount, words.Length)]
-            //    //    //        + " " + words[(i + 3) % Math.Min(wordCount, words.Length)] + " " + words[(i + 4) % Math.Min(wordCount, words.Length)];
-            //    //    //}
-
-            //    //    //// Debug statement.
-            //    //    //Console.WriteLine("value of wordkey: {0}", wordkey);
-
-            //    //    // Add key to hash table if not already found in table.
-            //    //    if (!hashTable.ContainsKey(wordkey))
-            //    //    {
-            //    //        //// Add key to hash table.
-            //    //        //hashTable.Add(wordkey, new ArrayList());
-            //    //        //if (i + 5 < Math.Min(wordCount, words.Length))
-            //    //        //{
-            //    //        //    // Add word following key as the value attached to the key.
-            //    //        //    hashTable[wordkey].Add(words[i + 5]);
-            //    //        //}
-            //    //        //else
-            //    //        //{
-            //    //        //    // Add word based on modulus as we have reached end of file.
-            //    //        //    hashTable[wordkey].Add(words[i % words.Length]);
-            //    //        //}
-            //    //    }
-            //    //    // If key already exists, simply add the word as part of that key's ArrayList
-            //    //    else
-            //    //    {
-            //    //        //// Add word following key as the value attached to the key.
-            //    //        //hashTable[wordkey].Add(words[i + 5]);
-
-            //    //        //// Add word to ArrayList only if it doesn't already exist.
-            //    //        //if (!hashTable[wordkey].Contains(words[i + 5]))
-            //    //        //{
-            //    //        //    if (i + 4 < Math.Min(wordCount, words.Length))
-            //    //        //    {
-            //    //        //        // Add word following key as the value attached to the key.
-            //    //        //        hashTable[wordkey].Add(words[i + 5]);
-            //    //        //    }
-            //    //        //    else
-            //    //        //    {
-            //    //        //        // Add word based on modulus as we have reached end of file.
-            //    //        //        hashTable[wordkey].Add(words[i % words.Length]);
-            //    //        //    }
-            //    //        //}
-            //    //    }
-            //    //}
-
-            //    Random random = new Random();
-
-            //    // Clear textBlock of previous text.
-            //    textBlock1.Text = "";
-
-            //    for (int i = 0; i < Math.Min(wordCount, words.Length); i++)
-            //    {
-            //        //// Condition for first, second, third, and fourth words of the file.
-            //        //if (i == 0 || i == 1 || i == 2 || i == 3 || i == 4)
-            //        //{
-            //        //    wordkey = words[i % Math.Min(wordCount, words.Length)] + " " + words[i + 1 % Math.Min(wordCount, words.Length)]
-            //        //        + " " + words[i + 2 % Math.Min(wordCount, words.Length)] + " " + words[i + 3 % Math.Min(wordCount, words.Length)]
-            //        //        + " " + words[i + 4 % Math.Min(wordCount, words.Length)];
-            //        //}
-            //        //// Use previous five words in file to determine key to use.
-            //        //else
-            //        //{
-            //        //    wordkey = words[i - 5] + " " + words[i - 4] + " " + words[i - 3] + " " + words[i - 2] + " " + words[i - 1];
-            //        //}
-
-            //        // Get the ArrayList corresponding to the current key.
-            //        ArrayList list = hashTable[wordkey];
-
-            //        // Determine the # of items in the ArrayList.
-            //        int numItems = list.Count;
-
-            //        // Randomly select an item from the ArrayList.
-            //        int r = random.Next(numItems);
-
-            //        // Get the ArrayList associated with that key.
-            //        ArrayList items = hashTable[wordkey];
-
-            //        // Add the randomly selected word to the textblock object in GUI.
-            //        textBlock1.Text += " " + items[r];
-            //    }
-            //}
-
-            //// Order 5 - six words
-            //if (orderComboBox.SelectedIndex == 5)
-            //{
-            //    //for (int i = 0; i < Math.Min(wordCount, words.Length); i++)
-            //    //{
-            //    //    //// Current five successive elements of the string[] array to consider.
-            //    //    //if (i + 5 < Math.Min(wordCount, words.Length))
-            //    //    //{
-            //    //    //    wordkey = words[i] + " " + words[i + 1] + " " + words[i + 2] + " " + words[i + 3] + " " + words[i + 4] + " " + words[i + 5];
-            //    //    //}
-            //    //    //else
-            //    //    //{
-            //    //    //    wordkey = words[i] + " " + words[(i + 1) % Math.Min(wordCount, words.Length)] + " " + words[(i + 2) % Math.Min(wordCount, words.Length)]
-            //    //    //        + " " + words[(i + 3) % Math.Min(wordCount, words.Length)] + " " + words[(i + 4) % Math.Min(wordCount, words.Length)]
-            //    //    //        + " " + words[(i + 5) % Math.Min(wordCount, words.Length)];
-            //    //    //}
-
-            //    //    //// Debug statement.
-            //    //    //Console.WriteLine("value of wordkey: {0}", wordkey);
-
-            //    //    // Add key to hash table if not already found in table.
-            //    //    if (!hashTable.ContainsKey(wordkey))
-            //    //    {
-            //    //        //// Add key to hash table.
-            //    //        //hashTable.Add(wordkey, new ArrayList());
-            //    //        //if (i + 6 < Math.Min(wordCount, words.Length))
-            //    //        //{
-            //    //        //    // Add word following key as the value attached to the key.
-            //    //        //    hashTable[wordkey].Add(words[i + 6]);
-            //    //        //}
-            //    //        //else
-            //    //        //{
-            //    //        //    // Add word based on modulus as we have reached end of file.
-            //    //        //    hashTable[wordkey].Add(words[i % words.Length]);
-            //    //        //}
-            //    //    }
-            //    //    // If key already exists, simply add the word as part of that key's ArrayList
-            //    //    else
-            //    //    {
-            //    //        ////// Add word following key as the value attached to the key.
-            //    //        //hashTable[wordkey].Add(words[i + 6]);
-
-            //    //        //// Add word to ArrayList only if it doesn't already exist.
-            //    //        //if (!hashTable[wordkey].Contains(words[i + 6]))
-            //    //        //{
-            //    //        //    if (i + 4 < Math.Min(wordCount, words.Length))
-            //    //        //    {
-            //    //        //        // Add word following key as the value attached to the key.
-            //    //        //        hashTable[wordkey].Add(words[i + 6]);
-            //    //        //    }
-            //    //        //    else
-            //    //        //    {
-            //    //        //        // Add word based on modulus as we have reached end of file.
-            //    //        //        hashTable[wordkey].Add(words[i % words.Length]);
-            //    //        //    }
-            //    //        //}
-            //    //    }
-            //    //}
-
-            //    Random random = new Random();
-
-            //    // Clear textBlock of previous text.
-            //    textBlock1.Text = "";
-
-            //    for (int i = 0; i < Math.Min(wordCount, words.Length); i++)
-            //    {
-            //        //// Condition for first, second, third, fourth, and fifth words of the file.
-            //        //if (i == 0 || i == 1 || i == 2 || i == 3 || i == 4 || i == 5)
-            //        //{
-            //        //    wordkey = words[i % Math.Min(wordCount, words.Length)] + " " + words[i + 1 % Math.Min(wordCount, words.Length)]
-            //        //        + " " + words[i + 2 % Math.Min(wordCount, words.Length)] + " " + words[i + 3 % Math.Min(wordCount, words.Length)]
-            //        //        + " " + words[i + 4 % Math.Min(wordCount, words.Length)] + " " + words[i + 5 % Math.Min(wordCount, words.Length)];
-            //        //}
-            //        //// Use previous six words in file to determine key to use.
-            //        //else
-            //        //{
-            //        //    wordkey = words[i - 6] + " " + words[i - 5] + " " + words[i - 4] + " " + words[i - 3] + " " + words[i - 2] + " " + words[i - 1];
-            //        //}
-
-            //        // Get the ArrayList corresponding to the current key.
-            //        ArrayList list = hashTable[wordkey];
-
-            //        // Determine the # of items in the ArrayList.
-            //        int numItems = list.Count;
-
-            //        // Randomly select an item from the ArrayList.
-            //        int r = random.Next(numItems);
-
-            //        // Get the ArrayList associated with that key.
-            //        ArrayList items = hashTable[wordkey];
-
-            //        // Add the randomly selected word to the textblock object in GUI.
-            //        textBlock1.Text += " " + items[r];
-            //    }
-            //}
         }
-
-        /////////////////////////////////////////////////////////////////////////////////////////////
-        /////////////////////////////////////////////////////////////////////////////////////////////
     }
-
-    /// <summary>
-    /// Class Hash hashes the string[] containing the contents of the input file.
-    /// Note: This is the template example code provided by Professor Plantinga
-    /// </summary>
-    //class Hash
-    //{
-    //    static Dictionary<string, ArrayList> makeHashtable()
-    //    {
-    //        String[] names = { "one", "two", "three", "four", "five", "six",
-    //                         "seven", "two", "ten", "four" };
-    //        Dictionary<string, ArrayList> hashTable = new Dictionary<string, ArrayList>();
-
-    //        foreach (string name in names)
-    //        {
-    //            string firstLetter = name.Substring(0, 1);
-    //            if (!hashTable.ContainsKey(firstLetter))
-    //                hashTable.Add(firstLetter, new ArrayList());
-    //            hashTable[firstLetter].Add(name);
-    //        }
-    //        return hashTable;
-    //    }
-
-    //    static void dump(Dictionary<string, ArrayList> hashTable)
-    //    {
-    //        foreach (KeyValuePair<string, ArrayList> entry in hashTable)
-    //        {
-    //            Console.Write("{0} -> ", entry.Key);
-    //            foreach (string name in entry.Value)
-    //                Console.Write("{0} ", name);
-    //            Console.WriteLine();
-    //        }
-    //    }
-
-    //    //static void Main(string[] args)
-    //    //{
-    //    //    Dictionary<string, ArrayList> hashTable = makeHashtable();
-    //    //    dump(hashTable);
-    //    //    Console.Write("\nPress enter to exit: ");
-    //    //    Console.ReadLine();
-    //    //}
-    //}
 }
