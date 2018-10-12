@@ -10,14 +10,15 @@
 /// Using the starter code for CS212 Babble assignment
 /// 
 
+// Import statements.
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
 
+// Namespace of solution.
 namespace Babble
 {
     /// <summary>
@@ -326,6 +327,8 @@ namespace Babble
                     }
                 }
 
+                ///////////////////////////////////////////////////////////////////////////////////////
+
                 // Debug statement.
                 // Note: Don't enable for large input files, otherwise it'll take forever!!!
                 if (debug2 == true)
@@ -345,6 +348,10 @@ namespace Babble
                     Console.WriteLine("\n");
                 }
             }
+
+            ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+            // Display some statistics concerning the currently parsed and tokenized input file to the GUI.
+            ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
             // Get number of keys in hash table (corresponds to unique elements since I don't allow entry of duplicate keys)
             int distinctWords = hashTable.Count;
@@ -435,9 +442,12 @@ namespace Babble
             // Clear textBlock of previous text.
             textBlock1.Text = " ";
 
-            ////////////////////////////////////////////////////////////////////////////////////////////////////
-            // Generate randomized text up to the # of words specified in the wordCount limit variable.
-            ////////////////////////////////////////////////////////////////////////////////////////////////////
+            //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+            // For loop generates randomized text up to the # of words specified in the wordCount limit variable.
+            //
+            // This section determines the key to use per iteration of the loop to generate the randomized text.
+            // Based on the order selected.
+            //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
             for (int i = 0; i < wordCount; i++)
             {
@@ -660,6 +670,11 @@ namespace Babble
                 //    Console.WriteLine("Something funky happened!");
                 //    return;
                 //}
+
+                ////////////////////////////////////////////////////////////////////////////////////////////////////
+                // Use a random number generator to randomly select the succeeding word to output to the GUI.
+                // Per iteration of the for loop for each key.
+                ////////////////////////////////////////////////////////////////////////////////////////////////////
 
                 // Get the ArrayList corresponding to the current key.
                 ArrayList list = hashTable[wordkey];
