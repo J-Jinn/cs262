@@ -46,8 +46,8 @@
         android:text="@string/button_text_fetch"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/my_toolbar"
-        app:layout_constraintVertical_bias="0.176" />
+        app:layout_constraintTop_toBottomOf="@+id/search_string"
+        app:layout_constraintVertical_bias="0.078" />
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/my_toolbar"

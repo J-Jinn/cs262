@@ -2,6 +2,7 @@ package jj47.cs262.calvin.edu.homework2;
 
 import android.net.Uri;
 import android.util.Log;
+import android.widget.Toast;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -15,11 +16,8 @@ public class NetworkUtils {
     private static final String LOG_TAG = NetworkUtils.class.getSimpleName();
 
     // Player URI for Homework 2
-    private static final String PLAYER_LIST_URL = "https://hello-endpoints-207818.appspot.com/monopoly/v1/players";
-    private static final String PLAYER_ID_URL = "https://hello-endpoints-207818.appspot.com/monopoly/v1/player/";
-
-    private static final String QUERY_PARAM1 = "query"; // Parameter for the search string
-    private static final String QUERY_PARAM2 = "id"; // Parameter for the search string
+    private static final String PLAYER_LIST_URL = "https://calvincs262-monopoly.appspot.com/monopoly/v1/players";
+    private static final String PLAYER_ID_URL = "https://calvincs262-monopoly.appspot.com/monopoly/v1/player/";
 
     /**
      * Method queries specified URI.
@@ -38,7 +36,7 @@ public class NetworkUtils {
         try {
             //Build up your query URI.
             Uri builtURI = Uri.parse(PLAYER_LIST_URL).buildUpon()
-                    .appendQueryParameter(QUERY_PARAM1, queryString)
+
                     .build();
 
             // Convert URI to URL
@@ -51,7 +49,7 @@ public class NetworkUtils {
 
             // Read the response.
             InputStream inputStream = urlConnection.getInputStream();
-            StringBuffer buffer = new StringBuffer();
+            StringBuilder buffer = new StringBuilder();
             if (inputStream == null) {
                 // Nothing to do.
                 return null;
@@ -62,7 +60,7 @@ public class NetworkUtils {
            /* Since it's JSON, adding a newline isn't necessary (it won't affect
               parsing) but it does make debugging a *lot* easier if you print out the
               completed buffer for debugging. */
-                buffer.append(line + "\n");
+                buffer.append(line).append("\n");
             }
             if (buffer.length() == 0) {
                 // Stream was empty.  No point in parsing.
@@ -73,7 +71,7 @@ public class NetworkUtils {
         } catch (Exception ex) {
 
             ex.printStackTrace();
-            return null;
+            return "Connection failed!";
         } finally {
 
             // Close all connections opened.
@@ -87,8 +85,13 @@ public class NetworkUtils {
                     e.printStackTrace();
                 }
             }
-            Log.e(LOG_TAG, playerListJSONString);
-            return playerListJSONString;
+            if(playerListJSONString != null) {
+                Log.e(LOG_TAG, playerListJSONString);
+                return playerListJSONString;
+            }
+            else{
+                return "";
+            }
         }
     }
 
@@ -109,7 +112,7 @@ public class NetworkUtils {
         try {
             //Build up your query URI.
             Uri builtURI = Uri.parse(PLAYER_ID_URL).buildUpon()
-                    .appendQueryParameter(QUERY_PARAM1, queryString)
+                    .appendPath(queryString)
                     .build();
 
             // Convert URI to URL
@@ -122,7 +125,7 @@ public class NetworkUtils {
 
             // Read the response.
             InputStream inputStream = urlConnection.getInputStream();
-            StringBuffer buffer = new StringBuffer();
+            StringBuilder buffer = new StringBuilder();
             if (inputStream == null) {
                 // Nothing to do.
                 return null;
@@ -133,7 +136,7 @@ public class NetworkUtils {
            /* Since it's JSON, adding a newline isn't necessary (it won't affect
               parsing) but it does make debugging a *lot* easier if you print out the
               completed buffer for debugging. */
-                buffer.append(line + "\n");
+                buffer.append(line).append("\n");
             }
             if (buffer.length() == 0) {
                 // Stream was empty.  No point in parsing.
@@ -143,7 +146,7 @@ public class NetworkUtils {
 
         } catch (Exception ex) {
             ex.printStackTrace();
-            return null;
+            return "Connection failed!";
         } finally {
 
             // Close all connections opened.
@@ -159,8 +162,11 @@ public class NetworkUtils {
             }
             if(playerIDJSONString != null) {
                 Log.e(LOG_TAG, playerIDJSONString);
+                return playerIDJSONString;
             }
-            return playerIDJSONString;
+            else{
+                return "";
+            }
         }
     }
 }

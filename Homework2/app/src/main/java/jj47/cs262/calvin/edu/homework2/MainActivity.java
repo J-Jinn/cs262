@@ -34,6 +34,8 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     private EditText editTextQueryString;
     private TextView textViewSearchResults;
 
+    private String queryString;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,6 +53,8 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         if(getSupportLoaderManager().getLoader(0)!=null){
             getSupportLoaderManager().initLoader(0,null,this);
         }
+
+        queryString = "";
     }
 
     /**
@@ -89,14 +93,14 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     }
 
     /**
-     * Method begins Google BooksAPI query process upon button click.
+     * Method begins Google Cloud endpoint query process upon button click.
      *
      * @param view view component
      */
     public void fetch(View view) {
 
         // Get the query string.
-        String queryString = editTextQueryString.getText().toString();
+        queryString = editTextQueryString.getText().toString();
 
         // Close keyboard after hitting search query button.
         InputMethodManager inputManager = (InputMethodManager)
@@ -117,7 +121,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         }
 
         // Check connection is available, we are connected, and query string is not empty.
-        if (networkInfo != null && networkInfo.isConnected() && queryString.length() != 0) {
+        if (networkInfo != null && networkInfo.isConnected()) {
 
             // Refactored to user AsyncTaskLoader via PlayerLoader.java
             Bundle queryBundle = new Bundle();
@@ -128,16 +132,9 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
             textViewSearchResults.setText("");
             textViewSearchResults.setText(R.string.loading_in_process);
         } else {
-            // User didn't enter anything to search for.
-            if (queryString.length() == 0) {
-                textViewSearchResults.setText("");
-                textViewSearchResults.setText(R.string.no_search_term);
-
-                // There is no available connection.
-            } else {
-                textViewSearchResults.setText("");
-                textViewSearchResults.setText(R.string.no_connection);
-            }
+            // There is no available connection.
+            textViewSearchResults.setText("");
+            textViewSearchResults.setText(R.string.no_connection);
         }
     }
 
@@ -165,53 +162,89 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     public void onLoadFinished(@NonNull Loader<String> loader, String s) {
 
         // If string s is empty, then connection failed.
-        if (s == null){
-            Toast.makeText(this, "Connection failed!", Toast.LENGTH_SHORT).show();
+        if (s.contains("Connection failed!")){
+            textViewSearchResults.setText("");
+            textViewSearchResults.setText(R.string.connection_failed);
+            Toast.makeText(this, R.string.connection_failed, Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if(s.length() == 0){
+            textViewSearchResults.setText("");
+            textViewSearchResults.setText(R.string.no_results_found);
+            Toast.makeText(this, R.string.no_results_found, Toast.LENGTH_SHORT).show();
             return;
         }
 
         // obtain the JSON array of results items
         try {
             JSONObject jsonObject = new JSONObject(s);
-            JSONArray itemsArray = jsonObject.getJSONArray("items");
+            JSONArray itemsArray;
 
-            //Iterate through the results
-            for (int i = 0; i < itemsArray.length(); i++) {
-                JSONObject player = itemsArray.getJSONObject(i); //Get the current item
-                String id = "id";
-                String email = "email";
-                String name = "default";
-                JSONObject info = player.getJSONObject("items");
+            // Condition to handle getting the player list
+            if(queryString.length() == 0){
+                itemsArray = jsonObject.getJSONArray("items");
+
+                Log.e(LOG_TAG, "Length of itemsArray: " + itemsArray.length());
+
+                //Iterate through the results
+                for (int i = 0; i < itemsArray.length(); i++) {
+                    JSONObject player = itemsArray.getJSONObject(i); //Get the current item
+                    String id = "id";
+                    String email = "email";
+                    String name = "default";
+
+                    try {
+                        id = player.getString("id");
+                        email = player.getString("emailAddress");
+                        name = player.getString("name");
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
+                    //If information field requested exists, update the TextViews and return
+                    if (id != null || email != null || name != null)  {
+                        textViewSearchResults.append("\n\nid: " + id + "\n" + "email: " + email + "\n" + "name: " + name + "\n");
+                    }
+                    else{
+                        textViewSearchResults.append("\n\nFailure to retrieve any information for this particular player!\n");
+                    }
+                }
+                return;
+            }
+            // Condition to get a specific player in list
+            else{
+                String id = "no id found";
+                String email = "no email found";
+                String name = "no name found";
 
                 try {
-                    id = info.getString("id");
-                    email = info.getString("emailAddress");
-                    name = info.getString("name");
+                    id = jsonObject.getString("id");
+                    email = jsonObject.getString("emailAddress");
+                    name = jsonObject.getString("name");
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
 
                 //If information field requested exists, update the TextViews and return
-                if (id != null && email != null) {
-                    textViewSearchResults.setText("id: " + id + "\n" + "email: " + email + "\n" + "name: " + name + "\n");
+                if (id != null || email != null || name != null) {
+                    textViewSearchResults.append("\n\nid: " + id + "\n" + "email: " + email + "\n" + "name: " + name + "\n");
                     return;
                 }
             }
 
             textViewSearchResults.setText("");
-            textViewSearchResults.setText(R.string.no_results_found);
-            Toast.makeText(this, "Non-existent ID", Toast.LENGTH_SHORT).show();
+            textViewSearchResults.setText(R.string.display_failure);
+            Toast.makeText(this, R.string.display_failure, Toast.LENGTH_SHORT).show();
 
         } catch (Exception ex){
 
             textViewSearchResults.setText("");
-            textViewSearchResults.setText(R.string.no_results_found);
-            Toast.makeText(this, "Non-existent ID", Toast.LENGTH_SHORT).show();
+            textViewSearchResults.setText(R.string.json_failure);
+            Toast.makeText(this, R.string.json_failure, Toast.LENGTH_SHORT).show();
             ex.printStackTrace();
 
         } finally{
-            Log.e(LOG_TAG,"Finished");
-            return;
+            Log.e(LOG_TAG,"Finished query process!");
         }
     }
 

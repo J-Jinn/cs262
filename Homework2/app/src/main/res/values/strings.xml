@@ -83,4 +83,7 @@
     <string name="no_connection">Please check your network connection and try again.</string>
     <string name="search_string_hint">Blank = All players; Positive integer = Player with that ID</string>
     <string name="search_results_text">Results</string>
+    <string name="connection_failed">Connection failed!</string>
+    <string name="json_failure">JSON retrieval failure!</string>
+    <string name="display_failure">Failed to display results!</string>
 </resources>
