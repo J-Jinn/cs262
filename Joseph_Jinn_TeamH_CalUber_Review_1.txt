@@ -1,0 +1,48 @@
+CS-262 Software Engineering
+Date: 9-27-18
+Reviewer: Joseph Jinn
+Team being reviewed: Team E - CalUber
+
+=================================================================================================================================================
+
+Vision Statement:
+
+=================================================================================================================================================
+
+Side-note: Opening README.md in Notepad++ yielded a blank document besides the phrase "# CS-262-Client" 
+	- I had to look at the vision statement in SourceTree (Git front-end) by looking at a branch of master.
+	
+Short and concise.  To the point.  Well-written.
+
+The application does indeed seem to be of practical use to Calvin students.
+
+Being a off-campus commuter that lives 10 minutes away with my family and owning a car, I personally wouldn't use this ride-sharing app
+unless I wanted to offer to drive people somewhere who are in need.
+
+As most college students seem to be universally acknowledged as being financially destitute, cheaper options aside from taxis, Uber, or Lyft
+are certainly welcome.
+
+I didn't know there was a Free and For Sale Calvin Facebook page where students posted requests for rides.
+
+=================================================================================================================================================
+
+Prototype:
+
+=================================================================================================================================================
+
+Basic prototype with main activity is implemented.
+
+Runs fine on the Android Emulator.
+
+I like the simple but clean layout of the main screen with its "join a ride" and "start a ride" button, placeholder image of a car, and app bar
+with the solid red background.
+
+This should work fine as a prototype template to work off of as a base for the app.
+
+=================================================================================================================================================
+
+Comments:
+
+Looking forward to future reviews of your team's progress as the semester continues. =)
+
+=================================================================================================================================================

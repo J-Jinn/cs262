@@ -1,0 +1,117 @@
+CS-262 Software Engineering
+Date: 10-14-18
+Reviewer: Joseph Jinn
+Team being reviewed: Team E - CalUber
+
+=================================================================================================================================================
+=================================================================================================================================================
+
+Trello Board Activity:
+
+-People seem to be logging their hours on a regular basis for each card.
+
+-Tasks are labeled according to categories.
+
+-Nate Gamble seems to be the Trello dungeon master in charge of keeping Trello organized and up-to-date.
+
+-Still tidy and neat.
+
+=================================================================================================================================================
+=================================================================================================================================================
+
+User Stories:
+
+-There are currently 3 user stories up on Trello
+
+-They seem to cover the general use of the app from the driver and passenger point-of-view.
+
+-Perhaps add more user stories that are more specific or cover special cases that could occur with users of the app.
+	-perhaps a story covering what happens when drivers or passengers decide to cancel a upcoming ride.
+	-perhaps a story covering how to get contact info to communicate directly between drivers and passengers.
+
+-Otherwise, looks good.
+
+=================================================================================================================================================
+=================================================================================================================================================
+
+Domain Model:
+
+-Available on Trello in the form of a screen capture of a pen and paper sketch.
+
+-Seems very basic and simple.
+
+-Seems somewhat incomplete in comparison to all other project documentation.
+
+-Suggest fleshing out some more in the future.
+
+-Not much else to say.
+
+=================================================================================================================================================
+=================================================================================================================================================
+
+User Interface Model:
+
+-Available on Trello in the form of a screen capture of a pencil and paper sketch.
+
+-I am able to get a good sense of the screen-flow of the app from glancing at it.
+
+-Nice to see the team has already thought of the specific information fields required for each screen of the app.
+	-much further along with this then my team is.
+	
+- Simple but elegant design that is to the point.
+	-Create Ride or Join Ride to cover drivers and passengers.
+	-Profile page so the user can input contact information.
+	-Upcoming/Previous rides page to view past,present, and future ride history.
+	
+-Looks like a workable UI model insofar as I can tell.
+
+=================================================================================================================================================
+=================================================================================================================================================
+
+GitHub client repository - Android App
+
+-Prototype runs and has placeholder functionality.
+
+-Has shown progress since "Hello-World" a while back.
+
+-User profile screen has been implemented
+
+-Start a Ride screen has been implemented.
+
+-Join a Ride is still just a non-functional button.
+
+-Upcoming/Previous rides screen is still just a non-functional button.
+
+-Suggest adding "Up" navigation at some point so user can navigate back to the MainActivity screen for the app.
+
+-Otherwise, looking good and making progress.
+
+-GitHub client repository to be heavy on commits from Nathan Gamble, with some team members' participation missing perhaps.
+
+=================================================================================================================================================
+=================================================================================================================================================
+
+Supplemental technical requirements documentation:
+
+-Some spelling errors.
+	-I assume "bottoms" = "button" in the Usability section =P
+	
+-Seems to be well thought-out.
+
+-Definitely covers non-functional requirements.
+
+-Sounds and reads like a professional document.
+
+-Covers 4 categories - Usability, Reliability, Performance, and Supportability
+	-Has description of what is involved within each of the categories.
+	
+=================================================================================================================================================
+=================================================================================================================================================
+
+Miscellaneous:
+
+-Suggest removing Readme.MD, Specifications.docx, and other project documentation from client repository into your currently empty "Data" repository, 
+	which I assume is supposed to be for project documentation.
+	
+=================================================================================================================================================
+=================================================================================================================================================
