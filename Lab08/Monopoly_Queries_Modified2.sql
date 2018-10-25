@@ -123,7 +123,7 @@ FROM PlayerGame, Game
 WHERE Game.time = '2006-06-28 13:20:00'
 	AND Game.ID = PlayerGame.gameID;
 
---Retrieve the name of the winner of the game played on 2006-06-28 13:20:00. (not working as intended)
+--Retrieve the name of the winner of the game played on 2006-06-28 13:20:00. (working as intended now!!!!)
 SELECT Player.name
 FROM Player, Game, PlayerGame
 WHERE Game.time = '2006-06-28 13:20:00'
@@ -142,10 +142,13 @@ FROM Player AS P1, Player AS P2
 WHERE P1.name = P2.name
   AND P1.ID < P2.ID;
   
+---------------------------------------------------------------------------------------------------------------------------
 --So what does that P1.ID < P2.ID clause do in the last example query?
 
---My best guess....I have no idea.
+--The player ID in instance P1 associated with that name is less than the player ID in instance P2 associated with the same name.
+--Therefore, select the names from PI, not P2, where the name is in both P1 and P2.
 
+---------------------------------------------------------------------------------------------------------------------------
 --The query that joined the Player table to itself seems rather contrived. 
 --Can you think of a realistic situation in which you’d want to join a table to itself?
 
@@ -155,3 +158,5 @@ WHERE P1.name = P2.name
 
 --Can be useful in getting two sets of information that exists in the same table without
 --resorting to sub-select nested queries.
+
+---------------------------------------------------------------------------------------------------------------------------
