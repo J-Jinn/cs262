@@ -30,7 +30,7 @@ namespace FractalFern
     class Fractal
     {
 
-        // Class constants.
+        // Constants for testing purposes.
         private static double MAX_DEPTH = 4;
 
         /// <summary>
@@ -46,7 +46,7 @@ namespace FractalFern
         /// <param name="redux"></param>
         /// <param name="turnbias"></param>
         /// <param name="canvas"></param>
-        public Fractal(double size, double redux, double turnbias, Canvas canvas)
+        public Fractal(double depth, double size, double turnbias, Canvas canvas)
         {
             // Clear canvas of old contents every iteration.
             canvas.Children.Clear();
@@ -54,38 +54,56 @@ namespace FractalFern
             // Set-up background image for drawing on.
             setupBackground(canvas);
 
+            // Get the slider value for depth from widget.
+            double sliderDepth = depth;
+
+            // Get the slider value for turn bias from widget.
+            double sliderTurnBias = turnbias;
+
+            // Get the slider value for TBD from widget.
+            double sliderSize = size;
+
+            //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
             // Initial parameters.
-            double initialX1 = canvas.Width / 2;
+            double initialX1 = canvas.Width / 2 - 300;
             double initialY1 = canvas.Height;
-            double initialDistance = 75;
-            double initialTheta = Math.PI / 2;
+            double initialTheta1 = 2 * Math.PI / 3;
+            double initialStemThickness1 = 5.0;
 
-            // Draw the recursive fractal fern.
-            drawFractalFern(canvas, initialX1, initialY1, initialDistance, initialTheta, MAX_DEPTH + 1);
+            // Draw the recursive fractal fern using many randomized parameters.
+            drawFractalFernRandomized(canvas, initialX1, initialY1, sliderSize, initialTheta1, sliderDepth, sliderTurnBias, initialStemThickness1);
+
+            //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
             // Initial parameters.
-            double initialX2 = canvas.Width / 2 + 25;
+            double initialX2 = canvas.Width / 2 + 300;
             double initialY2 = canvas.Height;
-            double initialDistance2 = 100;
             double initialTheta2 = Math.PI / 3;
+            double initialStemThickness2 = 5.0;
 
-            // Draw the recursive fractal fern.
-            drawFractalFern(canvas, initialX2, initialY2, initialDistance2, initialTheta2, MAX_DEPTH);
+            // Draw the recursive fractal fern using many randomized parameters.
+            drawFractalFernRandomized(canvas, initialX2, initialY2, sliderSize, initialTheta2, sliderDepth, sliderTurnBias, initialStemThickness2);
+
+            //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
             // Initial parameters.
-            double initialX3 = canvas.Width / 2 - 25;
+            double initialX3 = canvas.Width / 2;
             double initialY3 = canvas.Height;
-            double initialDistance3 = 125;
-            double initialTheta3 = Math.PI / 4;
+            double initialTheta3 = Math.PI / 2;
+            double initialStemThickness3 = 5.0;
 
-            // Draw the recursive fractal fern.
-            drawFractalFern(canvas, initialX3, initialY3, initialDistance3, initialTheta3, MAX_DEPTH - 1);
+            // Draw the recursive fractal fern using mostly non-randomized parameters.
+            drawFractalFernNonRandomized(canvas, initialX3, initialY3, sliderSize + 25, initialTheta3, sliderDepth, sliderTurnBias, initialStemThickness3);
 
         }
 
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
         /// <summary>
-        /// Draw the fractal fern.
+        /// Draw the fractal fern with many randomized parameters.
         /// </summary>
         /// <param name="canvas"></param>
         /// <param name="x"></param>
@@ -93,17 +111,23 @@ namespace FractalFern
         /// <param name="distance"></param>
         /// <param name="theta"></param>
         /// <param name="depth"></param>
-        private void drawFractalFern(Canvas canvas, double x, double y, double distance, double theta, double depth)
+        private void drawFractalFernRandomized(Canvas canvas, double x, double y, double distance, double theta, double depth, double turnBias, double thickness)
         {
             if (depth <= 0.5)
             {
                 return;
             }
 
+            // RNG.
             Random random = new Random();
-            double varyDistance = random.Next(Convert.ToInt32(distance) - 3, Convert.ToInt32(distance) + 3);
+
+            // Initial stem thickness.
+            double stemThickness = 3.0;
 
             // Constraints on the randomness.
+            double ellipseRadiusMax = 6;
+            double ellipseRadiusMin = 3;
+
             double frondDistanceRatioMax = 3.0;
             double frondDistanceRatioMin = 2.0;
 
@@ -123,6 +147,7 @@ namespace FractalFern
             double frondAngleOffsetMin = Math.PI / 12;
 
             // Random number generators.
+            double varyEllipseRadius = random.NextDouble() * (ellipseRadiusMax - ellipseRadiusMin) + ellipseRadiusMin;
             double varyFrondDistanceRatio = random.NextDouble() * (frondDistanceRatioMax - frondDistanceRatioMin) + frondDistanceRatioMin;
             double varyStemDistanceRatio = random.NextDouble() * (stemDistanceRatioMax - stemDistanceRatioMin) + stemDistanceRatioMin;
             double varyFrondDepthReductionRatio = random.NextDouble() * (frondDepthRatioMax - frondDepthRatioMin) + frondDepthRatioMin;
@@ -130,15 +155,17 @@ namespace FractalFern
             double varyStemAngleOffsetAmount = random.NextDouble() * (stemAngleOffsetMax - stemAngleOffsetMin) + stemAngleOffsetMin;
             double varyFrondAngleOffsetAmount = random.NextDouble() * (frondAngleOffsetMax - frondAngleOffsetMin) + frondAngleOffsetMin;
 
+            // TODO: reduce ellipse radius with each depth of recursive calls!
             // "leaves" of the fern.
-            drawMyEllipse(canvas, x, y, 3);
+            drawFernFrondDetail(canvas, x, y, distance / varyFrondDistanceRatio, theta + varyFrondAngleOffsetAmount, depth / varyFrondDepthReductionRatio, varyEllipseRadius);
 
             // Calculate new coordinates.
+            double varyDistance = random.Next(Convert.ToInt32(distance) - 3, Convert.ToInt32(distance) + 3);
             double newX = x + varyDistance * Math.Cos(theta);
             double newY = y - varyDistance * Math.Sin(theta);
 
             // Beginning of the stem of the fern.
-            drawMyLine(canvas, x, newX, y, newY);
+            drawMyLine(canvas, x, newX, y, newY, stemThickness / 1.5);
 
             // Calculate new coordinates.
             double varyDistance2 = random.Next(Convert.ToInt32(distance) - 3, Convert.ToInt32(distance) + 3);
@@ -146,7 +173,7 @@ namespace FractalFern
             double newY1 = y - varyDistance2 * Math.Sin(theta);
 
             // Draw the right fronds.
-            drawFractalFern(canvas, newX1, newY1, distance / varyFrondDistanceRatio, theta + varyFrondAngleOffsetAmount, depth / varyFrondDepthReductionRatio);
+            drawFractalFernRandomized(canvas, newX1, newY1, distance / varyFrondDistanceRatio, theta + varyFrondAngleOffsetAmount, depth / varyFrondDepthReductionRatio, turnBias, thickness / 1.1);
 
             // Calculate new coordinates.
             double varyDistance3 = random.Next(Convert.ToInt32(distance) - 3, Convert.ToInt32(distance) + 3);
@@ -154,24 +181,89 @@ namespace FractalFern
             double newY2 = y - varyDistance3 * Math.Sin(theta);
 
             // Draw the left fronds.
-            drawFractalFern(canvas, newX2, newY2, distance / varyFrondDistanceRatio, theta - varyFrondAngleOffsetAmount, depth / varyFrondDepthReductionRatio);
+            drawFractalFernRandomized(canvas, newX2, newY2, distance / varyFrondDistanceRatio, theta - varyFrondAngleOffsetAmount, depth / varyFrondDepthReductionRatio, turnBias, thickness / 1.1);
 
             // Draw the remaining parts of the main stem of the fern.
 
             int chooseTurnDirection = random.Next(1, 4);
 
-            if (chooseTurnDirection == 1)
+            if (chooseTurnDirection == 1 || chooseTurnDirection == 2)
             {
-                drawFractalFern(canvas, newX, newY, distance / varyStemDistanceRatio, theta + varyStemAngleOffsetAmount, depth / varyStemDepthReductionRatio);
+                drawFractalFernRandomized(canvas, newX, newY, distance / varyStemDistanceRatio, theta + varyStemAngleOffsetAmount, depth / varyStemDepthReductionRatio, turnBias, thickness / 1.1);
             }
             else
             {
-                drawFractalFern(canvas, newX, newY, distance / varyStemDistanceRatio, theta - varyStemAngleOffsetAmount, depth / varyStemDepthReductionRatio);
+                drawFractalFernRandomized(canvas, newX, newY, distance / varyStemDistanceRatio, theta - varyStemAngleOffsetAmount, depth / varyStemDepthReductionRatio, turnBias, thickness / 1.1);
             }
         }
 
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
         /// <summary>
-        /// Draw the frond details of the fern at each level.
+        /// Draw the fractal fern without as much randomization. (a lot less randomized parameters)
+        /// (aka a boring plain old stereotypical fern)
+        /// </summary>
+        /// <param name="canvas"></param>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        /// <param name="distance"></param>
+        /// <param name="theta"></param>
+        /// <param name="depth"></param>
+        private void drawFractalFernNonRandomized(Canvas canvas, double x, double y, double distance, double theta, double depth, double turnBias, double thickness)
+        {
+            if (depth <= 0.5)
+            {
+                return;
+            }
+
+            // RNG.
+            Random random = new Random();
+
+            // Constraints on the randomness.
+            double ellipseRadiusMax = 6;
+            double ellipseRadiusMin = 3;
+
+            // Random number generators.
+            double varyEllipseRadius = random.NextDouble() * (ellipseRadiusMax - ellipseRadiusMin) + ellipseRadiusMin;
+
+            // TODO: reduce ellipse radius with each depth of recursive calls!
+            // "leaves" of the fern.
+            drawFernFrondDetail(canvas, x, y, distance / 2.5, theta + Math.PI / 6, depth / 1.45, varyEllipseRadius);
+
+            // Calculate new coordinates.
+            double newX = x + distance * Math.Cos(theta);
+            double newY = y - distance * Math.Sin(theta);
+
+            // Beginning of the stem of the fern.
+            drawMyLine(canvas, x, newX, y, newY, thickness);
+
+            // Calculate new coordinates.
+            double newX1 = x + distance * Math.Cos(theta);
+            double newY1 = y - distance * Math.Sin(theta);
+
+            // Draw the right fronds.
+            drawFractalFernNonRandomized(canvas, newX1, newY1, distance / 2.5, theta + Math.PI / 6, depth / 1.45, turnBias, thickness / 1.1);
+
+            // Calculate new coordinates.
+            double newX2 = x + distance * Math.Cos(theta);
+            double newY2 = y - distance * Math.Sin(theta);
+
+            // Draw the left fronds.
+            drawFractalFernNonRandomized(canvas, newX2, newY2, distance / 2.5, theta - Math.PI / 6, depth / 1.45, turnBias, thickness / 1.1);
+
+            // Draw the remaining parts of the main stem of the fern.
+            drawFractalFernNonRandomized(canvas, newX, newY, distance / 1.15, theta + turnBias, depth / 1.25, turnBias, thickness / 1.1);
+
+        }
+
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        /// <summary>
+        /// Draw the frond details of the fern at each level. (leaves, etc.)
         /// </summary>
         /// <param name="canvas"></param>
         /// <param name="x1"></param>
@@ -179,10 +271,14 @@ namespace FractalFern
         /// <param name="y1"></param>
         /// <param name="y2"></param>
         /// <param name="depth"></param>
-        private void drawFernFrondDetail(Canvas canvas, double x, double y, double distance, double theta, int depth)
+        private void drawFernFrondDetail(Canvas canvas, double x, double y, double distance, double theta, double depth, double radius)
         {
-
+            drawMyEllipse(canvas, x, y, radius);
         }
+
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         /// <summary>
         /// Set-up a background image to draw on.
@@ -241,6 +337,10 @@ namespace FractalFern
             sourceBitmap.Dispose();
         }
 
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
         /// <summary>
         /// Method draws a ellipse with specified parameters.
         /// </summary>
@@ -283,10 +383,10 @@ namespace FractalFern
             radialGradientBrush.RadiusY = 0.5;
 
             // Create four gradient stops.
-            radialGradientBrush.GradientStops.Add(new GradientStop(Colors.Yellow, 0.0));
-            radialGradientBrush.GradientStops.Add(new GradientStop(Colors.Red, 0.25));
-            radialGradientBrush.GradientStops.Add(new GradientStop(Colors.Blue, 0.75));
-            radialGradientBrush.GradientStops.Add(new GradientStop(Colors.LimeGreen, 1.0));
+            radialGradientBrush.GradientStops.Add(new GradientStop(Colors.GreenYellow, 0.0));
+            radialGradientBrush.GradientStops.Add(new GradientStop(Colors.Green, 0.25));
+            radialGradientBrush.GradientStops.Add(new GradientStop(Colors.ForestGreen, 0.75));
+            radialGradientBrush.GradientStops.Add(new GradientStop(Colors.DarkSeaGreen, 1.0));
 
             // Freeze the brush (make it unmodifiable) for performance benefits.
             radialGradientBrush.Freeze();
@@ -312,6 +412,10 @@ namespace FractalFern
             canvas.Children.Add(myEllipse);
         }
 
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
         /// <summary>
         /// Method draws a line with specified parameters.
         /// </summary>
@@ -320,17 +424,18 @@ namespace FractalFern
         /// <param name="x2"></param>
         /// <param name="y1"></param>
         /// <param name="y2"></param>
-        private static void drawMyLine(Canvas canvas, double x1, double x2, double y1, double y2)
+        private static void drawMyLine(Canvas canvas, double x1, double x2, double y1, double y2, double thickness)
         {
             // RNG.
             Random random = new Random();
-            
+
             // Constraints.
             double strokeThicknessMin = 1.0;
             double strokeThicknessMax = 1.2;
 
             // Generate random numbers.
             double randomStrokeThickness = random.NextDouble() * (strokeThicknessMax - strokeThicknessMin) + strokeThicknessMin;
+
             int randomAlpha = random.Next(200, 250);
             int randomRed = random.Next(200, 220);
             int randomGreen = random.Next(245, 255);
@@ -349,12 +454,16 @@ namespace FractalFern
             myLine.Stroke = mySolidColorBrush;
             myLine.VerticalAlignment = VerticalAlignment.Center;
             myLine.HorizontalAlignment = HorizontalAlignment.Left;
-            myLine.StrokeThickness = randomStrokeThickness;
+            myLine.StrokeThickness = thickness;
 
             // Draw to canvas.
             canvas.Children.Add(myLine);
-        }         
+        }
     }
+
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     /// <summary>
     /// This class is needed to enable us to set the center for an ellipse (not built in?!)
@@ -373,6 +482,13 @@ namespace FractalFern
             Canvas.SetLeft(ellipse, X - ellipse.Width / 2);
         }
     }
+
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 }
+
 // TODO: fix color issue.
-// TODO: add 3 slider controls.
+// TODO: implement linear gradient brush.
+// TODO: add actual leaves of the fern (use ellipses properly)

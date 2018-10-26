@@ -37,7 +37,7 @@ namespace FractalFern
         /// <param name="e"></param>
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            Fractal f = new Fractal(depthSlider.Value, TBDSlider.Value, turnBiasSlider.Value, canvas);
+            Fractal f = new Fractal(depthSlider.Value, sizeSlider.Value, turnBiasSlider.Value, canvas);
         }
         
         /// <summary>
@@ -47,7 +47,7 @@ namespace FractalFern
         /// <param name="e"></param>
         private void button1_Click(object sender, RoutedEventArgs e)
         {
-            Fractal f = new Fractal(depthSlider.Value, TBDSlider.Value, turnBiasSlider.Value, canvas);
+            Fractal f = new Fractal(depthSlider.Value, sizeSlider.Value, turnBiasSlider.Value, canvas);
         }
     }
 }
