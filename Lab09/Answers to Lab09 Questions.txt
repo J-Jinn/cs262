@@ -1,0 +1,57 @@
+Answers to Lab09 Questions
+-------------------------------------------------------------------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------------------------------------------------------------------
+	What purpose does the Player DAO serve?
+------------------------------------------------------------------------
+	Defines an object-oriented way to represent and manipulate player objects from the traditional non-object-oriented relational Monopoly database.
+-------------------------------------------------------------------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------------------------------------------------------------------
+	How does it compare with the Player table?
+------------------------------------------------------------------------
+	It essentially contains the same attributes as the Player table: id, emailAddress, and name.
+	Only real difference is that everything is wrapped up in a Class, with private class members, public constructor, getters, and setters.
+	Otherwise, it’s an exact duplicate of the structure of the Player table.
+-------------------------------------------------------------------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------------------------------------------------------------------
+	What is the Java-based technology used to access data from a database?
+------------------------------------------------------------------------
+	JDBC = Java Database Connectivity: API for Java programming language that defines how a client may access a database.
+-------------------------------------------------------------------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------------------------------------------------------------------
+	How many API endpoints does this application support and where are they implemented?
+------------------------------------------------------------------------
+	2 API endpoints
+-------------------------------------------------------------------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------------------------------------------------------------------
+	What endpoints does the web service implement and where are they implemented?
+------------------------------------------------------------------------
+	GET , PUT, POST, DELETE operations in PLayerResource.java
+	https://calvincs262-monopoly.appspot.com/monopoly/v1/players
+	https://calvincs262-monopoly.appspot.com/monopoly/v1/player/ insert ID # here.
+-------------------------------------------------------------------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------------------------------------------------------------------
+	Compare and contrast the following:
+-------------------------------------------------------------------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------------------------------------------------------------------
+	SQL query statements vs. JDBC statement objects
+------------------------------------------------------------------------
+	JDBC statement objects seem to be a wrapper for the SQL query statements.
+	JDBC takes arguments into the method and passes it into a formatted string that corresponds to the SQL query that is sent to the database.
+-------------------------------------------------------------------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------------------------------------------------------------------
+	SQL relations vs. JDBC result sets vs. List<Player>
+------------------------------------------------------------------------
+	List<Player> Return a list of type Players.  Obtained by parsing the ResultSet object and adding each element in the ResultSet as a new element in List<Player>.
+	JDBC result sets: A Java object that contains the results of executing an SQL query.  Contains the rows that satisfy the conditions of the query.  The data stored in a ResultSet object is retrieved through a set of get methods that allows access to the various columns of the current row.  The ResultSet.next method is used to move to the next row of the ResultSet, making it the current row.
+	SQL relation: A set of tuples d1, d2,…,dn, where each element dj is a member of Dj, a data domain.  No ordering to the elements of the tuples of a relation.  Each element is called an attribute value.
+-------------------------------------------------------------------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------------------------------------------------------------------
+	The function getValueStringOrNull() is not called.  When would you want to use it?
+------------------------------------------------------------------------
+	It seems it is used to address the issue where some player ID’s have NULL as the value of the associated player.name attribute, as not all player tuples have a name.
+-------------------------------------------------------------------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------------------------------------------------------------------
+	Note: I sort of did these questions before you updated and revamped Lab09; hence I added to what I had to reflect the updated Exercise 9.1.
+-------------------------------------------------------------------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------------------------------------------------------------------
