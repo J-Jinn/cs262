@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="Fractal Fern" Height="450" Width="800">
     <Grid Background="#FFF4FFD8">
-        <Canvas Height="1080" HorizontalAlignment="Left" Margin="193,12,12,0" Name="canvas" VerticalAlignment="Top" Width="1920" Background="White" ClipToBounds="True" >
+        <Canvas Height="768" HorizontalAlignment="Left" Margin="193,12,12,0" Name="canvas" VerticalAlignment="Top" Width="1024" Background="White" ClipToBounds="True" >
         </Canvas>
         <Slider Height="24" HorizontalAlignment="Left" Margin="12,85,0,0" Name="depthSlider" VerticalAlignment="Top" Width="175" Value="4" Maximum="12" Minimum="1"/>
         <Slider Height="23" HorizontalAlignment="Left" Margin="12,151,0,0" x:Name="sizeSlider" VerticalAlignment="Top" Width="175" Value="75" Maximum="200" Minimum="1" />

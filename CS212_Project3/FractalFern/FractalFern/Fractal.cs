@@ -9,6 +9,9 @@
 /// Fractal Fern framework
 /// Modified from the original template provided for this assignment.
 /// 
+/// Note: May need to adjust hard-coded canvas size depending on size of user screen.
+/// Note: Background image uses hard-coded file path...may cause portability issues.
+/// 
 
 using System;
 using System.Drawing;
@@ -282,6 +285,7 @@ namespace FractalFern
 
         /// <summary>
         /// Set-up a background image to draw on.
+        /// Note: Hardcoded paths to images....might cause portability issues.
         /// </summary>
         private void setupBackground(Canvas canvas)
         {
@@ -298,6 +302,10 @@ namespace FractalFern
                 System.Diagnostics.Debug.WriteLine(e.Source, "Argument exception: {0}");
                 MessageBox.Show("Failed to load required files");
             }
+
+            // This section doesn't do much at the moment.  Was going to try a different way of drawing.
+            ///////////////////////////////////////////////////////////////////////////////////////////////////
+            ///////////////////////////////////////////////////////////////////////////////////////////////////
 
             // Declare objects necessary for the process.
             System.Drawing.Image sourceImage;
