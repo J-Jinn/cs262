@@ -10,7 +10,13 @@
 /// Modified from the original template provided for this assignment.
 /// 
 /// Note: May need to adjust hard-coded canvas size depending on size of user screen.
-/// Note: Background image uses hard-coded file path...may cause portability issues.
+///     (currently set to 1024x768)
+/// Note: Background image may cause portability issues 
+///     (.jpg is in same directory as .exe)
+///     
+/// Note: Weird color issue with SolidColorBrush where the color it draws doesn't really reflect
+/// the range of the randomized ARGB values (which should be a hue variation of green).
+/// But, the color it does draw adds a cool phosphorescent effect for the fern's "leaves".
 /// 
 
 using System;
@@ -45,10 +51,10 @@ namespace FractalFern
         /// 4) Calls recursive method to generate the fern.
         /// 
         /// </summary>
-        /// <param name="size"></param>
-        /// <param name="redux"></param>
-        /// <param name="turnbias"></param>
-        /// <param name="canvas"></param>
+        /// <param name="depth">value of depth slider</param>
+        /// <param name="size"> value of size slider</param>
+        /// <param name="turnbias">value of turn bias slider</param>
+        /// <param name="canvas">canvas object to draw on</param>
         public Fractal(double depth, double size, double turnbias, Canvas canvas)
         {
             // Clear canvas of old contents every iteration.
@@ -69,7 +75,7 @@ namespace FractalFern
             //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
             // Initial parameters.
-            double initialX1 = canvas.Width / 2 - 300;
+            double initialX1 = canvas.Width / 2 - 200;
             double initialY1 = canvas.Height;
             double initialTheta1 = 2 * Math.PI / 3;
             double initialStemThickness1 = 5.0;
@@ -81,7 +87,7 @@ namespace FractalFern
             //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
             // Initial parameters.
-            double initialX2 = canvas.Width / 2 + 300;
+            double initialX2 = canvas.Width / 2 + 200;
             double initialY2 = canvas.Height;
             double initialTheta2 = Math.PI / 3;
             double initialStemThickness2 = 5.0;
@@ -111,14 +117,18 @@ namespace FractalFern
         /// <summary>
         /// Draw the fractal fern with many randomized parameters.
         /// </summary>
-        /// <param name="canvas"></param>
-        /// <param name="x"></param>
-        /// <param name="y"></param>
-        /// <param name="distance"></param>
-        /// <param name="theta"></param>
-        /// <param name="depth"></param>
+        /// <param name="canvas">canvas object to draw on</param>
+        /// <param name="x">x-coordinate value</param>
+        /// <param name="y">y-coordinate value</param>
+        /// <param name="distance">length to draw</param>
+        /// <param name="theta">angle to draw</param>
+        /// <param name="depth">recursive depth value</param>
+        /// <param name="turnbias">amount to bend the fern plant</param>
+        /// <param name="stemThickness">thickness of the fern's stem</param>
+        /// <param name="leafSize">radius of the fern's elliptical leaves</param>
         private void drawFractalFernRandomized(Canvas canvas, double x, double y, double distance, double theta, double depth, double turnBias, double stemThickness, double leafSize)
         {
+            // Recursion base case.
             if (depth <= 0.5)
             {
                 return;
@@ -173,7 +183,7 @@ namespace FractalFern
             double newY1 = y - varyDistance2 * Math.Sin(theta);
 
             // Draw the right fronds.
-            drawFractalFernRandomized(canvas, newX1, newY1, distance / varyFrondDistanceRatio, theta + varyFrondAngleOffsetAmount, depth / varyFrondDepthReductionRatio, 
+            drawFractalFernRandomized(canvas, newX1, newY1, distance / varyFrondDistanceRatio, theta + varyFrondAngleOffsetAmount, depth / varyFrondDepthReductionRatio,
                 turnBias, stemThickness / 1.1, leafSize / 1.1);
 
             // Calculate new coordinates.
@@ -182,21 +192,21 @@ namespace FractalFern
             double newY2 = y - varyDistance3 * Math.Sin(theta);
 
             // Draw the left fronds.
-            drawFractalFernRandomized(canvas, newX2, newY2, distance / varyFrondDistanceRatio, theta - varyFrondAngleOffsetAmount, depth / varyFrondDepthReductionRatio, 
+            drawFractalFernRandomized(canvas, newX2, newY2, distance / varyFrondDistanceRatio, theta - varyFrondAngleOffsetAmount, depth / varyFrondDepthReductionRatio,
                 turnBias, stemThickness / 1.1, leafSize / 1.1);
 
             // Draw the remaining parts of the main stem of the fern.
-
+            // (randomizes whether it turns left or right (so turnBias slider won't always make it go one direction or the other)
             int chooseTurnDirection = random.Next(1, 4);
 
             if (chooseTurnDirection == 1 || chooseTurnDirection == 2)
             {
-                drawFractalFernRandomized(canvas, newX, newY, distance / varyStemDistanceRatio, theta + varyStemAngleOffsetAmount, depth / varyStemDepthReductionRatio, 
+                drawFractalFernRandomized(canvas, newX, newY, distance / varyStemDistanceRatio, theta + varyStemAngleOffsetAmount, depth / varyStemDepthReductionRatio,
                     turnBias, stemThickness / 1.1, leafSize / 1.1);
             }
             else
             {
-                drawFractalFernRandomized(canvas, newX, newY, distance / varyStemDistanceRatio, theta - varyStemAngleOffsetAmount, depth / varyStemDepthReductionRatio, 
+                drawFractalFernRandomized(canvas, newX, newY, distance / varyStemDistanceRatio, theta - varyStemAngleOffsetAmount, depth / varyStemDepthReductionRatio,
                     turnBias, stemThickness / 1.1, leafSize / 1.1);
             }
         }
@@ -209,14 +219,18 @@ namespace FractalFern
         /// Draw the fractal fern without as much randomization. (a lot less randomized parameters)
         /// (aka a boring plain old stereotypical fern)
         /// </summary>
-        /// <param name="canvas"></param>
-        /// <param name="x"></param>
-        /// <param name="y"></param>
-        /// <param name="distance"></param>
-        /// <param name="theta"></param>
-        /// <param name="depth"></param>
+        /// <param name="canvas">canvas object to draw on</param>
+        /// <param name="x">x-coordinate value</param>
+        /// <param name="y">y-coordinate value</param>
+        /// <param name="distance">length to draw</param>
+        /// <param name="theta">angle to draw</param>
+        /// <param name="depth">recursive depth value</param>
+        /// <param name="turnbias">amount to bend the fern plant</param>
+        /// <param name="stemThickness">thickness of the fern's stem</param>
+        /// <param name="leafSize">radius of the fern's elliptical leaves</param>
         private void drawFractalFernNonRandomized(Canvas canvas, double x, double y, double distance, double theta, double depth, double turnBias, double stemThickness, double leafSize)
         {
+            // Recursion base case.
             if (depth <= 0.5)
             {
                 return;
@@ -268,12 +282,13 @@ namespace FractalFern
         /// <summary>
         /// Draw the frond details of the fern at each level. (leaves, etc.)
         /// </summary>
-        /// <param name="canvas"></param>
-        /// <param name="x1"></param>
-        /// <param name="x2"></param>
-        /// <param name="y1"></param>
-        /// <param name="y2"></param>
-        /// <param name="depth"></param>
+        /// <param name="canvas">canvas object to draw on</param>
+        /// <param name="x">x-coordinate value</param>
+        /// <param name="y">y-coordinate value</param>
+        /// <param name="distance">length to draw</param>
+        /// <param name="theta">angle to draw</param>
+        /// <param name="depth">recursive depth value</param>
+        /// <param name="radius">radius of the elliptical object</param>
         private void drawFernFrondDetail(Canvas canvas, double x, double y, double distance, double theta, double depth, double radius)
         {
             drawMyEllipse(canvas, x, y, radius);
@@ -285,15 +300,17 @@ namespace FractalFern
 
         /// <summary>
         /// Set-up a background image to draw on.
-        /// Note: Hardcoded paths to images....might cause portability issues.
+        /// Note: hopefully there's no portability issues with the background image.
         /// </summary>
+        /// <param name="canvas">canvas object to draw on</param>
         private void setupBackground(Canvas canvas)
         {
             // Set canvas to the background image.
             try
             {
                 ImageBrush myImageBrush = new ImageBrush();
-                myImageBrush.ImageSource = new BitmapImage(new Uri("D:/Dropbox/CS_262/CS212_Project3/FractalFern/patchygrass_1.jpg", UriKind.RelativeOrAbsolute));
+                //myImageBrush.ImageSource = new BitmapImage(new Uri("D:/Dropbox/CS_262/CS212_Project3/FractalFern/patchygrass_1.jpg", UriKind.RelativeOrAbsolute));
+                myImageBrush.ImageSource = new BitmapImage(new Uri("patchygrass_1.jpg", UriKind.RelativeOrAbsolute));
 
                 canvas.Background = myImageBrush;
             }
@@ -301,6 +318,7 @@ namespace FractalFern
             {
                 System.Diagnostics.Debug.WriteLine(e.Source, "Argument exception: {0}");
                 MessageBox.Show("Failed to load required files");
+                return;
             }
 
             // This section doesn't do much at the moment.  Was going to try a different way of drawing.
@@ -315,7 +333,7 @@ namespace FractalFern
             // Create Image object from user specified image file path.
             try
             {
-                sourceImage = System.Drawing.Image.FromFile("D:/Dropbox/CS_262/CS212_Project3/FractalFern/patchygrass_1.jpg");
+                sourceImage = System.Drawing.Image.FromFile("patchygrass_1.jpg");
             }
             catch (ArgumentException e)
             {
@@ -352,10 +370,10 @@ namespace FractalFern
         /// <summary>
         /// Method draws a ellipse with specified parameters.
         /// </summary>
-        /// <param name="canvas"></param>
-        /// <param name="x1"></param>
-        /// <param name="y1"></param>
-        /// <param name="radius"></param>
+        /// <param name="canvas">canvas object to draw on</param>
+        /// <param name="x">x-coordinate value</param>
+        /// <param name="y">y-coordinate value</param>
+        /// <param name="radius">radius of the elliptical object</param>
         private static void drawMyEllipse(Canvas canvas, double x1, double y1, double radius)
         {
             // RNG.
@@ -428,10 +446,11 @@ namespace FractalFern
         /// Method draws a line with specified parameters.
         /// </summary>
         /// <param name="canvas"></param>
-        /// <param name="x1"></param>
-        /// <param name="x2"></param>
-        /// <param name="y1"></param>
-        /// <param name="y2"></param>
+        /// <param name="x1">starting x-coordinate of line segment</param>
+        /// <param name="x2">ending x-coordinate of line segment</param>
+        /// <param name="y1">starting y-coordinate of line segment</param>
+        /// <param name="y2">ending y-coordinate of line segment</param>
+        /// <param name="thickness">stroke thickness of line segment</param>
         private static void drawMyLine(Canvas canvas, double x1, double x2, double y1, double y2, double thickness)
         {
             // RNG.
@@ -441,7 +460,7 @@ namespace FractalFern
             double strokeThicknessMin = 1.0;
             double strokeThicknessMax = 1.2;
 
-            // Generate random numbers.
+            // Generate random numbers. (not used in current implementation)
             double randomStrokeThickness = random.NextDouble() * (strokeThicknessMax - strokeThicknessMin) + strokeThicknessMin;
 
             int randomAlpha = random.Next(200, 250);
@@ -495,9 +514,9 @@ namespace FractalFern
         /// <summary>
         /// This method sets the center for an ellipse.
         /// </summary>
-        /// <param name="ellipse"></param>
-        /// <param name="X"></param>
-        /// <param name="Y"></param>
+        /// <param name="ellipse">ellipse object</param>
+        /// <param name="X">x-coordinate value</param>
+        /// <param name="Y">y-coordinate value</param>
         public static void SetCenter(this Ellipse ellipse, double X, double Y)
         {
             Canvas.SetTop(ellipse, Y - ellipse.Height / 2);
@@ -510,6 +529,3 @@ namespace FractalFern
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 }
-
-// TODO: fix color issue.
-// TODO: add actual leaves of the fern (use ellipses properly)
