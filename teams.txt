@@ -1,0 +1,42 @@
+﻿Joseph Jinn    (jj47)
+Thomas Woltjer (tw34)
+
+Lab 1
+1.	Exercise 1.1
+a.	Application both interesting and tractable: Companion app for a computer game.
+i.	App that can interface with your game account and pull information about the user.
+b.	Wacky application that might not be feasible: App to overclock the hardware in your smartphone.
+i.	Overclock the CPU, RAM, GPU, etc.
+2.	Exercise 1.2
+a.	Demographics
+i.	Sophomore in terms of the B.C.S. program; Senior in terms of earned credits
+ii.	Major: B.C.S. and Mathematics
+iii.	CS 112: A, CS 212: Currently in-progress
+b.	Technical
+i.	Worked with Android Studio during the Thailand Interim 2018
+ii.	Java applications from course-work in CS 214.  Also, some Java experience from the equivalent of CS 108 that I took at GVSU.
+iii.	Slack account and some minor experience with GitHub/Git also from the Thailand Interim 2018.
+1.	Used GitHub for the Android development team at SIL at Paypap University.  Otherwise, used Android Studio’s built-in GitHub features to do commits, etc.  Also, used GitHub’s project management features to create pull requests.
+iv.	I have a Samsung Galaxy J3 V Smartphone running Android version 8.0.0
+v.	I would like to work on a companion app for a computer game.
+c.	Personality
+i.	My Big-five personality type is “Empathic Idealist” followed in order of decreasing magnitude by “Analytical Thinker”, “Practical Caretaker”, and last “Logical Mechanic”.
+ii.	People I’d like to work with:  
+1.	Caleb Boraby
+2.	Ian Park
+3.	Mark Wessink
+4.	Andrew Thomas
+5.	Ian Christensen
+6.	Myself
+7.	Professor VanderLinden
+8.	Other human beings
+d.	I like free coffee ^_^
+i.	I barely know my way around the Linux kernel
+ii.	I dislike Apple products including i-phones.
+iii.	I would prefer to be on a team working on a game-related app.
+3.	Exercise 1.3
+a.	Task 3
+i.	The strings.xml file stores strings that are assigned to variables.
+ii.	It is valuable to store such things in this file because of localization issues.
+b.	Task 9
+i.	Running your app on a physical Android device via USB is significantly faster than using the emulator.

@@ -1,0 +1,10 @@
+Joseph Jinn    (jj47)
+Thomas Woltjer (tw34)
+
+Exercise 1.1:
+
+Idea 1 (realistic):
+A Calvin People app! An app built on the people search, that lets you import people to your phone's contacts. What we would need for this project would be a way to authenticate and get information from the people search page, decent search/filter functionality, and a way to create and/or update contacts in the phone.
+
+Idea 2 (wacky):
+Girapp: An app that uses machine learning/a neural network to recognize if an image is of a giraffe. Extra functionality could include image capture, social media integration, facial recognition of giraffes (distinguishing them), and maybe filters (think Snapchat). Brownie points for becoming Skynet. 
