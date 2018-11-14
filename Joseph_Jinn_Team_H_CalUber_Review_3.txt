@@ -153,6 +153,45 @@ RESTful Web Service
 =================================================================================================================================================
 =================================================================================================================================================
 
+Design Presentation
+
+-Overall, it was an effective presentation.  It easily generated enough interest to invite a entire sequence of questions from the audience.
+(even if part of that is motivated by the graded aspect of event participation)
+
+-I would say the delivery of the presentation fell around the mean value relative to the entire set of presentations for Teams A-H.
+
+-The presentation slides themselves did their job, otherwise weren't particularly noteworthy in either a good or bad way.
+
+-There wasn't anything that stood out to me as a spectacular success or a spectacular failure.
+
+-As I'm finishing this section of the team review on Saturday, the finer details from Friday have sort of faded in memory.
+
+-I noticed that on one of their slides they had "Domain Model - UI model" as the header while showing their UI model.  I was under the impression that those
+two models are two very different kinds of models.
+
+-Text and picture size could be larger on some slides, for ease of reading, especially for those sitting in the back rows.  Then again, I'm terribly
+nearsighted with a lack of 20/20 vision wearing these 6+ year old pair of glasses, so individual mileage may vary.
+
+-They effectively used their vision statement as their introductory speech for the presentation.  It provided a clear direction and idea behind
+the app.
+
+-Not particularly noteworthy, but there were consistent "Uhm's" during Nate Gamble's part of the presentation (before the Q & A session)
+
+-They were the only team to use a stylus with their smartphone to demo their app prototype.
+
+-Some team members could have been somewhat better-dressed for the occasion, with slightly more formal fashion sense.
+
+-Positioning wise, they might have been blocking some people's view of the slides who sat on the side of the room facing the goldfish fountain,
+on the far right.
+
+-I don't expect everyone to sound as enthusiastic as Andrew Thomas, but there could have perhaps been more voice fluctuation (tonal changes) and
+use of body language (gestures, etc.).
+
+-Everyone seemed to maintain decent eye contact with the audience.
+
+=================================================================================================================================================
+=================================================================================================================================================
+
 Miscellaneous:
 
 -Suggest including your supplemental technical requirements documentation in your CS-262-Materials repository alongside your other documents.
