@@ -43,6 +43,18 @@ Homework 01: Calculator
 
 -Used Code --> Optimize Imports
 
+-Used Analyze --> Inspect Code
+
+-Refactored hard-coded strings into strings.xml
+
+-Suppressed warning concerning "App is not indexable by Google Search"
+
+-Changed minSDK version to 28.0
+
+-added autofillHints attribute to EditTextViews
+
+-Some changes are suggested depending on what you set the minSDK version to in flavors.
+
 ======================================================================================
 ======================================================================================
 
