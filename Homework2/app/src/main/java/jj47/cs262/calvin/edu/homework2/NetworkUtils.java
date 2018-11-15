@@ -2,7 +2,6 @@ package jj47.cs262.calvin.edu.homework2;
 
 import android.net.Uri;
 import android.util.Log;
-import android.widget.Toast;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -11,7 +10,11 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-public class NetworkUtils {
+/**
+ * Class implements GET CRUD operation to retrieve sample data from the Monopoly Database Player
+ * endpoint(s).
+ */
+class NetworkUtils {
 
     private static final String LOG_TAG = NetworkUtils.class.getSimpleName();
 
@@ -85,11 +88,10 @@ public class NetworkUtils {
                     e.printStackTrace();
                 }
             }
-            if(playerListJSONString != null) {
+            if (playerListJSONString != null) {
                 Log.e(LOG_TAG, playerListJSONString);
                 return playerListJSONString;
-            }
-            else{
+            } else {
                 return "";
             }
         }
@@ -160,11 +162,10 @@ public class NetworkUtils {
                     e.printStackTrace();
                 }
             }
-            if(playerIDJSONString != null) {
+            if (playerIDJSONString != null) {
                 Log.e(LOG_TAG, playerIDJSONString);
                 return playerIDJSONString;
-            }
-            else{
+            } else {
                 return "";
             }
         }

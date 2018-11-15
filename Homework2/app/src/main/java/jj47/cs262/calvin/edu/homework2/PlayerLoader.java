@@ -6,11 +6,16 @@ import android.support.annotation.Nullable;
 import android.support.v4.content.AsyncTaskLoader;
 import android.util.Log;
 
-public class PlayerLoader extends AsyncTaskLoader<String> {
+/**
+ * Class acts as intermediary between NetworkUtils.java and MainActivity.java
+ * <p>
+ * Specifies necessary operations involving AsyncTaskLoader for the Player Table.
+ */
+class PlayerLoader extends AsyncTaskLoader<String> {
 
     private static final String LOG_TAG = PlayerLoader.class.getSimpleName();
 
-    private String mQueryString;
+    private final String mQueryString;
 
     /**
      * Method called when starting the loader.
@@ -19,7 +24,7 @@ public class PlayerLoader extends AsyncTaskLoader<String> {
     protected void onStartLoading() {
         super.onStartLoading();
 
-        // Starts the loadinBackground() method.
+        // Starts the loadInBackground() method.
         forceLoad();
     }
 
@@ -46,11 +51,10 @@ public class PlayerLoader extends AsyncTaskLoader<String> {
 
         // Call method to query specified URI.
         // Based on whether string is empty or contains a positive integer value.
-        if(mQueryString.length() == 0){
+        if (mQueryString.length() == 0) {
             Log.e(LOG_TAG, "getPlayerListInfo called!");
             return NetworkUtils.getPlayerListInfo(mQueryString);
-        }
-        else {
+        } else {
             Log.e(LOG_TAG, "getPlayerIDInfo called!");
             return NetworkUtils.getPlayerIDInfo(mQueryString);
         }

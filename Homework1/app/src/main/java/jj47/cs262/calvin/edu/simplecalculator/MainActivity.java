@@ -1,7 +1,7 @@
 package jj47.cs262.calvin.edu.simplecalculator;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -12,27 +12,28 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 /**
- * Main Activity class for the Simple Calculator.
+ * Main Activity class for the Simple Calculator Application.
+ * <p>
+ * Performs basic arithmetic operations based on user selection.
+ * <p>
+ * Supports multiply, divide, add, and subtract.
  */
 public class MainActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener, View.OnClickListener {
 
-    // Class variables.
-    private Button calculate;
-    private TextView value1, value2, operator, result;
+    private TextView result;
     private Spinner opSelect;
     private EditText editValue1, editValue2;
     private String opSelected;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         // Find all Activity Objects.
-        calculate = findViewById(R.id.Button_Calculate);
-        value1 = findViewById(R.id.TextView_Value1);
-        value2 = findViewById(R.id.TextView_Value2);
-        operator = findViewById(R.id.TextView_Operator);
+        // Class variables.
+        Button calculate = findViewById(R.id.Button_Calculate);
         result = findViewById(R.id.TextView_Result);
         opSelect = findViewById(R.id.Spinner_OpType);
         editValue1 = findViewById(R.id.EditText_Value1);
@@ -42,6 +43,9 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         calculate.setOnClickListener(this);
     }
 
+    /**
+     * Method sets up a spinner for operation selection.
+     */
     @Override
     protected void onStart() {
 
@@ -62,19 +66,38 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         opSelect.setOnItemSelectedListener(this);
     }
 
-    // When user selects an item using the spinner.
+    /**
+     * Method that listens for the user selection of a spinner item.
+     * (When user selects an item using the spinner)
+     *
+     * @param parent AdapterView object.
+     * @param view   View object.
+     * @param pos    integer value.
+     * @param id     integer value.
+     */
     public void onItemSelected(AdapterView<?> parent, View view,
                                int pos, long id) {
         // Retrieve selected item and convert to string.
         opSelected = parent.getItemAtPosition(pos).toString();
     }
 
-    // When user does not select an item using the spinner.
+    /**
+     * Method stub that is necessary for implements.
+     * (When user does not select an item using the spinner.)
+     *
+     * @param parent AdapterView object.
+     */
     public void onNothingSelected(AdapterView<?> parent) {
         // Another interface callback
     }
 
-    // Do something once user clicks button.
+    /**
+     * Method that reacts to the user clicking the button.
+     * Performs the arithmetic operation based on operator selected.
+     * (Do something once user clicks button.)
+     *
+     * @param v View object.
+     */
     @Override
     public void onClick(View v) {
 
@@ -119,29 +142,5 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             default:
                 break;
         }
-    }
-
-    @Override
-    protected void onResume() {
-
-        super.onResume();
-    }
-
-    @Override
-    protected void onPause() {
-
-        super.onPause();
-    }
-
-    @Override
-    protected void onStop() {
-
-        super.onStop();
-    }
-
-    @Override
-    protected void onDestroy() {
-
-        super.onDestroy();
     }
 }

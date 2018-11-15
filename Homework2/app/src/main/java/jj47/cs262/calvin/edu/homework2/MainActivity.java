@@ -5,12 +5,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
@@ -26,6 +26,10 @@ import org.json.JSONObject;
 
 import java.util.Objects;
 
+/**
+ * Class creates a UI for user interaction by which the user can retrieve a list of players or a
+ * specific player via his/her ID.
+ */
 public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<String> {
 
     // Private class members.
@@ -50,8 +54,8 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         textViewSearchResults = findViewById(R.id.search_results);
 
         // Reconnect to the loader if one exists already, upon device config change.
-        if(getSupportLoaderManager().getLoader(0)!=null){
-            getSupportLoaderManager().initLoader(0,null,this);
+        if (getSupportLoaderManager().getLoader(0) != null) {
+            getSupportLoaderManager().initLoader(0, null, this);
         }
 
         queryString = "";
@@ -74,7 +78,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
      * Method does something upon app bar menu item selection.
      *
      * @param item app bar menu item
-     * @return true
+     * @return true (unless something bad happened)
      */
 
     @Override
@@ -126,7 +130,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
             // Refactored to user AsyncTaskLoader via PlayerLoader.java
             Bundle queryBundle = new Bundle();
             queryBundle.putString("queryString", queryString);
-            getSupportLoaderManager().restartLoader(0, queryBundle,this);
+            getSupportLoaderManager().restartLoader(0, queryBundle, this);
 
             // Indicate to user query is in process.
             textViewSearchResults.setText("");
@@ -141,8 +145,8 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     /**
      * Method called when load is instantiated.
      *
-     * @param i
-     * @param bundle contains data
+     * @param i integer value
+     * @param bundle contains data in key-value pairs
      * @return query results
      */
     @NonNull
@@ -154,21 +158,21 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     /**
      * Method called when loader task is finished.  Add code to update UI with results.
      *
-     * @param loader loader object.
-     * @param s
+     * @param loader Loader object.
+     * @param s a String.
      */
     @SuppressLint("SetTextI18n")
     @Override
     public void onLoadFinished(@NonNull Loader<String> loader, String s) {
 
         // If string s is empty, then connection failed.
-        if (s.contains("Connection failed!")){
+        if (s.contains("Connection failed!")) {
             textViewSearchResults.setText("");
             textViewSearchResults.setText(R.string.connection_failed);
             Toast.makeText(this, R.string.connection_failed, Toast.LENGTH_SHORT).show();
             return;
         }
-        if(s.length() == 0){
+        if (s.length() == 0) {
             textViewSearchResults.setText("");
             textViewSearchResults.setText(R.string.no_results_found);
             Toast.makeText(this, R.string.no_results_found, Toast.LENGTH_SHORT).show();
@@ -181,7 +185,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
             JSONArray itemsArray;
 
             // Condition to handle getting the player list
-            if(queryString.length() == 0){
+            if (queryString.length() == 0) {
                 itemsArray = jsonObject.getJSONArray("items");
 
                 Log.e(LOG_TAG, "Length of itemsArray: " + itemsArray.length());
@@ -202,17 +206,16 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
                     }
 
                     //If information field requested exists, update the TextViews and return
-                    if (id != null || email != null || name != null)  {
+                    if (id != null || email != null || name != null) {
                         textViewSearchResults.append("\n\nid: " + id + "\n" + "email: " + email + "\n" + "name: " + name + "\n");
-                    }
-                    else{
+                    } else {
                         textViewSearchResults.append("\n\nFailure to retrieve any information for this particular player!\n");
                     }
                 }
                 return;
             }
             // Condition to get a specific player in list
-            else{
+            else {
                 String id = "no id found";
                 String email = "no email found";
                 String name = "no name found";
@@ -236,22 +239,22 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
             textViewSearchResults.setText(R.string.display_failure);
             Toast.makeText(this, R.string.display_failure, Toast.LENGTH_SHORT).show();
 
-        } catch (Exception ex){
+        } catch (Exception ex) {
 
             textViewSearchResults.setText("");
             textViewSearchResults.setText(R.string.json_failure);
             Toast.makeText(this, R.string.json_failure, Toast.LENGTH_SHORT).show();
             ex.printStackTrace();
 
-        } finally{
-            Log.e(LOG_TAG,"Finished query process!");
+        } finally {
+            Log.e(LOG_TAG, "Finished query process!");
         }
     }
 
     /**
      * Method called to clean up any remaining resources.
      *
-     * @param loader loader object.
+     * @param loader Loader object.
      */
     @Override
     public void onLoaderReset(@NonNull Loader<String> loader) {

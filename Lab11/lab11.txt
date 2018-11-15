@@ -1,0 +1,98 @@
+Name: Joseph Jinn
+Date: 11-15-18
+Class: CS-262 Software Engineering
+Instructor: Professor VanderLinden
+Assignment: Lab 11 - Software Quality
+
+======================================================================================
+======================================================================================
+
+Change-Log: Refer to sections below.
+
+======================================================================================
+
+Note: No "personal" code in Homework 03, as that, just concerns conceptual questions 
+with the RESTful Web Service.
+
+Note: Changes will be committed and merged into master for GitHub "CS-262" Repo.
+
+Note: I ran the text through Grammerly in Microsoft Word, so that should fix most 
+basic grammatical issues. (side note: Mandarin, not English, was my 1st language)
+
+======================================================================================
+======================================================================================
+
+Homework 01: Calculator
+
+======================================================================================
+
+-Changed some class member variables "value1", "value2", "operator" to local fields.
+
+-Removed local fields "value1", "value2", "operator", as they are unused.
+
+-Removed unnecessary Override Methods "onResume", "onPause", "onStop", "onDestroy"
+(they were empty stubs)
+
+-Added JavaDoc headers to each method.
+
+-Appended to JavaDoc class header.
+
+-Used Code --> Reformat Code
+
+-Used Code --> Auto-Indent Lines
+
+-Used Code --> Optimize Imports
+
+======================================================================================
+======================================================================================
+
+Homework 02: REST/JSON Monopoly Data Retrieval (via GET)
+
+======================================================================================
+
+-Not modifying the template AppCompatPReferenceActivity.java as I didn't touch that and
+used it merely to implement a SettingsActivity.java as instructed.
+
+-Not modifying the template SettingsActivity.java as I didn't touch that and used it
+merely to implement placeholder Settings Option Menu as instructed.
+
+-Added JavaDoc headers to MainActivity.java, NetworkUtils.java, and PlayerLoader.java
+
+-The code is already commented pretty well and relatively grammatically correct.
+(I used this code as a baseline to implement tests for CRUD operations for our
+Knight Ranker app for Team E)
+
+-Appended to JavaDoc headers for some methods.
+
+-Used Code --> Reformat Code
+
+-Used Code --> Auto-Indent Lines
+
+-Used Code --> Optimize Imports
+
+-Leaving some code indicated as deprecated in (don't fix what ain't broken)
+(also, this is code from the Android Developer Course)
+
+-Merged some resource file folders according to Analyze --> Inspect Code
+
+-Removed unused strings.xml resources
+
+-Not going to change Error handling warnings as that is template code from following the
+Android Studio Developer Course.
+
+-Added @NonNull annotation to getMenuInflater() method in AppCompatPreferenceActivity.java
+
+-Changed declaration access for NetworkUtils.java, PlayerLoader.java, and AppCompatPreferenceActivity.java to private
+
+-Changed private String mQueryString to private final String mQueryString;
+
+-Following some of the Analyze --> Inspect Code suggestions has now broken my app......
+(right-click --> automated fix)
+
+-Managed to fix the error, the app is now running again...
+
+-I think I will stop here for now.  I'd rather spend more time commenting, formatting, and
+documenting the code for our Team E's Knight-Ranker App and RESTful Web Service.
+
+======================================================================================
+======================================================================================
