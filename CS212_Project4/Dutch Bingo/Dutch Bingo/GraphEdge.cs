@@ -51,16 +51,54 @@ namespace Dutch_Bingo
 
         /// <summary>
         /// 
-        /// Method gets the destination node of the directed edge.
+        /// Method gets the destination node name of the directed edge.
         /// (return the name of the "to" person in the relationship)
         /// 
         /// </summary>
         /// 
         /// <returns>name of the destination node 
         /// of the directed edge</returns>
-        public string To()
+        public string ToNodeName()
         {
             return toNode.Name;
+        }
+
+        /// <summary>
+        /// 
+        /// Method gets the source node name of the directed edge.
+        /// (return the name of the "from" person in the relationship)
+        /// 
+        /// </summary>
+        /// 
+        /// <returns>name of the source node
+        /// of the directed edge</returns>
+        public string FromNodeName()
+        {
+            return fromNode.Name;
+        }
+
+        /// <summary>
+        /// 
+        /// Method gets the destination node of the directed edge.
+        /// (return the node of the "to" person in the relationship)
+        /// 
+        /// </summary>
+        /// <returns>destination node</returns>
+        public GraphNode ToNode()
+        {
+            return toNode;
+        }
+
+        /// <summary>
+        /// 
+        /// Method gets the source node of the directed edge.
+        /// (return the node of the "from" person in the relationship)
+        /// 
+        /// </summary>
+        /// <returns>source node</returns>
+        public GraphNode FromNode()
+        {
+            return fromNode;
         }
 
         /// <summary>
