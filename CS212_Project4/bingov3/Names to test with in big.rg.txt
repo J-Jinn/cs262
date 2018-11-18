@@ -1,5 +1,17 @@
 name:Gibeah; hasSpouse:Shamir; hasChild:Resen; hasChild:Jasiel; hasChild:Meribbaal; hasDeacon:Ziklag
 
+====================================================================================================
+
 name:Resen; hasSpouse:Abiud; hasChild:Elizur; hasChild:Jaazah; hasFriend:Shuah; hasFriend:Maasiai; hasRoommate:Azazel
 
+name:Jasiel; hasSpouse:Dothan; hasFriend:Eutychus; hasFriend:Paphos; hasFriend:Sosthenes
+
 name:Meribbaal; hasChild:Sheariah; hasFriend:Mearah; hasCo-conspirator:Enon
+
+====================================================================================================
+
+name:Elizur; hasFriend:Tarsus; hasButcher:Samaria
+
+name:Jaazah; hasSpouse:Jehdeiah; hasFriend:Kabzeel; hasFriend:Ezekiel; hasFriend:Imlah; hasFriend:Tilon; hasFriend:Elihoreph
+
+name:Sheariah; hasSpouse:Aristobulus; hasFriend:Dalmanutha; hasClassmate:Zadok

@@ -26,8 +26,24 @@ namespace Dutch_Bingo
     class GraphEdge
     {
         // Class member variables.
-        public string Label { get; private set; }
+        private string Status;
         private GraphNode fromNode, toNode;
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        // METHOD SEPARATOR METHOD SEPARATOR METHOD SEPARATOR METHOD SEPARATOR METHOD SEPARATOR METHOD SEPARATOR METHOD SEPARATOR
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        /// <summary>
+        /// 
+        /// Class member variable and attached methods to get/set the name of the node.
+        /// 
+        /// </summary>
+        /// 
+        public string Label { get; private set; }
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        // METHOD SEPARATOR METHOD SEPARATOR METHOD SEPARATOR METHOD SEPARATOR METHOD SEPARATOR METHOD SEPARATOR METHOD SEPARATOR
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         /// <summary>
         /// 
@@ -42,12 +58,49 @@ namespace Dutch_Bingo
         /// <param name="from">origin node</param>
         /// <param name="to">destination node</param>
         /// <param name="myLabel">name of the directed edge</param>
-        public GraphEdge(GraphNode from, GraphNode to, string myLabel)
+        public GraphEdge(GraphNode from, GraphNode to, string myLabel, string status)
         {
             fromNode = from;
             toNode = to;
             Label = myLabel;
+            Status = status;
         }
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        // METHOD SEPARATOR METHOD SEPARATOR METHOD SEPARATOR METHOD SEPARATOR METHOD SEPARATOR METHOD SEPARATOR METHOD SEPARATOR
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        /// <summary>
+        /// 
+        /// Get the status of the edge (unexplored, discovery, or back)
+        /// 
+        /// </summary>
+        /// 
+        /// <returns>status of the specified edge</returns>
+        public string GetStatus()
+        {
+            return Status;
+        }
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        // METHOD SEPARATOR METHOD SEPARATOR METHOD SEPARATOR METHOD SEPARATOR METHOD SEPARATOR METHOD SEPARATOR METHOD SEPARATOR
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        /// <summary>
+        /// 
+        /// Set the status of the edge (unexplored, discovery, or back)
+        /// 
+        /// </summary>
+        /// 
+        /// <param name="status">status name</param>
+        public void SetStatus(string status)
+        {
+            Status = status;
+        }
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        // METHOD SEPARATOR METHOD SEPARATOR METHOD SEPARATOR METHOD SEPARATOR METHOD SEPARATOR METHOD SEPARATOR METHOD SEPARATOR
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         /// <summary>
         /// 
@@ -63,6 +116,10 @@ namespace Dutch_Bingo
             return toNode.Name;
         }
 
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        // METHOD SEPARATOR METHOD SEPARATOR METHOD SEPARATOR METHOD SEPARATOR METHOD SEPARATOR METHOD SEPARATOR METHOD SEPARATOR
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
         /// <summary>
         /// 
         /// Method gets the source node name of the directed edge.
@@ -77,6 +134,10 @@ namespace Dutch_Bingo
             return fromNode.Name;
         }
 
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        // METHOD SEPARATOR METHOD SEPARATOR METHOD SEPARATOR METHOD SEPARATOR METHOD SEPARATOR METHOD SEPARATOR METHOD SEPARATOR
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
         /// <summary>
         /// 
         /// Method gets the destination node of the directed edge.
@@ -89,6 +150,10 @@ namespace Dutch_Bingo
             return toNode;
         }
 
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        // METHOD SEPARATOR METHOD SEPARATOR METHOD SEPARATOR METHOD SEPARATOR METHOD SEPARATOR METHOD SEPARATOR METHOD SEPARATOR
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
         /// <summary>
         /// 
         /// Method gets the source node of the directed edge.
@@ -100,6 +165,10 @@ namespace Dutch_Bingo
         {
             return fromNode;
         }
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        // METHOD SEPARATOR METHOD SEPARATOR METHOD SEPARATOR METHOD SEPARATOR METHOD SEPARATOR METHOD SEPARATOR METHOD SEPARATOR
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         /// <summary>
         /// 
@@ -115,6 +184,10 @@ namespace Dutch_Bingo
             string result = fromNode.Name + " --(" + Label + ")--> " + toNode.Name;
             return result;
         }
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        // METHOD SEPARATOR METHOD SEPARATOR METHOD SEPARATOR METHOD SEPARATOR METHOD SEPARATOR METHOD SEPARATOR METHOD SEPARATOR
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     }
 }
 

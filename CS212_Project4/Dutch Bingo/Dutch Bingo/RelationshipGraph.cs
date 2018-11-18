@@ -34,6 +34,10 @@ namespace Dutch_Bingo
         public List<GraphNode> nodes { get; private set; }
         private Dictionary<String, GraphNode> nodeDict;
 
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        // METHOD SEPARATOR METHOD SEPARATOR METHOD SEPARATOR METHOD SEPARATOR METHOD SEPARATOR METHOD SEPARATOR METHOD SEPARATOR
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
         /// <summary>
         /// 
         /// Public constructor.
@@ -49,6 +53,10 @@ namespace Dutch_Bingo
             nodes = new List<GraphNode>();
             nodeDict = new Dictionary<String, GraphNode>();
         }
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        // METHOD SEPARATOR METHOD SEPARATOR METHOD SEPARATOR METHOD SEPARATOR METHOD SEPARATOR METHOD SEPARATOR METHOD SEPARATOR
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         /// <summary>
         /// 
@@ -66,11 +74,15 @@ namespace Dutch_Bingo
         {
             if (!nodeDict.ContainsKey(name))
             {
-                GraphNode n = new GraphNode(name);
+                GraphNode n = new GraphNode(name, "unexplored");
                 nodes.Add(n);
                 nodeDict.Add(name, n);
             }
         }
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        // METHOD SEPARATOR METHOD SEPARATOR METHOD SEPARATOR METHOD SEPARATOR METHOD SEPARATOR METHOD SEPARATOR METHOD SEPARATOR
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         /// <summary>
         /// 
@@ -100,9 +112,13 @@ namespace Dutch_Bingo
             AddNode(name2);
             GraphNode n2 = nodeDict[name2];
 
-            GraphEdge e = new GraphEdge(n1, n2, relationship);
+            GraphEdge e = new GraphEdge(n1, n2, relationship, "unexplored");
             n1.AddIncidentEdge(e);
         }
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        // METHOD SEPARATOR METHOD SEPARATOR METHOD SEPARATOR METHOD SEPARATOR METHOD SEPARATOR METHOD SEPARATOR METHOD SEPARATOR
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         /// <summary>
         /// 
@@ -122,6 +138,10 @@ namespace Dutch_Bingo
                 return null;
         }
 
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        // METHOD SEPARATOR METHOD SEPARATOR METHOD SEPARATOR METHOD SEPARATOR METHOD SEPARATOR METHOD SEPARATOR METHOD SEPARATOR
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
         /// <summary>
         /// 
         /// Method prints to console terminal the entire text representation
@@ -135,5 +155,9 @@ namespace Dutch_Bingo
                 Console.Write(n.ToString());
             }
         }
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        // METHOD SEPARATOR METHOD SEPARATOR METHOD SEPARATOR METHOD SEPARATOR METHOD SEPARATOR METHOD SEPARATOR METHOD SEPARATOR
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     }
 }
