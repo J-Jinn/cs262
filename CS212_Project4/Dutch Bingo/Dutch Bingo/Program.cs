@@ -29,7 +29,7 @@ namespace Dutch_Bingo
     class Program
     {
         // Class member variables.
-        private static RelationshipGraph rg;
+        private static RelationshipGraph rg = new RelationshipGraph();
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // METHOD SEPARATOR METHOD SEPARATOR METHOD SEPARATOR METHOD SEPARATOR METHOD SEPARATOR METHOD SEPARATOR METHOD SEPARATOR
@@ -689,12 +689,16 @@ namespace Dutch_Bingo
         /// Note: Currently finds a path if one exists, but still need to figure out a way to parse the actual path from the
         /// nodes it visits that are stored in List<GraphNode> path.
         /// 
+        /// TODO: maybe we should store and traverse edges instead of nodes? (refactor method to use edges instead of nodes)
+        /// 
         /// </summary>
         /// <param name="source_name">name of the person to search a relationship from</param>
         /// <param name="destination_name">name of the person to search a relationship to</param>
         /// 
         private static void BingoGameOriginal(string source_name, string destination_name)
         {
+            Boolean debug = true;
+
             // Trivial (stupid) case where we're looking for the same person
             if (source_name == destination_name)
             {
@@ -714,6 +718,9 @@ namespace Dutch_Bingo
 
             // Stack to record the path.
             Stack<GraphNode> stackPath = new Stack<GraphNode>();
+
+            // Stack to record the edges.
+            Stack<GraphEdge> stackPathEdge = new Stack<GraphEdge>();
 
             // List to record the path.
             List<GraphNode> listPath = new List<GraphNode>();
@@ -742,22 +749,44 @@ namespace Dutch_Bingo
                 stackPath.Push(current_node);
                 listPath.Add(current_node);
 
-                // Debug statement.
-                //Console.WriteLine("Current node is: {0}", current_node.Name);
-
                 // Check if we have found a path.
                 if (current_node.Name == destination_name)
                 {
                     Console.WriteLine("Path of relationship found!");
 
-                    // Not functional.
-                    traceShortestPath(stackPath, source_name, destination_name);
-
-                    // Display to console all the nodes we have traversed.
-                    for (int i = 0; i < listPath.Count; i++)
+                    if (debug == true)
                     {
-                        Console.WriteLine("Path Node: {0}", listPath[i].Name);
+                        // Make a copy for debug purposes.
+                        Stack<GraphEdge> stackPathEdgeCopy = new Stack<GraphEdge>(stackPathEdge);
+
+                        while (stackPathEdgeCopy.Count > 0)
+                        {
+                            Console.WriteLine("Stack Path Edge: {0}", stackPathEdgeCopy.Peek().FromNodeName());
+                            Console.WriteLine("Stack Path Edge: {0}", stackPathEdgeCopy.Peek().Label);
+                            Console.WriteLine("Stack Path Edge: {0}", stackPathEdgeCopy.Peek().ToNodeName());
+                            Console.WriteLine("Stack Path Edge Remaining: {0}", stackPathEdgeCopy.Count);
+                            stackPathEdgeCopy.Pop();
+                        }
+
+                        // Make a copy for debug purposes.
+                        Stack<GraphNode> stackPathCopy = new Stack<GraphNode>(stackPath);
+
+                        while (stackPathCopy.Count > 0)
+                        {
+                            Console.WriteLine("Stack Path Node: {0}", stackPathCopy.Peek().Name);
+                            Console.WriteLine("Stack Path Node Remaining: {0}", stackPathCopy.Count);
+                            stackPathCopy.Pop();
+                        }
+
+                        // Display to console all the nodes we have traversed.
+                        for (int i = 0; i < listPath.Count; i++)
+                        {
+                            Console.WriteLine("List Path Node: {0}", listPath[i].Name);
+                        }
                     }
+
+                    // Prases the actual shortest path - Not functional.
+                    traceShortestPath(stackPath, stackPathEdge, listPath, source_name, destination_name);
 
                     Console.WriteLine("Edges searched: {0}", path_counter);
                     return;
@@ -776,6 +805,9 @@ namespace Dutch_Bingo
                         visited.Add(e.ToNode());
                         // Add node to queue
                         queue.Enqueue(e.ToNode());
+
+                        // Store the edges we traversed.
+                        stackPathEdge.Push(e);
 
                         // Debug statement.
                         //Console.WriteLine("{0} : {1} : {2}", e.FromNodeName(), e.Label, e.ToNodeName());
@@ -803,36 +835,85 @@ namespace Dutch_Bingo
         /// <param name="path"></param>
         /// <param name="source"></param>
         /// <param name="destination"></param>
-        private static void traceShortestPath(Stack<GraphNode> path, string source, string destination)
+        private static void traceShortestPath(Stack<GraphNode> pathNodeStack, Stack<GraphEdge> pathEdgeStack, List<GraphNode> pathNodeList, string source, string destination)
         {
-            List<GraphNode> shortestPath = new List<GraphNode>();
+            bool debug = true;
+
+            List<GraphNode> shortestPathNodes = new List<GraphNode>();
+            List<GraphEdge> shortestPathEdges = new List<GraphEdge>();
 
             GraphNode endNode = rg.GetNode("destination");
             GraphNode startNode = rg.GetNode("source");
 
-            GraphNode currentNode = path.Pop();
+            // Parse the sequence of nodes for the shortest path.
+            GraphNode currentNode = pathNodeStack.Pop();
 
-            while (currentNode != startNode && path.Count > 0)
+            while (currentNode != startNode && pathNodeStack.Count > 0)
             {
+                if (debug == true)
+                    Console.WriteLine("Current node is: {0}", currentNode.Name);
+
                 List<GraphEdge> nodeEdges = currentNode.GetEdges();
+
+                if (debug == true)
+                    Console.WriteLine("Path.peek value is: {0}", pathNodeStack.Peek());
 
                 foreach (GraphEdge e in nodeEdges)
                 {
-                    if (e.FromNode() == path.Peek())
+                    if (e.FromNode() == pathNodeStack.Peek())
                     {
-                        shortestPath.Add(path.Peek());
+                        shortestPathNodes.Add(pathNodeStack.Peek());
+                        break;
                     }
                 }
-                currentNode = path.Pop();
+                currentNode = pathNodeStack.Pop();
             }
 
-            shortestPath.Reverse();
+            // Parse the sequence of edges for the shortest path.
+            GraphEdge currentEdge = pathEdgeStack.Pop();
 
-            Console.WriteLine("Path is: ");
-
-            for (int i = 0; i < shortestPath.Count; i++)
+            while (pathEdgeStack.Count > 0)
             {
-                Console.WriteLine("Node: {0}", shortestPath[i].Name);
+                if (debug == true)
+                    Console.WriteLine("Current edge is: {0}", currentEdge.Label);
+
+                if (debug == true)
+                    Console.WriteLine("Path.peek value is: {0}", pathEdgeStack.Peek());
+
+                if (currentEdge.ToNodeName() == destination)
+                {
+                    shortestPathEdges.Add(currentEdge);
+                }
+                if (currentEdge.FromNodeName() == pathEdgeStack.Peek().ToNodeName())
+                {
+                    shortestPathEdges.Add(currentEdge);
+                }
+                if (currentEdge.FromNodeName() == source)
+                {
+                    shortestPathEdges.Add(currentEdge);
+                    break;
+                }
+                currentEdge = pathEdgeStack.Pop();
+            }
+
+            // Reverse the list.
+            shortestPathNodes.Reverse();
+
+            Console.WriteLine("Node Path is: ");
+
+            for (int i = 0; i < shortestPathNodes.Count; i++)
+            {
+                Console.WriteLine("Node: {0}", shortestPathNodes[i].Name);
+            }
+
+            // Reverse the list.
+            shortestPathEdges.Reverse();
+
+            Console.WriteLine("Edge Path is: ");
+
+            for (int i = 0; i < shortestPathEdges.Count; i++)
+            {
+                Console.WriteLine("Edge: {0}", shortestPathEdges[i].Label);
             }
         }
 
@@ -857,12 +938,17 @@ namespace Dutch_Bingo
             string[] commandWords;
 
             Console.Write("Welcome to the Dutch Bingo Parlor!\n");
+            Console.WriteLine("Kind suggestion: Read in a RelationshipGraph before attempting these commands! ;D");
+            Console.WriteLine("If you don't it won't crash, but it'll be a very boring default RelationshipGraph ^_^\n");
 
             // Continue program execution so long as user does not wish to exit.
             while (command != "exit")
             {
+                Console.WriteLine("\nEnter \"help\" for a list of valid commands");
+
                 Console.Write("\nEnter a command: ");
                 command = Console.ReadLine();
+                Console.WriteLine();
 
                 // Regex to split user input into an array of words.
                 commandWords = Regex.Split(command, @"\s+");
@@ -898,6 +984,7 @@ namespace Dutch_Bingo
                 {
                     ShowOrphans();
                 }
+                // Command to show all descendants in the RelationshipGraph.
                 else if (command == "descendants" && commandWords.Length > 1)
                 {
                     // Use recursive DFS (properly labels each generation of descendants)
@@ -906,18 +993,61 @@ namespace Dutch_Bingo
                     // Use non-recursive DFS (doesn't properly label each generation of descendants)
                     //ShowDescendantsNonRecursive(commandWords[1]);
                 }
+                // Command to find shortest relationship between two people.
                 else if (command == "bingo" && commandWords.Length > 2)
                 {
+                    // Currently finds a path and # of edges traversed to find it, but doesn't parse
+                    // properly for the actual # of nodes/edges in the path.
                     BingoGameOriginal(commandWords[1], commandWords[2]);
-                    //BingoGameWorkInProgress(commandWords[1], commandWords[2]);
+
+                    // Failed attempt at using a inefficent recursive DFS search to find shortest path.
                     //BingoGameFailed(commandWords[1], commandWords[2]);
                 }
+                // Command to display description of all commands.
+                else if (command == "help")
+                {
+                    Console.WriteLine("read [filename]");
+                    Console.WriteLine("This command reads in the specified input file as a RelationshipGraph");
+                    Console.WriteLine();
 
+                    Console.WriteLine("dump");
+                    Console.WriteLine("This command prints to console the entire contents of the RelationshipGraph");
+                    Console.WriteLine("Example: \"name:Zebina; hasSpouse:Minneiah; hasFriend:Jekamiah\"");
+                    Console.WriteLine("Example: \"name:Akkub; hasSpouse:Jedidiah; hasChild:Miamin; hasPastor:Apocalypse\"");
+                    Console.WriteLine();
+
+                    Console.WriteLine("show [personname]");
+                    Console.WriteLine("This command will display all the relationships the specified person is involved in");
+                    Console.WriteLine("Similar to \"dump\" command but only for a specific individual");
+                    Console.WriteLine();
+
+                    Console.WriteLine("friends [personname]");
+                    Console.WriteLine("This command will display all the \"hasFriend\" relationships the specified person has");
+                    Console.WriteLine();
+
+                    Console.WriteLine("exit");
+                    Console.WriteLine("This command will terminate the Dutch Bingo program");
+                    Console.WriteLine();
+
+                    Console.WriteLine("orphans");
+                    Console.WriteLine("This command will display all individuals without \"hasParent\" relationships");
+                    Console.WriteLine();
+
+                    Console.WriteLine("descendants [personname]");
+                    Console.WriteLine("This command will display all the \"hasChild\" relationships (descendants) of the specified person");
+                    Console.WriteLine();
+
+                    Console.WriteLine("bingo");
+                    Console.WriteLine("This command will find the shortest path of relationship (connection) between the two specified people");
+                    Console.WriteLine();
+                }
                 // User entered an invalid command.
                 else
                 {
+                    Console.WriteLine("Oops! You entered a non-existent command!  Enter \"help\" for a helpful description of all valid commands");
                     Console.Write("\nLegal commands:\n read [filename]\n dump\n show [personname]\n friends [personname]\n exit\n");
                     Console.Write(" orphans\n descendants [personname]\n \bingo\n");
+                    Console.WriteLine();
                 }
             }
         }
@@ -935,6 +1065,12 @@ namespace Dutch_Bingo
         /// <param name="args">command-line arguments the user inputs</param>
         static void Main(string[] args)
         {
+            // Default node and edges to prevent program from crashing if user didn't enter a input file before attempting commands.
+            rg.AddNode("DefaultNode1");
+            rg.AddNode("DefaultNode2");
+            rg.AddEdge("DefaultNode1", "DefaultNode2", "hasFriend");
+            rg.AddEdge("DefaultNode2", "DefaultNode1", "hasFriend");
+
             CommandLoop();
         }
     }

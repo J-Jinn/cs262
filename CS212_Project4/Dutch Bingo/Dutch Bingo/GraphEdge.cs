@@ -22,11 +22,18 @@ namespace Dutch_Bingo
 {
     /// <summary>
     /// Class models and represents a labeled, directed edge in a RelationshipGraph.
+    /// 
+    /// Modified from original template code.
+    /// 
+    /// Added Status and Weight fields.
+    /// Addded methods ToNodeName and FromNodeName for directly string name retrieval.
+    /// 
     /// </summary>
     class GraphEdge
     {
         // Class member variables.
         private string Status;
+        private int Weight;
         private GraphNode fromNode, toNode;
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -58,12 +65,47 @@ namespace Dutch_Bingo
         /// <param name="from">origin node</param>
         /// <param name="to">destination node</param>
         /// <param name="myLabel">name of the directed edge</param>
-        public GraphEdge(GraphNode from, GraphNode to, string myLabel, string status)
+        /// <param name="status">unexplored, discovery, or back</param>
+        /// <param name="weight">associated weight value of this edge</param>
+        public GraphEdge(GraphNode from, GraphNode to, string myLabel, string status, int weight)
         {
             fromNode = from;
             toNode = to;
             Label = myLabel;
             Status = status;
+            Weight = weight;
+        }
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        // METHOD SEPARATOR METHOD SEPARATOR METHOD SEPARATOR METHOD SEPARATOR METHOD SEPARATOR METHOD SEPARATOR METHOD SEPARATOR
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        /// <summary>
+        /// 
+        /// Get the weight value of the edge.
+        /// 
+        /// </summary>
+        /// 
+        /// <returns>status of the specified node</returns>
+        public int GetWeight()
+        {
+            return Weight;
+        }
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        // METHOD SEPARATOR METHOD SEPARATOR METHOD SEPARATOR METHOD SEPARATOR METHOD SEPARATOR METHOD SEPARATOR METHOD SEPARATOR
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        /// <summary>
+        /// 
+        /// Set the weight value of the edge.
+        /// 
+        /// </summary>
+        /// 
+        /// <param name="weight">weight value</param>
+        public void SetWeight(int weight)
+        {
+            Weight = weight;
         }
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

@@ -74,7 +74,7 @@ namespace Dutch_Bingo
         {
             if (!nodeDict.ContainsKey(name))
             {
-                GraphNode n = new GraphNode(name, "unexplored");
+                GraphNode n = new GraphNode(name, "unexplored", int.MaxValue);
                 nodes.Add(n);
                 nodeDict.Add(name, n);
             }
@@ -112,7 +112,7 @@ namespace Dutch_Bingo
             AddNode(name2);
             GraphNode n2 = nodeDict[name2];
 
-            GraphEdge e = new GraphEdge(n1, n2, relationship, "unexplored");
+            GraphEdge e = new GraphEdge(n1, n2, relationship, "unexplored", 1);
             n1.AddIncidentEdge(e);
         }
 

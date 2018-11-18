@@ -21,12 +21,17 @@ using System.Text;
 namespace Dutch_Bingo
 {
     /// <summary>
+    /// 
     /// Class models and represents a node in a RelationshipGraph.
+    /// 
+    /// Added Status and WeightValue fields.
+    /// 
     /// </summary>
     class GraphNode
     {
         // Class member variables.
         private string Status;
+        private int WeightValue;
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // METHOD SEPARATOR METHOD SEPARATOR METHOD SEPARATOR METHOD SEPARATOR METHOD SEPARATOR METHOD SEPARATOR METHOD SEPARATOR
@@ -65,12 +70,46 @@ namespace Dutch_Bingo
         /// </summary>
         /// 
         /// <param name="v">name of the node</param>
-        public GraphNode(string v, string status)
+        /// <param name="status">unexplored, discovery, or back</param>
+        /// <param name="weight">associated weight value of this node</param>
+        public GraphNode(string v, string status, int weight)
         {
             Name = v;
             incidentEdges = new List<GraphEdge>();
             Status = status;
+            WeightValue = weight;
+        }
 
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        // METHOD SEPARATOR METHOD SEPARATOR METHOD SEPARATOR METHOD SEPARATOR METHOD SEPARATOR METHOD SEPARATOR METHOD SEPARATOR
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        /// <summary>
+        /// 
+        /// Get the weight value of the edge.
+        /// 
+        /// </summary>
+        /// 
+        /// <returns>status of the specified node</returns>
+        public int GetWeight()
+        {
+            return WeightValue;
+        }
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        // METHOD SEPARATOR METHOD SEPARATOR METHOD SEPARATOR METHOD SEPARATOR METHOD SEPARATOR METHOD SEPARATOR METHOD SEPARATOR
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        /// <summary>
+        /// 
+        /// Set the weight value of the edge.
+        /// 
+        /// </summary>
+        /// 
+        /// <param name="weight">weight value</param>
+        public void SetWeight(int weight)
+        {
+            WeightValue = weight;
         }
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
