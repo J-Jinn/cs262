@@ -16,13 +16,17 @@ using System.Linq;
 using System.Text;
 
 /// <summary>
+/// 
 /// Namespace the class belongs to.
+/// 
 /// </summary>
 namespace Dutch_Bingo
 {
     /// <summary>
+    /// 
     /// Class models and represents a directed labeled graph with a string Name at each node
     /// and a string Label for each edge.
+    /// 
     /// </summary>
     class RelationshipGraph
     {
@@ -145,7 +149,7 @@ namespace Dutch_Bingo
         /// <summary>
         /// 
         /// Method prints to console terminal the entire text representation
-        /// of the graph. (all its nodes/vertices and edges)
+        /// of the graph. (all its nodes (vertices) and edges)
         /// 
         /// </summary>
         public void Dump()

@@ -16,7 +16,9 @@ using System.Linq;
 using System.Text;
 
 /// <summary>
+/// 
 /// Namespace the class belongs to.
+/// 
 /// </summary>
 namespace Dutch_Bingo
 {

@@ -16,17 +16,20 @@ using System.Linq;
 using System.Text;
 
 /// <summary>
+/// 
 /// Namespace the class belongs to.
+/// 
 /// </summary>
 namespace Dutch_Bingo
 {
     /// <summary>
+    /// 
     /// Class models and represents a labeled, directed edge in a RelationshipGraph.
     /// 
     /// Modified from original template code.
     /// 
     /// Added Status and Weight fields.
-    /// Addded methods ToNodeName and FromNodeName for directly string name retrieval.
+    /// Added methods ToNodeName and FromNodeName for directly string name retrieval.
     /// 
     /// </summary>
     class GraphEdge

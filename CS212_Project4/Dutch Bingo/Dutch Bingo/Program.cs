@@ -25,6 +25,11 @@ namespace Dutch_Bingo
     /// 
     /// Contains various methods that retrieves different sorts of information from the RelationshipGraph.
     /// 
+    /// Note: I have collapsed the methods that can be ignored for grading.  Not sure if this is portable though.
+    /// 
+    /// Note: Keeping deprecated methods and code in, in case I want to go back in the future and see if I can implement them
+    /// properly.
+    /// 
     /// </summary>
     class Program
     {
@@ -220,6 +225,8 @@ namespace Dutch_Bingo
         /// 
         /// Note: Uses recursive DFS.
         /// 
+        /// Note: For use with "ShowDescendantsRecursive(string name)" below.
+        /// 
         /// </summary>
         /// <param name="name">name of the starting/root node to search for cycles</param>
         /// <returns></returns>
@@ -240,7 +247,7 @@ namespace Dutch_Bingo
             }
 
             // Recursive call.
-            DFSCycles(name, rgCopy);
+            DetectCyclesDFS(name, rgCopy);
 
             // Check for any edges labeled as a "back" edge, indicating we have found a cycle.
             foreach (GraphNode n in rgCopy.nodes)
@@ -266,9 +273,11 @@ namespace Dutch_Bingo
         /// 
         /// Helper method for DetectCycles(string name) that implements the actual depth-first search (DPS)
         /// algorithm to detect any existing cycles based on traversal of "hasChild" from-to relationships,
-        /// indicating descendancy.  A back-edge indicates we have found a cycle.
+        /// indicating it is a descendant.  A back-edge indicates we have found a cycle.
         /// 
         /// Note: Adapted from Chapter 6 PowerPoint Slides on DFS
+        /// 
+        /// Note: For use with "DetectCycles(string name)" above.
         /// 
         /// Note: Took way too long to figure this one out because I was getting all edges at first, which
         /// meant it was checking for potential cycles for all types of relationships, not just the ones
@@ -277,7 +286,7 @@ namespace Dutch_Bingo
         /// </summary>
         /// <param name="name">name of the node to label</param>
         /// <param name="graph">copy of the RelationshipGraph read in by user</param>
-        private static void DFSCycles(string name, RelationshipGraph graph)
+        private static void DetectCyclesDFS(string name, RelationshipGraph graph)
         {
             // Get the node associated with the name of the person.
             GraphNode n = graph.GetNode(name);
@@ -298,7 +307,7 @@ namespace Dutch_Bingo
                     if (e.ToNode().GetStatus() == "unexplored")
                     {
                         e.SetStatus("discovery");
-                        DFSCycles(e.ToNodeName(), graph);
+                        DetectCyclesDFS(e.ToNodeName(), graph);
                     }
                     // If the node connected to the current node has been visited already.
                     else
@@ -316,9 +325,9 @@ namespace Dutch_Bingo
         /// <summary>
         /// 
         /// Method displays to console all of the descendants that a specific
-        /// individiual has.
+        /// individual has.
         /// 
-        /// Note: Uses recursive BFS via recursion.
+        /// Note: Uses recursive BFS.
         /// 
         /// TODO: Display to console all descendants and generation labels in sorted order.
         /// 
@@ -354,7 +363,7 @@ namespace Dutch_Bingo
             depthStack.Push(0);
 
             // Call recursive BFS algorithm.
-            BFS(name, depthStack, visited, trackGen);
+            ShowDescendantsRecursiveBFS(name, depthStack, visited, trackGen);
         }
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -366,11 +375,13 @@ namespace Dutch_Bingo
         /// Utility method that implements the actual recursive breadth-first search to find
         /// the descendants of the specified individual.
         /// 
+        /// Note: For use with "ShowDescendantsRecursive(string name)" above.
+        /// 
         /// </summary>
         /// <param name="name">Name of the current node we're iterating on</param>
         /// <param name="visited">HashTable of nodes already visited</param>
         /// <param name="currentGen">How far down the generations we are from original person</param>
-        private static void BFS(string name, Stack<int> depthStack, HashSet<GraphNode> visited, Dictionary<GraphNode, int> trackGen)
+        private static void ShowDescendantsRecursiveBFS(string name, Stack<int> depthStack, HashSet<GraphNode> visited, Dictionary<GraphNode, int> trackGen)
         {
             // Get the node associated with the name of the person.
             GraphNode n = rg.GetNode(name);
@@ -424,7 +435,7 @@ namespace Dutch_Bingo
                         Console.WriteLine("Grand-Children: {0}", e.ToNodeName());
                     }
                     // Recursive call.
-                    BFS(e.ToNodeName(), depthStack, visited, trackGen);
+                    ShowDescendantsRecursiveBFS(e.ToNodeName(), depthStack, visited, trackGen);
                 }
             }
         }
@@ -438,7 +449,7 @@ namespace Dutch_Bingo
         /// Method displays to console all of the descendants that a specific
         /// individual has.
         /// 
-        /// FIXME: Not properly tracking and labeling each descendent as their correct
+        /// FIXME: Not properly tracking and labeling each descendant as their correct
         /// generation from the original person we are tracking descendants for.
         /// 
         /// Note: This implementation of generation tracking and labeling DOES work for my
@@ -449,15 +460,20 @@ namespace Dutch_Bingo
         /// </summary>
         /// 
         /// <param name="name">name of the person whose descendants to search for</param>
+        /// 
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        // IGNORE THIS METHOD IGNORE THIS METHOD IGNORE THIS METHOD IGNORE THIS METHOD IGNORE THIS METHOD IGNORE THIS METHOD
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         private static void ShowDescendantsNonRecursive(string name)
         {
             // Check that the individual exists.
             if (rg.GetNode(name) == null)
             {
-                Console.WriteLine("Individual does not exist!");
+                Console.WriteLine("\nIndividual does not exist!\n");
                 return;
             }
-            Console.WriteLine("{0}'s descendants:\n\n", name);
+            Console.WriteLine("\n{0}'s descendants:\n\n", name);
 
             // Keep track of current generation of descendants.
             Stack<int> depthStack = new Stack<int>();
@@ -517,7 +533,7 @@ namespace Dutch_Bingo
                 }
             }
             // Print all descendants to console.
-            printDescendants(trackGen);
+            printDescendantsNonRecursive(trackGen);
         }
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -529,10 +545,17 @@ namespace Dutch_Bingo
         /// Utility method that prints all of a person's descendants to console with 
         /// appropriate labels.
         /// 
+        /// Note: For use with "ShowDescendantsNonRecursive(string name)" above.
+        /// 
         /// </summary>
         /// 
         /// <param name="trackGen">dictionary containing all nodes and their associated depth value from root</param>
-        private static void printDescendants(Dictionary<GraphNode, int> trackGen)
+        /// 
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        // IGNORE THIS METHOD IGNORE THIS METHOD IGNORE THIS METHOD IGNORE THIS METHOD IGNORE THIS METHOD IGNORE THIS METHOD
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        private static void printDescendantsNonRecursive(Dictionary<GraphNode, int> trackGen)
         {
             foreach (KeyValuePair<GraphNode, int> p in trackGen)
             {
@@ -567,7 +590,7 @@ namespace Dutch_Bingo
         /// <summary>
         /// 
         /// Method displays to console the shortest path of relationship between two people
-        /// or says they are unrelated.  Also eports on the # of edges searched overall and
+        /// or says they are unrelated.  Also reports on the # of edges searched overall and
         /// if no relationship was found, displays a message saying so.
         /// 
         /// Note: Uses a variation of recursive DFS.
@@ -578,19 +601,23 @@ namespace Dutch_Bingo
         /// <param name="source_name">name of the person to search a relationship from</param>
         /// <param name="destination_name">name of the person to search a relationship to</param>
         /// 
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        // IGNORE THIS METHOD IGNORE THIS METHOD IGNORE THIS METHOD IGNORE THIS METHOD IGNORE THIS METHOD IGNORE THIS METHOD
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         private static void BingoGameFailed(string source_name, string destination_name)
         {
             // Trivial (stupid) case where we're looking for the same person
             if (source_name == destination_name)
             {
-                Console.WriteLine("You have found yourself!");
+                Console.WriteLine("\nYou have found yourself!\n");
                 return;
             }
             // If we're looking for relationships among non-existent individual(s)
             if (rg.GetNode(source_name) == null || rg.GetNode(destination_name) == null)
             {
-                Console.WriteLine("One or both individuals do not exist!");
-                Console.WriteLine("Please try again!");
+                Console.WriteLine("\nOne or both individuals do not exist!");
+                Console.WriteLine("Please try again!\n");
                 return;
             }
 
@@ -607,8 +634,9 @@ namespace Dutch_Bingo
             HashSet<GraphNode> visited = new HashSet<GraphNode>();
 
             // Recursive call.
-            DFSSearch(source_node, destination_node, visited, successfulPaths, currentPath);
+            BingoGameFailedDFSSearch(source_node, destination_node, visited, successfulPaths, currentPath);
 
+            // Find the shortest path in all the viable paths.
             int shortestLength = int.MaxValue;
 
             foreach (List<GraphNode> list in successfulPaths)
@@ -636,17 +664,25 @@ namespace Dutch_Bingo
         /// Utility method that actually implements the recursive depth-first search algorithm in order to find all
         /// possible paths of relationship between the two specified individuals.
         /// 
+        /// Note: For use with "BingoGameFailed(string source_name, string destination_name)" above.
+        /// 
         /// </summary>
         /// 
         /// <param name="source">the person we are starting the search from</param>
         /// <param name="destination">the person we are attempting to reach</param>
         /// <param name="visited">stores all the nodes we have already visited</param>
         /// <param name="successfulPaths">stores all the paths by which we can connect the two people</param>
-        /// <param name="currentPath">store the current path we are traversing in order ot find a relationship</param>
-        private static void DFSSearch(GraphNode source, GraphNode destination, HashSet<GraphNode> visited, List<List<GraphNode>> successfulPaths, List<GraphNode> currentPath)
+        /// <param name="currentPath">store the current path we are traversing in order to find a relationship</param>
+        /// 
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        // IGNORE THIS METHOD IGNORE THIS METHOD IGNORE THIS METHOD IGNORE THIS METHOD IGNORE THIS METHOD IGNORE THIS METHOD
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        private static void BingoGameFailedDFSSearch(GraphNode source, GraphNode destination, HashSet<GraphNode> visited, List<List<GraphNode>> successfulPaths, List<GraphNode> currentPath)
         {
             // Indicate we have visited this node.
             visited.Add(source);
+
             // Add source node to path.
             currentPath.Add(source);
 
@@ -656,6 +692,7 @@ namespace Dutch_Bingo
             // Iterate through all connected nodes.
             foreach (GraphEdge e in nodeEdges)
             {
+                // If we have reached our destination.
                 if (e.ToNode() == destination)
                 {
                     currentPath.Add(e.ToNode());
@@ -664,10 +701,13 @@ namespace Dutch_Bingo
                 }
                 else
                 {
+                    // If we haven't visited this node yet.
                     if (!visited.Contains(e.ToNode()))
                     {
                         GraphNode next = e.ToNode();
-                        DFSSearch(next, destination, visited, successfulPaths, currentPath);
+
+                        // Recursive call.
+                        BingoGameFailedDFSSearch(next, destination, visited, successfulPaths, currentPath);
                     }
                 }
             }
@@ -681,114 +721,90 @@ namespace Dutch_Bingo
         /// <summary>
         /// 
         /// Method displays to console the shortest path of relationship between two people
-        /// or says they are unrelated.  Also eports on the # of edges searched overall and
+        /// or says they are unrelated.  Also reports on the # of edges searched overall and
         /// if no relationship was found, displays a message saying so.
         /// 
-        /// Note: Uses a variation of non-recursive BFS.
+        /// Note: Uses a variation of non-recursive BFS via a queue.
         /// 
         /// Note: Currently finds a path if one exists, but still need to figure out a way to parse the actual path from the
-        /// nodes it visits that are stored in List<GraphNode> path.
+        /// nodes it visits that are stored in the associated data structure(s)
         /// 
-        /// TODO: maybe we should store and traverse edges instead of nodes? (refactor method to use edges instead of nodes)
+        /// Update: I'm sure my BFS search is working properly, it's just parsing the shortest path that is presenting difficulties.
         /// 
         /// </summary>
         /// <param name="source_name">name of the person to search a relationship from</param>
         /// <param name="destination_name">name of the person to search a relationship to</param>
-        /// 
         private static void BingoGameOriginal(string source_name, string destination_name)
         {
-            Boolean debug = true;
-
             // Trivial (stupid) case where we're looking for the same person
             if (source_name == destination_name)
             {
-                Console.WriteLine("You have found yourself!");
+                Console.WriteLine("\nYou have found yourself!\n");
                 return;
             }
             // If we're looking for relationships among non-existent individual(s)
             if (rg.GetNode(source_name) == null || rg.GetNode(destination_name) == null)
             {
-                Console.WriteLine("One or both individuals do not exist!");
-                Console.WriteLine("Please try again!");
+                Console.WriteLine("\nOne or both individuals do not exist!");
+                Console.WriteLine("Please try again!\n");
                 return;
             }
 
-            // Get the node associated with the name of the person.
-            GraphNode source_node = rg.GetNode(source_name);
+            // Dictionary to record the node and its parent.
+            Dictionary<GraphNode, GraphNode> nodeAndParent = new Dictionary<GraphNode, GraphNode>();
 
-            // Stack to record the path.
-            Stack<GraphNode> stackPath = new Stack<GraphNode>();
+            // Stack to record the nodes traversed to find the path.
+            Stack<GraphNode> stackPathNode = new Stack<GraphNode>();
 
-            // Stack to record the edges.
+            // Stack to record the edges traversed to find the path.
             Stack<GraphEdge> stackPathEdge = new Stack<GraphEdge>();
 
-            // List to record the path.
-            List<GraphNode> listPath = new List<GraphNode>();
+            // List to record the nodes traversed to find the path.
+            List<GraphNode> listPathNodes = new List<GraphNode>();
 
-            // Hash table to store/track visited nodes.
+            // Hash table to indicate and store the nodes already visited.
             HashSet<GraphNode> visited = new HashSet<GraphNode>();
 
-            // Create queue for breadth-first search algorithm.
+            // Create queue for non-recursive breadth-first search algorithm.
             Queue<GraphNode> queue = new Queue<GraphNode>();
 
-            // Add node as visited.
-            visited.Add(source_node);
+            // Get the node associated with the names of the people we are finding a connection for.
+            GraphNode sourceNode = rg.GetNode(source_name);
+            GraphNode destinationNode = rg.GetNode(destination_name);
 
-            // Add node to queue.
-            queue.Enqueue(source_node);
+            // Add starting node as visited.
+            visited.Add(sourceNode);
 
-            // Counts # of edges traversed.
-            int path_counter = 0;
+            // Add starting node to queue.
+            queue.Enqueue(sourceNode);
+
+            // Counts # of edges traversed during the BFS search.
+            int pathCounter = 0;
 
             while (queue.Count > 0)
             {
                 // Retrieve the node we should traverse with.
                 GraphNode current_node = queue.Dequeue();
 
-                // Add current node as part of the path.
-                stackPath.Push(current_node);
-                listPath.Add(current_node);
+                // Add current node as part of the path, if not already part of the path.
+                if (!stackPathNode.Contains(current_node))
+                {
+                    listPathNodes.Add(current_node);
+                    stackPathNode.Push(current_node);
+                }
 
                 // Check if we have found a path.
-                if (current_node.Name == destination_name)
+                if (current_node == destinationNode)
                 {
-                    Console.WriteLine("Path of relationship found!");
+                    Console.WriteLine("Relationship path found!");
 
-                    if (debug == true)
-                    {
-                        // Make a copy for debug purposes.
-                        Stack<GraphEdge> stackPathEdgeCopy = new Stack<GraphEdge>(stackPathEdge);
+                    // Debug Method - View contents of data structures to check it is storing the proper nodes/edges.
+                    DebugDataStructures(nodeAndParent, stackPathNode, stackPathEdge, listPathNodes);
 
-                        while (stackPathEdgeCopy.Count > 0)
-                        {
-                            Console.WriteLine("Stack Path Edge: {0}", stackPathEdgeCopy.Peek().FromNodeName());
-                            Console.WriteLine("Stack Path Edge: {0}", stackPathEdgeCopy.Peek().Label);
-                            Console.WriteLine("Stack Path Edge: {0}", stackPathEdgeCopy.Peek().ToNodeName());
-                            Console.WriteLine("Stack Path Edge Remaining: {0}", stackPathEdgeCopy.Count);
-                            stackPathEdgeCopy.Pop();
-                        }
+                    // Parses the actual shortest path - Semi-functional (ugly as heck, but it sort of works)
+                    traceShortestPath(nodeAndParent, stackPathNode, stackPathEdge, listPathNodes, source_name, destination_name);
 
-                        // Make a copy for debug purposes.
-                        Stack<GraphNode> stackPathCopy = new Stack<GraphNode>(stackPath);
-
-                        while (stackPathCopy.Count > 0)
-                        {
-                            Console.WriteLine("Stack Path Node: {0}", stackPathCopy.Peek().Name);
-                            Console.WriteLine("Stack Path Node Remaining: {0}", stackPathCopy.Count);
-                            stackPathCopy.Pop();
-                        }
-
-                        // Display to console all the nodes we have traversed.
-                        for (int i = 0; i < listPath.Count; i++)
-                        {
-                            Console.WriteLine("List Path Node: {0}", listPath[i].Name);
-                        }
-                    }
-
-                    // Prases the actual shortest path - Not functional.
-                    traceShortestPath(stackPath, stackPathEdge, listPath, source_name, destination_name);
-
-                    Console.WriteLine("Edges searched: {0}", path_counter);
+                    Console.WriteLine("\nTotal edges searched to find a path: {0}\n", pathCounter);
                     return;
                 }
 
@@ -798,25 +814,114 @@ namespace Dutch_Bingo
                 // Iterate through all connected nodes.
                 foreach (GraphEdge e in edges)
                 {
-                    // Iterate through univisited nodes.
+                    // Iterate through unvisited nodes only.
                     if (!visited.Contains(e.ToNode()))
                     {
                         // Add node as visited.
                         visited.Add(e.ToNode());
-                        // Add node to queue
+
+                        // Add node to queue.
                         queue.Enqueue(e.ToNode());
 
                         // Store the edges we traversed.
                         stackPathEdge.Push(e);
 
-                        // Debug statement.
-                        //Console.WriteLine("{0} : {1} : {2}", e.FromNodeName(), e.Label, e.ToNodeName());
+                        // Store the current node and its parent.
+                        nodeAndParent.Add(e.ToNode(), e.FromNode());
                     }
                 }
-                path_counter++;
+                pathCounter++;
             }
-            Console.WriteLine("No relationship path was found between these two individuals!");
-            Console.WriteLine("Edges searched: {0}", path_counter);
+            Console.WriteLine("\nNo relationship path was found between these two individuals!");
+            Console.WriteLine("Total edges searched: {0}\n", pathCounter);
+        }
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        // METHOD SEPARATOR METHOD SEPARATOR METHOD SEPARATOR METHOD SEPARATOR METHOD SEPARATOR METHOD SEPARATOR METHOD SEPARATOR
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        /// <summary>
+        /// 
+        /// Method is purely for debugging the contents of the data structures that store the nodes/edges traversed during the BFS traversal.
+        /// 
+        /// Note: Can be ignored for grading purposes.
+        /// 
+        /// </summary>
+        /// 
+        /// <param name="nodeAndParent">dictionary that stores a node and its immediate parent node</param>
+        /// <param name="stackPathNode">stack that stores the nodes we traversed during the search</param>
+        /// <param name="stackPathEdge">stack that stores the edges we traversed during the search</param>
+        /// <param name="listPathNodes">list that stores the nodes we traversed during the search</param>
+        private static void DebugDataStructures(Dictionary<GraphNode, GraphNode> nodeAndParent, Stack<GraphNode> stackPathNode, Stack<GraphEdge> stackPathEdge, List<GraphNode> listPathNodes)
+        {
+            // Booleans to turn on debugging-related code sections.
+            bool debug1 = false;
+            bool debug2 = false;
+            bool debug3 = false;
+            bool debug4 = false;
+
+            Console.WriteLine("\n\n\n");
+
+            if (debug1 == true)
+            {
+                // Make a copy for debug purposes.
+                Stack<GraphEdge> stackPathEdgeCopy = new Stack<GraphEdge>(stackPathEdge);
+
+                Console.WriteLine("\nStack Path Edges:\n");
+
+                while (stackPathEdgeCopy.Count > 0)
+                {
+                    Console.WriteLine("From Node: {0}", stackPathEdgeCopy.Peek().FromNodeName());
+                    Console.WriteLine("Edge Label: {0}", stackPathEdgeCopy.Peek().Label);
+                    Console.WriteLine("To Node: {0}", stackPathEdgeCopy.Peek().ToNodeName());
+                    Console.WriteLine("Stack Path Edges Remaining: {0}", stackPathEdgeCopy.Count);
+                    stackPathEdgeCopy.Pop();
+                }
+            }
+            if (debug2 == true)
+            {
+                // Make a copy for debug purposes.
+                Stack<GraphNode> stackPathCopy = new Stack<GraphNode>(stackPathNode);
+
+                Console.WriteLine("\nStack Path Nodes:\n");
+
+                while (stackPathCopy.Count > 0)
+                {
+                    Console.WriteLine("Stack: Node Name: {0}", stackPathCopy.Peek().Name);
+                    Console.WriteLine("Stack Path Nodes Remaining: {0}", stackPathCopy.Count);
+                    stackPathCopy.Pop();
+                }
+            }
+            if (debug3 == true)
+            {
+                // Display to console all the nodes we have traversed in the List.
+                Console.WriteLine("\nList Path Nodes:\n");
+
+                int listCounter = listPathNodes.Count;
+
+                foreach (GraphNode node in listPathNodes)
+                {
+                    Console.WriteLine("List: Node Name: {0}", node.Name);
+                    Console.WriteLine("List Path Nodes Remaining: {0}", listCounter);
+                    listCounter--;
+                }
+            }
+            if (debug4 == true)
+            {
+                // Display to console all the nodes we have traversed in the Dictionary.
+                Console.WriteLine("\nDictionary Path Nodes:\n");
+
+                int dictCounter = nodeAndParent.Count;
+
+                foreach (KeyValuePair<GraphNode, GraphNode> entry in nodeAndParent)
+                {
+                    Console.WriteLine("Dictionary Node's Name is: {0}", entry.Key.Name);
+                    Console.WriteLine("Dictionary Node's Parent Node's Name is: {0}", entry.Value.Name);
+                    Console.WriteLine("Dictionary Path Nodes Remaining: {0}", dictCounter);
+                    dictCounter--;
+                }
+            }
+            Console.WriteLine("\n\n\n");
         }
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -828,92 +933,185 @@ namespace Dutch_Bingo
         /// Method parses the nodes visited during the BFS search in order to find the actual shortest path between the
         /// two people.
         /// 
-        /// Note: currently not functioning.
+        /// Note: Not functioning as intended thus far.
         /// 
         /// </summary>
         /// 
-        /// <param name="path"></param>
-        /// <param name="source"></param>
-        /// <param name="destination"></param>
-        private static void traceShortestPath(Stack<GraphNode> pathNodeStack, Stack<GraphEdge> pathEdgeStack, List<GraphNode> pathNodeList, string source, string destination)
+        /// <param name="nodePlusParent">dictionary containing a node and it's parent during BFS traversal</param>
+        /// <param name="pathNodeStack">stack storing all the nodes traversed during BFS</param>
+        /// <param name="pathEdgeStack">stack storing all the edges traversed during BFS</param>
+        /// <param name="pathNodeList">list storing all the nodes traversed during BFS</param>
+        /// <param name="source">the person who we are trying to establish a relationship for</param>
+        /// <param name="destination">the person we are trying to establish a relationship with</param>
+        private static void traceShortestPath(Dictionary<GraphNode, GraphNode> nodePlusParent, Stack<GraphNode> pathNodeStack, Stack<GraphEdge> pathEdgeStack,
+            List<GraphNode> pathNodeList, string source, string destination)
         {
-            bool debug = true;
+            // Booleans to turn on debugging-related code sections.
+            bool debug1 = false;
+            bool debug2 = false;
+            bool debug3 = false;
 
-            List<GraphNode> shortestPathNodes = new List<GraphNode>();
-            List<GraphEdge> shortestPathEdges = new List<GraphEdge>();
+            // Booleans to turn on/off different methods of parsing the actual shortest path from all nodes traversed to find the path.
+            bool searchUsingStackNodes = true;
+            bool searchUsingStackEdges = false;
+            bool searchUsingStackNodesAndDictionaryNodes = false;
+            bool searchUsingDictionaryNodes = false;
 
-            GraphNode endNode = rg.GetNode("destination");
+            // The two people we want to find a relationship for.
             GraphNode startNode = rg.GetNode("source");
+            GraphNode endNode = rg.GetNode("destination");
 
             // Parse the sequence of nodes for the shortest path.
-            GraphNode currentNode = pathNodeStack.Pop();
-
-            while (currentNode != startNode && pathNodeStack.Count > 0)
+            if (searchUsingStackNodes == true)
             {
-                if (debug == true)
-                    Console.WriteLine("Current node is: {0}", currentNode.Name);
 
-                List<GraphEdge> nodeEdges = currentNode.GetEdges();
+                List<GraphNode> shortestPath = new List<GraphNode>();
 
-                if (debug == true)
-                    Console.WriteLine("Path.peek value is: {0}", pathNodeStack.Peek());
+                GraphNode currentNode = pathNodeStack.Pop();
 
-                foreach (GraphEdge e in nodeEdges)
+                while (currentNode != startNode && pathNodeStack.Count > 0)
                 {
-                    if (e.FromNode() == pathNodeStack.Peek())
+                    if (debug1 == true)
+                        Console.WriteLine("Current node is: {0}", currentNode.Name);
+
+                    List<GraphEdge> nodeEdges = currentNode.GetEdges();
+
+                    if (debug1 == true)
+                        Console.WriteLine("Path.peek value is: {0}", pathNodeStack.Peek());
+
+                    foreach (GraphEdge e in nodeEdges)
                     {
-                        shortestPathNodes.Add(pathNodeStack.Peek());
-                        break;
+                        if (e.FromNode() == pathNodeStack.Peek())
+                        {
+                            shortestPath.Add(pathNodeStack.Peek());
+                            break;
+                        }
                     }
+                    currentNode = pathNodeStack.Pop();
                 }
-                currentNode = pathNodeStack.Pop();
+
+                // Reverse the list.
+                shortestPath.Reverse();
+
+                Console.WriteLine("Node Path is: ");
+
+                for (int i = 0; i < shortestPath.Count; i++)
+                {
+                    Console.WriteLine("Node: {0}", shortestPath[i].Name);
+                }
             }
 
             // Parse the sequence of edges for the shortest path.
-            GraphEdge currentEdge = pathEdgeStack.Pop();
-
-            while (pathEdgeStack.Count > 0)
+            if (searchUsingStackEdges == true)
             {
-                if (debug == true)
-                    Console.WriteLine("Current edge is: {0}", currentEdge.Label);
+                List<GraphEdge> shortestPathEdges = new List<GraphEdge>();
 
-                if (debug == true)
-                    Console.WriteLine("Path.peek value is: {0}", pathEdgeStack.Peek());
+                GraphEdge currentEdge = pathEdgeStack.Pop();
 
-                if (currentEdge.ToNodeName() == destination)
+                while (currentEdge.FromNode() != startNode && pathEdgeStack.Count > 0)
                 {
-                    shortestPathEdges.Add(currentEdge);
+                    if (debug2 == true)
+                        Console.WriteLine("Current edge is: {0}", currentEdge.Label);
+
+                    if (debug2 == true)
+                        Console.WriteLine("Path.peek value is: {0}", pathEdgeStack.Peek());
+
+                    if (currentEdge.ToNodeName() == destination)
+                    {
+                        shortestPathEdges.Add(currentEdge);
+                    }
+                    if (currentEdge.FromNodeName() == pathEdgeStack.Peek().ToNodeName())
+                    {
+                        shortestPathEdges.Add(currentEdge);
+                    }
+                    currentEdge = pathEdgeStack.Pop();
                 }
-                if (currentEdge.FromNodeName() == pathEdgeStack.Peek().ToNodeName())
+
+                // Reverse the list.
+                shortestPathEdges.Reverse();
+
+                Console.WriteLine("Shortest Edge Path is: ");
+
+                foreach (GraphEdge edge in shortestPathEdges)
                 {
-                    shortestPathEdges.Add(currentEdge);
+                    Console.WriteLine("Edge: {0}", edge);
                 }
-                if (currentEdge.FromNodeName() == source)
-                {
-                    shortestPathEdges.Add(currentEdge);
-                    break;
-                }
-                currentEdge = pathEdgeStack.Pop();
             }
 
-            // Reverse the list.
-            shortestPathNodes.Reverse();
-
-            Console.WriteLine("Node Path is: ");
-
-            for (int i = 0; i < shortestPathNodes.Count; i++)
+            //Parse the sequence of nodes using dictionary with node and parent node information.
+            if (searchUsingStackNodesAndDictionaryNodes == true)
             {
-                Console.WriteLine("Node: {0}", shortestPathNodes[i].Name);
-            }
+                List<GraphNode> shortestPathTraversal = new List<GraphNode>();
 
-            // Reverse the list.
-            shortestPathEdges.Reverse();
+                shortestPathTraversal.Add(pathNodeStack.Peek());
+                GraphNode currentPathNode = pathNodeStack.Pop();
 
-            Console.WriteLine("Edge Path is: ");
+                while (currentPathNode != startNode && pathNodeStack.Count > 0)
+                {
+                    if (nodePlusParent.ContainsKey(currentPathNode))
+                    {
+                        shortestPathTraversal.Add(nodePlusParent[currentPathNode]);
+                    }
 
-            for (int i = 0; i < shortestPathEdges.Count; i++)
-            {
-                Console.WriteLine("Edge: {0}", shortestPathEdges[i].Label);
+                    currentPathNode = pathNodeStack.Pop();
+                }
+
+                // Reverse the list so we start from the source and head towards the destination.
+                shortestPathTraversal.Reverse();
+
+                // This section removes duplicates in the shortest path.
+                List<GraphNode> shortestPathWithoutDuplicates = new List<GraphNode>();
+
+                foreach (GraphNode n in shortestPathTraversal)
+                {
+                    if (!shortestPathWithoutDuplicates.Contains(n))
+                    {
+                        shortestPathWithoutDuplicates.Add(n);
+                    }
+                }
+
+                if (debug3 == true)
+                {
+                    Console.WriteLine("Node Traversal Path with duplicates is: ");
+
+                    Console.WriteLine("The shortest path of connections between {0} and {1} is: ", startNode.Name, endNode.Name);
+
+                    foreach (GraphNode entry in shortestPathTraversal)
+                    {
+                        {
+                            Console.WriteLine("Person: {0}", entry.Name);
+                        }
+                    }
+                }
+
+                Console.WriteLine("Node Traversal Path is: ");
+
+                for (int i = 0; i < shortestPathWithoutDuplicates.Count; i++)
+                {
+                    Console.WriteLine("Node: {0}", shortestPathWithoutDuplicates[i].Name);
+                }
+
+
+                // Parse only the dictionary to retrieve the shortest path (non-functional)
+                if (searchUsingDictionaryNodes == true)
+                {
+                    List<GraphNode> shortestPathOfRelationship = new List<GraphNode>();
+
+                    foreach (KeyValuePair<GraphNode, GraphNode> entry in nodePlusParent)
+                    {
+                        if (!shortestPathOfRelationship.Contains(entry.Value))
+                        {
+                            shortestPathOfRelationship.Add(entry.Value);
+                        }
+                    }
+
+                    Console.WriteLine("The shortest path of connections between {0} and {1} is: ", startNode.Name, endNode.Name);
+
+                    foreach (GraphNode entry in shortestPathOfRelationship)
+                    {
+                        Console.WriteLine("person: {0}", entry.Name);
+                    }
+                }
             }
         }
 
@@ -931,7 +1129,7 @@ namespace Dutch_Bingo
         /// </summary>
         private static void CommandLoop()
         {
-            // Stores the user commmand.
+            // Stores the user command.
             string command = "";
 
             // Stores the user input as an array of words.
@@ -954,7 +1152,7 @@ namespace Dutch_Bingo
                 commandWords = Regex.Split(command, @"\s+");
                 command = commandWords[0];
 
-                // Commmand to terminate the program.
+                // Command to terminate the program.
                 if (command == "exit")
                 {
                     return;
@@ -1000,7 +1198,7 @@ namespace Dutch_Bingo
                     // properly for the actual # of nodes/edges in the path.
                     BingoGameOriginal(commandWords[1], commandWords[2]);
 
-                    // Failed attempt at using a inefficent recursive DFS search to find shortest path.
+                    // Failed attempt at using a inefficient recursive DFS search to find shortest path.
                     //BingoGameFailed(commandWords[1], commandWords[2]);
                 }
                 // Command to display description of all commands.
@@ -1066,12 +1264,18 @@ namespace Dutch_Bingo
         static void Main(string[] args)
         {
             // Default node and edges to prevent program from crashing if user didn't enter a input file before attempting commands.
+            // (aka user stupidity insurance)
             rg.AddNode("DefaultNode1");
             rg.AddNode("DefaultNode2");
             rg.AddEdge("DefaultNode1", "DefaultNode2", "hasFriend");
             rg.AddEdge("DefaultNode2", "DefaultNode1", "hasFriend");
 
+            // Execute the Dutch Bingo program.
             CommandLoop();
         }
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        // METHOD SEPARATOR METHOD SEPARATOR METHOD SEPARATOR METHOD SEPARATOR METHOD SEPARATOR METHOD SEPARATOR METHOD SEPARATOR
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     }
 }

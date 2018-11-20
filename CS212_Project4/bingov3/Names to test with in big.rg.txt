@@ -1,5 +1,7 @@
 name:Gibeah; hasSpouse:Shamir; hasChild:Resen; hasChild:Jasiel; hasChild:Meribbaal; hasDeacon:Ziklag
 
+name:Shamir; hasFriend:Asaiah; hasFriend:Ahiam; hasCo-conspirator:Ahikam
+
 ====================================================================================================
 
 name:Resen; hasSpouse:Abiud; hasChild:Elizur; hasChild:Jaazah; hasFriend:Shuah; hasFriend:Maasiai; hasRoommate:Azazel
