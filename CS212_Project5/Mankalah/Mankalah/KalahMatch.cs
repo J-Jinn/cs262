@@ -1,105 +1,171 @@
-﻿using System;
+﻿/// <summary>
+/// Project 5: Mankalah
+/// CS-212 Data Structures and Algorithms
+/// Section: B
+/// Instructor: Professor Plantinga
+/// Date: 11-20-18
+/// 
+/// Mankalah Game Framework.
+/// Modified from the original template provided for this assignment.
+/// </summary>
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+/// <summary>
+/// Namespace this class belongs to.
+/// </summary>
 namespace Mankalah
 {
-    /********************************************************************/
-    /* This class creates two Players and runs a pair of Kalah games,
-    /* one with each player starting. The match score is reported.
-    /********************************************************************/
-
+    /// <summary>
+    /// Class KalahMatch creates two different Players and runs a pair of Mankalah games, one with
+    /// each player starting.  The match results are reported.
+    /// </summary>
     public class KalahMatch
     {
-        private static int timeLimit = 1000;						                // turn time in milliseconds
+        // Turn time limit calculated in milliseconds
+        private static int turnTimeLimit = 1000;
 
-        private static Player pTop = new BonzoPlayer(Position.Top, timeLimit);	// TOP player (MAX)
-        private static Player pBot = new HumanPlayer(Position.Bottom, timeLimit);	// BOTTOM player	
-        private static Board b;			                                // playing surface
+        // The player on the TOP (MAX)
+        private static Player playerTop = new BonzoPlayer(Position.Top, turnTimeLimit);
+        // The player on the BOTTOM (MIN)
+        private static Player playerBottom = new HumanPlayer(Position.Bottom, turnTimeLimit);
+
+        // The game board.
+        private static Board board;
+        // The current move position or value.
         private static int move;
 
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        // METHOD SEPARATOR METHOD SEPARATOR METHOD SEPARATOR METHOD SEPARATOR METHOD SEPARATOR METHOD SEPARATOR METHOD SEPARATOR
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-        /* 
-         * Play one Kalah game with the two given players, with firstPlayer
-         * starting. This function returns TOP's score.
-         */
-        public static int playGame(Player pTop, Player pBot, Position firstPlayer)
+        /// <summary>
+        /// Play a Mankalah game with the two given players, with the firstPlayer starting.
+        /// Returns TOP's score.
+        /// </summary>
+        /// <param name="playerTop">the player on the top</param>
+        /// <param name="playerBottom">the player on the bottom</param>
+        /// <param name="firstPlayer">the player who is starting the game</param>
+        /// <returns>the score of the TOP player</returns>
+        public static int playGame(Player playerTop, Player playerBottom, Position firstPlayer)
         {
-            b = new Board(firstPlayer);
+            // Create a new game board.
+            board = new Board(firstPlayer);
 
+            // Determine the player who starts.
             if (firstPlayer == Position.Top)
-                Console.WriteLine("Player " + pTop.getName() + " starts.");
+            {
+                Console.WriteLine("Player " + playerTop.getName() + " starts.");
+            }
             else
-                Console.WriteLine("Player " + pBot.getName() + " starts.");
+            {
+                Console.WriteLine("Player " + playerBottom.getName() + " starts.");
+            }
 
-            b.display();
+            // Display the current state of the game board.
+            board.display();
 
-            while (!b.gameOver())
+            // Continue rotating turns till the game is over.
+            while (!board.gameOver())
             {
                 Console.WriteLine();
-                if (b.whoseMove() == Position.Top)
+
+                // Get the player's move and output what move the player made.
+                if (board.whoseMove() == Position.Top)
                 {
-                    move = pTop.chooseMove(b);
-                    Console.WriteLine(pTop.getName() + " chooses move " + move);
-                }
-                else
-                {
-                    move = pBot.chooseMove(b);
-                    Console.WriteLine(pBot.getName() + " chooses move " + move);
+                    move = playerTop.chooseMove(board);
+                    Console.WriteLine(playerTop.getName() + " chooses move " + move);
                 }
 
-                b.makeMove(move, true);		// last parameter says to be chatty
-                b.display();
-
-                if (b.gameOver())
+                else
                 {
-                    if (b.winner() == Position.Top)
-                        Console.WriteLine("Player " + pTop.getName() +
-                        " (TOP) wins " + b.scoreTop() + " to " + b.scoreBot());
-                    else if (b.winner() == Position.Bottom)
-                        Console.WriteLine("Player " + pBot.getName() +
-                        " (BOTTOM) wins " + b.scoreBot() + " to " + b.scoreTop());
-                    else Console.WriteLine("A tie!");
+                    move = playerBottom.chooseMove(board);
+                    Console.WriteLine(playerBottom.getName() + " chooses move " + move);
                 }
+
+                // Commit the move to the game state. (true = verbose, false = non-verbose)
+                board.makeMove(move, true);
+
+                // Display the new state of the game board.
+                board.display();
+
+                // Game is over, determine final results.
+                if (board.gameOver())
+                {
+                    if (board.winner() == Position.Top)
+                    {
+                        Console.WriteLine("Player " + playerTop.getName() +
+                        " (TOP) wins " + board.scoreTopPlayer() + " to " + board.scoreBottomPlayer());
+                    }
+                    else if (board.winner() == Position.Bottom)
+                    {
+                        Console.WriteLine("Player " + playerBottom.getName() +
+                        " (BOTTOM) wins " + board.scoreBottomPlayer() + " to " + board.scoreTopPlayer());
+                    }
+                    else
+                    {
+                        Console.WriteLine("A tie!");
+                    }
+                }
+                // Game is not over, ask player to make their move.
                 else
-                    if (b.whoseMove() == Position.Top)
-                    Console.WriteLine(pTop.getName() + " to move.");
+                    if (board.whoseMove() == Position.Top)
+                    Console.WriteLine(playerTop.getName() + " to move.");
                 else
-                    Console.WriteLine(pBot.getName() + " to move.");
+                    Console.WriteLine(playerBottom.getName() + " to move.");
             }
-            return b.scoreTop();
+
+            // Return the final score for the match.
+            return board.scoreTopPlayer();
         }
 
-        public static void Main(String[] args)
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        // METHOD SEPARATOR METHOD SEPARATOR METHOD SEPARATOR METHOD SEPARATOR METHOD SEPARATOR METHOD SEPARATOR METHOD SEPARATOR
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        /// <summary>
+        /// Main method outputs the results of each match to the console.
+        /// </summary>
+        /// <param name="arguments">optional command-line arguments</param>
+        public static void Main(String[] arguments)
         {
-            int topScore;
+            // Obtain final score for the TOP and BOTTOM player.
+            int finalScore;
 
             Console.WriteLine("\n================ Game 1 ================");
-            topScore = playGame(pTop, pBot, Position.Bottom);
+            finalScore = playGame(playerTop, playerBottom, Position.Bottom);
 
             Console.WriteLine("\n================ Game 2 ================");
-            topScore += playGame(pTop, pBot, Position.Top);
+            finalScore += playGame(playerTop, playerBottom, Position.Top);
 
             Console.WriteLine("\n========================================");
             Console.Write("Match result: ");
 
-            int botScore = 96 - topScore;
-            if (topScore > 48)
+            // Determine the winner and loser.
+            int botScore = 96 - finalScore;
+
+            if (finalScore > 48)
             {
-                Console.WriteLine(pTop.getName() + " wins " + topScore + " to " + botScore);
-                pTop.gloat();
+                Console.WriteLine(playerTop.getName() + " wins " + finalScore + " to " + botScore);
+                playerTop.gloat();
             }
             else if (botScore > 48)
             {
-                Console.WriteLine(pBot.getName() + " wins " + botScore + " to " + topScore);
-                pBot.gloat();
+                Console.WriteLine(playerBottom.getName() + " wins " + botScore + " to " + finalScore);
+                playerBottom.gloat();
             }
             else
                 Console.WriteLine("Match was a tie, 48-48!");
 
             Console.Read();
         }
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        // METHOD SEPARATOR METHOD SEPARATOR METHOD SEPARATOR METHOD SEPARATOR METHOD SEPARATOR METHOD SEPARATOR METHOD SEPARATOR
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     }
 }
