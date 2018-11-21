@@ -8,7 +8,7 @@
 /// Mankalah Game Framework.
 /// Modified from the original template provided for this assignment.
 /// </summary>
-/// 
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -56,7 +56,7 @@ namespace Mankalah
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         /// <summary>
-        /// Method calculate the move the AI Player should choose.
+        /// Method calculates the move the AI Player should choose.
         /// </summary>
         /// <param name="b">Game Board object</param>
         /// 

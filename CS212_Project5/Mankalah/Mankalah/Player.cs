@@ -88,7 +88,7 @@ namespace Mankalah
         /// (by default, just counts the score).
         /// </summary>
         /// 
-        /// <param name="b">game board object</param>
+        /// <param name="b">Game Board object</param>
         /// <returns>how optimal the state of the game board is</returns>
         public virtual int heuristicEvaluation(Board b)
         {

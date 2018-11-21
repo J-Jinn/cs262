@@ -45,6 +45,7 @@
     <Compile Include="Board.cs" />
     <Compile Include="BonzoPlayer.cs" />
     <Compile Include="HumanPlayer.cs" />
+    <Compile Include="jj47Player.cs" />
     <Compile Include="KalahMatch.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
