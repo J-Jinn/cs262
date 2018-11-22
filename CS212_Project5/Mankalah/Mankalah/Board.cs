@@ -1,4 +1,5 @@
-﻿/// <summary>
+﻿// ReSharper disable InvalidXmlDocComment
+/// <summary>
 /// Project 5: Mankalah
 /// CS-212 Data Structures and Algorithms
 /// Section: B
@@ -43,10 +44,10 @@ namespace Mankalah
     public class Board
     {
         // Store the position associated with player move.
-        private Position playerToMove;
+        private Position _playerToMove;
 
         // Model all positions on the game boardPositions. (public for performance reasons)
-        public int[] boardPositions = new int[14];
+        public int[] BoardPositions = new int[14];
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // METHOD SEPARATOR METHOD SEPARATOR METHOD SEPARATOR METHOD SEPARATOR METHOD SEPARATOR METHOD SEPARATOR METHOD SEPARATOR
@@ -61,12 +62,12 @@ namespace Mankalah
             // These positions represent both player's pockets, holes, or pits.
             for (int i = 0; i < 13; i++)
             {
-                boardPositions[i] = 4;
+                BoardPositions[i] = 4;
             }
 
             // These two positions represents the player's scoring cache.
-            boardPositions[6] = 0;
-            boardPositions[13] = 0;
+            BoardPositions[6] = 0;
+            BoardPositions[13] = 0;
         }
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -82,14 +83,14 @@ namespace Mankalah
             // These positions represent both player's pockets, holes, or pits.
             for (int i = 0; i < 13; i++)
             {
-                boardPositions[i] = 4;
+                BoardPositions[i] = 4;
             }
 
             // These two positions represents the player's scoring cache.
-            boardPositions[6] = 0;
-            boardPositions[13] = 0;
+            BoardPositions[6] = 0;
+            BoardPositions[13] = 0;
 
-            playerToMove = toMove;
+            _playerToMove = toMove;
         }
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -104,10 +105,10 @@ namespace Mankalah
         {
             for (int i = 0; i < 14; i++)
             {
-                boardPositions[i] = b.boardPositions[i];
+                BoardPositions[i] = b.BoardPositions[i];
             }
 
-            playerToMove = b.playerToMove;
+            _playerToMove = b._playerToMove;
         }
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -118,14 +119,14 @@ namespace Mankalah
         /// Method to copy the current state of the game boardPositions each move.
         /// </summary>
         /// <param name="b">Game Board Object</param>
-        public void copy(Board b)
+        public void Copy(Board b)
         {
             for (int i = 0; i < 14; i++)
             {
-                boardPositions[i] = b.boardPositions[i];
+                BoardPositions[i] = b.BoardPositions[i];
             }
 
-            playerToMove = b.playerToMove;
+            _playerToMove = b._playerToMove;
         }
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -137,9 +138,9 @@ namespace Mankalah
         /// </summary>
         /// <param name="position">the position on the game boardPositions</param>
         /// <returns># of stones at specified position</returns>
-        public int stonesAt(int position)
+        public int StonesAt(int position)
         {
-            return boardPositions[position];
+            return BoardPositions[position];
         }
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -154,9 +155,9 @@ namespace Mankalah
         /// </summary>
         /// <param name="position">the position on the game boardPositions</param>
         /// <param name="value">the number of stones to set to</param>
-        public void setStonesAt(int position, int value)
+        public void SetStonesAt(int position, int value)
         {
-            boardPositions[position] = value;
+            BoardPositions[position] = value;
         }
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -167,9 +168,9 @@ namespace Mankalah
         /// Method to retrieve whose turn it is.
         /// </summary>
         /// <returns>playerToMove - the current player whose turn it is</returns>
-        public Position whoseMove()
+        public Position WhoseMove()
         {
-            return playerToMove;
+            return _playerToMove;
         }
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -181,15 +182,15 @@ namespace Mankalah
         /// </summary>
         /// <param name="move">the position on the boardPositions the player wishes to initiate a move</param>
         /// <returns>true = legal move, false = illegal move</returns>
-        public bool legalMove(int move)
+        public bool LegalMove(int move)
         {
-            if (playerToMove == Position.Top && move >= 7 && move <= 12 &&
-                boardPositions[move] != 0)
+            if (_playerToMove == Position.Top && move >= 7 && move <= 12 &&
+                BoardPositions[move] != 0)
             {
                 return true;
             }
-            if (playerToMove == Position.Bottom && move >= 0 && move <= 5 &&
-                boardPositions[move] != 0)
+            if (_playerToMove == Position.Bottom && move >= 0 && move <= 5 &&
+                BoardPositions[move] != 0)
             {
                 return true;
             }
@@ -204,15 +205,15 @@ namespace Mankalah
         /// Method to determine if the game is over.
         /// </summary>
         /// <returns>true = game over, false = game not over</returns>
-        public bool gameOver()
+        public bool GameOver()
         {
-            if (boardPositions[0] == 0 && boardPositions[1] == 0 && boardPositions[2] == 0 &&
-                boardPositions[3] == 0 && boardPositions[4] == 0 && boardPositions[5] == 0)
+            if (BoardPositions[0] == 0 && BoardPositions[1] == 0 && BoardPositions[2] == 0 &&
+                BoardPositions[3] == 0 && BoardPositions[4] == 0 && BoardPositions[5] == 0)
             {
                 return true;
             }
-            if (boardPositions[7] == 0 && boardPositions[8] == 0 && boardPositions[9] == 0 &&
-                boardPositions[10] == 0 && boardPositions[11] == 0 && boardPositions[12] == 0)
+            if (BoardPositions[7] == 0 && BoardPositions[8] == 0 && BoardPositions[9] == 0 &&
+                BoardPositions[10] == 0 && BoardPositions[11] == 0 && BoardPositions[12] == 0)
             {
                 return true;
             }
@@ -227,14 +228,14 @@ namespace Mankalah
         /// Method determines which player is currently winning, given the current state of the game board.
         /// </summary>
         /// <returns>enumerated representation of the currently winning player</returns>
-        public Position winner()
+        public Position Winner()
         {
             // Determine the # of stones owned by Player 1.
             int player1Count = 0;
 
             for (int i = 7; i <= 13; i++)
             {
-                player1Count += boardPositions[i];
+                player1Count += BoardPositions[i];
             }
 
             // Determine the # of stones owned by Player 2.
@@ -242,7 +243,7 @@ namespace Mankalah
 
             for (int i = 0; i <= 6; i++)
             {
-                player2Count += boardPositions[i];
+                player2Count += BoardPositions[i];
             }
 
             // Determine who is currently winning.
@@ -267,13 +268,13 @@ namespace Mankalah
         /// Method returns the current score for the TOP player.
         /// </summary>
         /// <returns>score of the TOP player</returns>
-        public int scoreTopPlayer()
+        public int ScoreTopPlayer()
         {
             int score = 0;
 
             for (int i = 7; i <= 13; i++)
             {
-                score += boardPositions[i];
+                score += BoardPositions[i];
             }
             return score;
         }
@@ -286,13 +287,13 @@ namespace Mankalah
         /// Method returns the current score for the BOTTOM player.
         /// </summary>
         /// <returns>score of the BOTTOM player</returns>
-        public int scoreBottomPlayer()
+        public int ScoreBottomPlayer()
         {
             int score = 0;
 
             for (int i = 0; i <= 6; i++)
             {
-                score += boardPositions[i];
+                score += BoardPositions[i];
             }
             return score;
         }
@@ -311,13 +312,13 @@ namespace Mankalah
         /// <param name="move">the move to be made</param>
         /// <param name="chatter">do we want to be verbose?</param>
         /// <returns>the # of stones captures</returns>
-        public int makeMove(int move, bool chatter)
+        public int MakeMove(int move, bool chatter)
         {
             // Check for illegal moves.
-            if (!legalMove(move))
+            if (!LegalMove(move))
             {
                 string err = String.Format("Player {0} cheated! (Attempted illegal move {1})",
-                                           playerToMove, move);
+                                           _playerToMove, move);
                 Console.WriteLine(err);
                 Console.Read();
                 //Environment.Exit(1);
@@ -325,8 +326,8 @@ namespace Mankalah
             }
 
             // Pick up the stones.
-            int stones = boardPositions[move];
-            boardPositions[move] = 0;
+            int stones = BoardPositions[move];
+            BoardPositions[move] = 0;
 
             // Integer to store the # of stones captures.
             int stonesCaptured = 0;
@@ -337,13 +338,13 @@ namespace Mankalah
             for (position = move + 1; stones > 0; position++)
             {
                 // Don't add stone to opposing player's scoring cup.
-                if (playerToMove == Position.Top && position == 6)
+                if (_playerToMove == Position.Top && position == 6)
                 {
                     position++;
                 }
 
                 // Don't add stone to opposing player's scoring cup.
-                if (playerToMove == Position.Bottom && position == 13)
+                if (_playerToMove == Position.Bottom && position == 13)
                 {
                     position++;
                 }
@@ -355,7 +356,7 @@ namespace Mankalah
                 }
 
                 // Add stones to the appropriate positions on the game board.
-                boardPositions[position]++;
+                BoardPositions[position]++;
 
                 // Add stones to each position till we run out.
                 stones--;
@@ -365,13 +366,13 @@ namespace Mankalah
             position--;
 
             // Determine if there was a capture by TOP player. 
-            if (playerToMove == Position.Top && position > 6 && position < 13 && boardPositions[position] == 1 && boardPositions[12 - position] > 0)
+            if (_playerToMove == Position.Top && position > 6 && position < 13 && BoardPositions[position] == 1 && BoardPositions[12 - position] > 0)
             {
-                stonesCaptured = boardPositions[12 - position] + 1;
-                boardPositions[13] += boardPositions[12 - position];
-                boardPositions[12 - position] = 0;
-                boardPositions[13]++;
-                boardPositions[position] = 0;
+                stonesCaptured = BoardPositions[12 - position] + 1;
+                BoardPositions[13] += BoardPositions[12 - position];
+                BoardPositions[12 - position] = 0;
+                BoardPositions[13]++;
+                BoardPositions[position] = 0;
 
                 if (chatter)
                 {
@@ -380,13 +381,13 @@ namespace Mankalah
             }
 
             // Determine if there was a capture by BOTTOM player. 
-            if (playerToMove == Position.Bottom && position >= 0 && position < 6 && boardPositions[position] == 1 && boardPositions[12 - position] > 0)
+            if (_playerToMove == Position.Bottom && position >= 0 && position < 6 && BoardPositions[position] == 1 && BoardPositions[12 - position] > 0)
             {
-                stonesCaptured = boardPositions[12 - position] + 1;
-                boardPositions[6] += boardPositions[12 - position];
-                boardPositions[12 - position] = 0;
-                boardPositions[6]++;
-                boardPositions[position] = 0;
+                stonesCaptured = BoardPositions[12 - position] + 1;
+                BoardPositions[6] += BoardPositions[12 - position];
+                BoardPositions[12 - position] = 0;
+                BoardPositions[6]++;
+                BoardPositions[position] = 0;
 
                 if (chatter)
                 {
@@ -395,11 +396,11 @@ namespace Mankalah
             }
 
             // Determine who gets the next move.
-            if (playerToMove == Position.Top)
+            if (_playerToMove == Position.Top)
             {
                 if (position != 13)
                 {
-                    playerToMove = Position.Bottom;
+                    _playerToMove = Position.Bottom;
                 }
                 else
                 {
@@ -413,7 +414,7 @@ namespace Mankalah
             {
                 if (position != 6)
                 {
-                    playerToMove = Position.Top;
+                    _playerToMove = Position.Top;
                 }
                 else
                 {
@@ -436,22 +437,22 @@ namespace Mankalah
         /// 
         /// TODO: Create a graphical representation of the game board by refactoring to WPF, etc.
         /// </summary>
-        public void display()
+        public void Display()
         {
             Console.Write("\n    ");
 
             for (int i = 12; i >= 7; i--)
             {
-                Console.Write(boardPositions[i] + "  ");
+                Console.Write(BoardPositions[i] + "  ");
             }
 
             Console.WriteLine("");
-            Console.WriteLine(boardPositions[13] + "                     " + boardPositions[6]);
+            Console.WriteLine(BoardPositions[13] + "                     " + BoardPositions[6]);
             Console.Write("    ");
 
             for (int i = 0; i <= 5; i++)
             {
-                Console.Write(boardPositions[i] + "  ");
+                Console.Write(BoardPositions[i] + "  ");
             }
 
             Console.WriteLine("");

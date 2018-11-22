@@ -1,4 +1,5 @@
-﻿/// <summary>
+﻿// ReSharper disable InvalidXmlDocComment
+/// <summary>
 /// Project 5: Mankalah
 /// CS-212 Data Structures and Algorithms
 /// Section: B
@@ -29,13 +30,13 @@ namespace Mankalah
     public abstract class Player
     {
         // Store the name of the player.
-        private String myName;
+        private readonly string _myName;
 
         // Determine if the player is TOP, BOTTOM, or INVALID.
-        private Position myPosition;
+        private readonly Position _myPosition;
 
         // Time limit per move calculated in milliseconds.
-        private int timePerMove;
+        private readonly int _timePerMove;
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // METHOD SEPARATOR METHOD SEPARATOR METHOD SEPARATOR METHOD SEPARATOR METHOD SEPARATOR METHOD SEPARATOR METHOD SEPARATOR
@@ -51,11 +52,11 @@ namespace Mankalah
         /// <param name="position">Position (TOP or BOTTOM) the player is to play</param>
         /// <param name="name">name of the player</param>
         /// <param name="maxTimePerMove">time limit per turn in milliseconds</param>
-        public Player(Position position, String name, int maxTimePerMove)
+        protected Player(Position position, String name, int maxTimePerMove)
         {
-            myName = name;
-            myPosition = position;
-            timePerMove = maxTimePerMove;
+            _myName = name;
+            _myPosition = position;
+            _timePerMove = maxTimePerMove;
 
             Console.Write("Player " + name + " playing on ");
 
@@ -67,7 +68,7 @@ namespace Mankalah
             {
                 Console.WriteLine("bottom.");
             }
-            if (position != Position.Top && myPosition != Position.Bottom)
+            if (position != Position.Top && _myPosition != Position.Bottom)
             {
                 Console.Write("...an illegal side of the board.");
                 Environment.Exit(1);
@@ -90,9 +91,9 @@ namespace Mankalah
         /// 
         /// <param name="b">Game Board object</param>
         /// <returns>how optimal the state of the game board is</returns>
-        public virtual int heuristicEvaluation(Board b)
+        public virtual int HeuristicEvaluation(Board b)
         {
-            return b.stonesAt(13) - b.stonesAt(6);
+            return b.StonesAt(13) - b.StonesAt(6);
         }
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -103,9 +104,9 @@ namespace Mankalah
         /// Method to get the name of the player.
         /// </summary>
         /// <returns>name of the player</returns>
-        public String getName()
+        public string GetName()
         {
-            return myName;
+            return _myName;
         }
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -116,9 +117,9 @@ namespace Mankalah
         /// Method to get the max time allowed per turn or move.
         /// </summary>
         /// <returns>time limit per turn or move</returns>
-        public int getTimePerMove()
+        public int GetTimePerMove()
         {
-            return timePerMove;
+            return _timePerMove;
         }
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -131,9 +132,9 @@ namespace Mankalah
         /// Override with personalized avatar.
         /// </summary>
         /// <returns>string representation of URL or relative file path</returns>
-        public virtual String getImage()
+        public virtual string GetImage()
         {
-            return String.Empty;
+            return string.Empty;
         }
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -146,7 +147,7 @@ namespace Mankalah
         /// </summary>
         /// <param name="b">Game Board object.</param>
         /// <returns>the optimal move to make</returns>
-        public abstract int chooseMove(Board b);
+        public abstract int ChooseMove(Board b);
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // METHOD SEPARATOR METHOD SEPARATOR METHOD SEPARATOR METHOD SEPARATOR METHOD SEPARATOR METHOD SEPARATOR METHOD SEPARATOR
@@ -157,7 +158,7 @@ namespace Mankalah
         /// Override with personalized message.
         /// </summary>
         /// <returns>message in string format</returns>
-        public virtual String gloat()
+        public virtual string Gloat()
         {
             return "I win.";
         }

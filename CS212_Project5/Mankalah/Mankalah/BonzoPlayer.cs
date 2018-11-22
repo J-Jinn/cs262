@@ -46,7 +46,7 @@ namespace Mankalah
         /// Method permits the user to specify a personalized emotive message.
         /// </summary>
         /// <returns>emotive message</returns>
-        public override string gloat()
+        public override string Gloat()
         {
             return "I WIN! YOU'RE DUMBER THAN BONZO!!";
         }
@@ -61,20 +61,20 @@ namespace Mankalah
         /// <param name="b">Game Board object</param>
         /// 
         /// <returns>the move the AI chose to make</returns>
-        public override int chooseMove(Board b)
+        public override int ChooseMove(Board b)
         {
             // If AI Player is Position TOP
-            if (b.whoseMove() == Position.Top)
+            if (b.WhoseMove() == Position.Top)
             {
                 // Try first go-again.
                 for (int i = 12; i >= 7; i--)
                 {
-                    if (b.stonesAt(i) == 13 - i) return i;
+                    if (b.StonesAt(i) == 13 - i) return i;
                 }
                 // Otherwise, choose first available move.
                 for (int i = 12; i >= 7; i--)
                 {
-                    if (b.stonesAt(i) > 0) return i;
+                    if (b.StonesAt(i) > 0) return i;
                 }
             }
             // If AI Player is Position  BOTTOM
@@ -83,12 +83,12 @@ namespace Mankalah
                 // Try first go-again.
                 for (int i = 5; i >= 0; i--)
                 {
-                    if (b.stonesAt(i) == 6 - i) return i;
+                    if (b.StonesAt(i) == 6 - i) return i;
                 }
                 // Otherwise, choose first available move.
                 for (int i = 5; i >= 0; i--)
                 {
-                    if (b.stonesAt(i) > 0) return i;
+                    if (b.StonesAt(i) > 0) return i;
                 }
             }
             // Return illegal move, if no legal moves are possible. (only if game is over)

@@ -43,19 +43,19 @@ namespace Mankalah
         /// <param name="b">Game Board object</param>
         /// 
         /// <returns>the move the user chose to make</returns>
-        public override int chooseMove(Board b)
+        public override int ChooseMove(Board b)
         {
             int move = -1;
             string moveString;
 
             // Continue asking for a legal move, if illegal.
-            while (!b.legalMove(move))
+            while (!b.LegalMove(move))
             {
                 Console.Write("Your move: ");
                 moveString = Console.ReadLine();
 
                 // Obtain integer representation of move and store in variable.
-                if (!int.TryParse(moveString, out move) || !b.legalMove(move))
+                if (!int.TryParse(moveString, out move) || !b.LegalMove(move))
                     Console.WriteLine("Illegal move. Try again.");
             }
             return move;
@@ -69,7 +69,7 @@ namespace Mankalah
         /// Method permits the user to specify a personalized emotive message.
         /// </summary>
         /// <returns>emotive message</returns>
-        public override string gloat()
+        public override string Gloat()
         {
             return "I WIN! Humans still rule.";
         }
