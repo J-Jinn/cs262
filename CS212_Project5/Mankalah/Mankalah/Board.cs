@@ -53,7 +53,28 @@ namespace Mankalah
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         /// <summary>
-        /// Constructor that creates a brand new fresh game boardPositions.
+        /// Default constructor that simply creates a new game board.
+        /// Note: Added for testing purposes for Class jj47Player.
+        /// </summary>
+        public Board()
+        {
+            // These positions represent both player's pockets, holes, or pits.
+            for (int i = 0; i < 13; i++)
+            {
+                boardPositions[i] = 4;
+            }
+
+            // These two positions represents the player's scoring cache.
+            boardPositions[6] = 0;
+            boardPositions[13] = 0;
+        }
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        // METHOD SEPARATOR METHOD SEPARATOR METHOD SEPARATOR METHOD SEPARATOR METHOD SEPARATOR METHOD SEPARATOR METHOD SEPARATOR
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        
+        /// <summary>
+        /// Constructor that creates a brand new fresh game boardPositions and specifies the starting player.
         /// </summary>
         /// <param name="toMove">position to initiate a move</param>
         public Board(Position toMove)
@@ -119,6 +140,23 @@ namespace Mankalah
         public int stonesAt(int position)
         {
             return boardPositions[position];
+        }
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        // METHOD SEPARATOR METHOD SEPARATOR METHOD SEPARATOR METHOD SEPARATOR METHOD SEPARATOR METHOD SEPARATOR METHOD SEPARATOR
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        /// <summary>
+        /// Method to set the # of stones at specified boardPositions position.
+        /// Note: Added for testing purposes.
+        ///
+        /// TODO: Should not be public outside of testing purposes.
+        /// </summary>
+        /// <param name="position">the position on the game boardPositions</param>
+        /// <param name="value">the number of stones to set to</param>
+        public void setStonesAt(int position, int value)
+        {
+            boardPositions[position] = value;
         }
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

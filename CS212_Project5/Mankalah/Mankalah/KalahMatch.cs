@@ -10,10 +10,6 @@
 /// </summary>
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 /// <summary>
 /// Namespace this class belongs to.
@@ -133,35 +129,94 @@ namespace Mankalah
         /// <param name="arguments">optional command-line arguments</param>
         public static void Main(String[] arguments)
         {
-            // Obtain final score for the TOP and BOTTOM player.
-            int finalScore;
+            // Boolean variables for debugging purposes.
+            bool debuggingDisabled = false;
+            bool debugHeuristicEvaluationFunction = true;
+            bool debugChooseMoveMiniMaxAlgorithmFunction = false;
 
-            Console.WriteLine("\n================ Game 1 ================");
-            finalScore = playGame(playerTop, playerBottom, Position.Bottom);
+            ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+            /// Play the game.
 
-            Console.WriteLine("\n================ Game 2 ================");
-            finalScore += playGame(playerTop, playerBottom, Position.Top);
-
-            Console.WriteLine("\n========================================");
-            Console.Write("Match result: ");
-
-            // Determine the winner and loser.
-            int botScore = 96 - finalScore;
-
-            if (finalScore > 48)
+            if (debuggingDisabled == true)
             {
-                Console.WriteLine(playerTop.getName() + " wins " + finalScore + " to " + botScore);
-                playerTop.gloat();
-            }
-            else if (botScore > 48)
-            {
-                Console.WriteLine(playerBottom.getName() + " wins " + botScore + " to " + finalScore);
-                playerBottom.gloat();
-            }
-            else
-                Console.WriteLine("Match was a tie, 48-48!");
+                // Obtain final score for the TOP and BOTTOM player.
+                int finalScore;
 
-            Console.Read();
+                Console.WriteLine("\n================ Game 1 ================");
+                finalScore = playGame(playerTop, playerBottom, Position.Bottom);
+
+                Console.WriteLine("\n================ Game 2 ================");
+                finalScore += playGame(playerTop, playerBottom, Position.Top);
+
+                Console.WriteLine("\n========================================");
+                Console.Write("Match result: ");
+
+                // Determine the winner and loser.
+                int botScore = 96 - finalScore;
+
+                if (finalScore > 48)
+                {
+                    Console.WriteLine(playerTop.getName() + " wins " + finalScore + " to " + botScore);
+                    playerTop.gloat();
+                }
+                else if (botScore > 48)
+                {
+                    Console.WriteLine(playerBottom.getName() + " wins " + botScore + " to " + finalScore);
+                    playerBottom.gloat();
+                }
+                else
+                    Console.WriteLine("Match was a tie, 48-48!");
+
+                Console.Read();
+            }
+
+            ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+            /// TEST EACH METHOD OR FUNCTION IN jj47Player works as intended
+
+            if (debugHeuristicEvaluationFunction == true)
+            {
+
+                // Create new game board.
+                Board testBoard = new Board();
+
+                testBoard.display();
+                Console.WriteLine("\n\n");
+
+                // Debug - test setter for number of stones at specified position.
+                testBoard.setStonesAt(2, 0);
+
+                testBoard.display();
+                Console.WriteLine("\n\n");
+
+                if (testBoard.stonesAt(2) != 0)
+                {
+                    Console.WriteLine("Method setStonesAt(position) not functioning properly");
+                }
+
+                // Store the move the AI determined it should make.
+                int moveTOP = -1;
+                int moveBOTTOM = -1;
+
+                // Test as TOP Player.
+                jj47Player testTOPPlayer = new jj47Player(Position.Top, 100000);
+
+                moveTOP = testTOPPlayer.heuristicEvaluation(testBoard);
+
+                Console.WriteLine("TOP Player AI determined optimal move was: {0}", moveTOP);
+
+                // Test as BOTTOM Player.
+                jj47Player testBOTTOMPlayer = new jj47Player(Position.Bottom, 100000);
+
+                moveBOTTOM = testBOTTOMPlayer.heuristicEvaluation(testBoard);
+
+                Console.WriteLine("BOTTOM Player AI determined optimal move was: {0}", moveBOTTOM);
+
+            }
+
+            while (true)
+            {
+                //Do nothing.  Keep terminal open.
+            }
         }
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
