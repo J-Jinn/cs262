@@ -152,32 +152,44 @@ namespace Mankalah
             // Call mini-max algorithm.
             int optimalMove = MiniMaxAlgorithm(b, initialDepth, elapsedTime).GetOptimalMove();
 
-            return optimalMove;
+            // Initial alpha and beta values.
+            int alpha = int.MinValue;
+            int beta = int.MaxValue;
+
+            // Call mini-max algorithm with Alpha-Beta Pruning support.
+            int optimalMovePruned = MiniMaxAlgorithmWithAlphaBetaPruning(b, initialDepth, elapsedTime, alpha, beta).GetOptimalMove();
+
+            return optimalMovePruned;
         }
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // METHOD SEPARATOR METHOD SEPARATOR METHOD SEPARATOR METHOD SEPARATOR METHOD SEPARATOR METHOD SEPARATOR METHOD SEPARATOR
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        /// 
+
         /// <summary>
         /// Method implements the mini-max algorithm via a staged (limited) depth-first search.
+        /// Supports alpha-beta pruning.
+        /// TODO - not functional yet!
         /// </summary>
         /// 
-        /// <param name="b">Game Board object.</param>
+        /// <param name="board">Game Board object.</param>
         /// <param name="depth">current depth of the recursive search</param>
-        /// <returns>the optimal position and optimal weight value at that position</returns>
-        private MovePredictionResults MiniMaxAlgorithm(Board board, int depth, Stopwatch time)
+        /// <param name="time">keep track of the execution time of mini-max algorithm</param>
+        /// <param name="Alpha">TOP Player - maximizing value</param>
+        /// <param name="Beta">BOTTOM Player - minimizing value</param>
+        /// <returns>the optimal position and optimal weight value of the game board</returns>
+        private MovePredictionResults MiniMaxAlgorithmWithAlphaBetaPruning(Board board, int depth, Stopwatch time,
+            int Alpha, int Beta)
         {
             int optimalMoveValue;
             int optimalMove = -1;
 
             /**
              * Base Case - ends recursion.
-             * 1. We have reached the turn time limit.
-             * 2. We have reach the depth limit.
-             * 3. The game is over.
+             * 1. We have reach the depth limit.
+             * 2. The game is over.
              */
-            if (time.ElapsedMilliseconds > turnTimeLimit || depth == 0 || board.GameOver())
+            if (depth == 0 || board.GameOver())
             {
                 return new MovePredictionResults(-1, HeuristicEvaluation(board));
             }
@@ -190,7 +202,114 @@ namespace Mankalah
                 // Loop through all possible choice of moves per turn.
                 foreach (KeyValuePair<string, int> entry in _positionLabelsTop)
                 {
-                    if (board.LegalMove(entry.Value))
+                    if (board.LegalMove(entry.Value) && time.ElapsedMilliseconds < turnTimeLimit)
+                    {
+                        // Duplicate game board so we don't overwrite current game state.
+                        Board predictionBoard = new Board(board);
+
+                        // Initiate the move.
+                        predictionBoard.MakeMove(entry.Value, false);
+
+                        // Determine the optimality of that move.
+                        int moveValue = MiniMaxAlgorithmWithAlphaBetaPruning(predictionBoard, depth - 1, time, Alpha, Beta).GetOptimalMoveScore();
+
+                        Alpha = Math.Max(Alpha, optimalMoveValue);
+                        
+                        // Set the best possible predicted move.
+                        if (moveValue > optimalMoveValue)
+                        {
+                            optimalMoveValue = moveValue;
+                            optimalMove = entry.Value;
+                        }
+
+                        // Prune.
+                        if (Beta <= Alpha)
+                        {
+                            break;
+                        }
+                    }
+                }
+            }
+            // Determine optimal move for BOTTOM (MIN) Player.
+            else if (board.WhoseMove() == Position.Bottom)
+            {
+                optimalMoveValue = int.MaxValue;
+
+                // Loop through all possible choice of moves per turn.
+                foreach (KeyValuePair<string, int> entry in _positionLabelsBottom)
+                {
+                    if (board.LegalMove(entry.Value) && time.ElapsedMilliseconds < turnTimeLimit)
+                    {
+                        // Duplicate game board so we don't overwrite current game state.
+                        Board predictionBoard = new Board(board);
+
+                        // Initiate the move.
+                        predictionBoard.MakeMove(entry.Value, false);
+
+                        // Determine the optimality of that move.
+                        int moveValue = MiniMaxAlgorithmWithAlphaBetaPruning(predictionBoard, depth - 1, time, Alpha, Beta).GetOptimalMoveScore();
+
+                        Beta = Math.Min(Beta, optimalMoveValue);
+                        
+                        // Set the best possible predicted move.
+                        if (moveValue < optimalMoveValue)
+                        {
+                            optimalMoveValue = moveValue;
+                            optimalMove = entry.Value;
+                        }
+
+                        //Prune.
+                        if (Beta <= Alpha)
+                        {
+                            break;
+                        }
+                    }
+                }
+            }
+            // Not a valid Player.
+            else
+            {
+                return new MovePredictionResults(-1, 0);
+            }
+            return new MovePredictionResults(optimalMove, optimalMoveValue);
+        }
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        // METHOD SEPARATOR METHOD SEPARATOR METHOD SEPARATOR METHOD SEPARATOR METHOD SEPARATOR METHOD SEPARATOR METHOD SEPARATOR
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        /// <summary>
+        /// Method implements the mini-max algorithm via a staged (limited) depth-first search.
+        /// </summary>
+        /// 
+        /// <param name="board">Game Board object.</param>
+        /// <param name="depth">current depth of the recursive search</param>
+        /// <param name="time">keep track of the execution time of mini-max algorithm</param>
+        /// <returns>the optimal position and optimal weight value of the game board</returns>
+        private MovePredictionResults MiniMaxAlgorithm(Board board, int depth, Stopwatch time)
+        {
+            int optimalMoveValue;
+            int optimalMove = -1;
+
+            /**
+             * Base Case - ends recursion.
+             * 1. We have reach the depth limit.
+             * 2. The game is over.
+             */
+            if (depth == 0 || board.GameOver())
+            {
+                return new MovePredictionResults(-1, HeuristicEvaluation(board));
+            }
+
+            // Determine optimal move for TOP (MAX) Player.
+            if (board.WhoseMove() == Position.Top)
+            {
+                optimalMoveValue = int.MinValue;
+
+                // Loop through all possible choice of moves per turn.
+                foreach (KeyValuePair<string, int> entry in _positionLabelsTop)
+                {
+                    if (board.LegalMove(entry.Value) && time.ElapsedMilliseconds < turnTimeLimit)
                     {
                         // Duplicate game board so we don't overwrite current game state.
                         Board predictionBoard = new Board(board);
@@ -218,7 +337,7 @@ namespace Mankalah
                 // Loop through all possible choice of moves per turn.
                 foreach (KeyValuePair<string, int> entry in _positionLabelsBottom)
                 {
-                    if (board.LegalMove(entry.Value))
+                    if (board.LegalMove(entry.Value) && time.ElapsedMilliseconds < turnTimeLimit)
                     {
                         // Duplicate game board so we don't overwrite current game state.
                         Board predictionBoard = new Board(board);
@@ -298,7 +417,7 @@ namespace Mankalah
 
 
             ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-            /// HEURISTIC CONDITION ZERO
+            /// HEURISTIC CONDITION ZERO - Increase value of position(s) that have x > 0 stones.
 
             // Increase optimal position weight values for all positions that are not empty of stones
             // (this will ensure that we never try to choose a move that has no stones in the hole)
@@ -336,7 +455,7 @@ namespace Mankalah
             }
 
             ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-            /// HEURISTIC CONDITION ONE
+            /// HEURISTIC CONDITION ONE - Increase value of position(s) with the most stones.
 
             // Instantiate necessary data structures.
             SortedDictionary<int, int> topPositionsCurrentNumStones = new SortedDictionary<int, int>();
@@ -447,7 +566,7 @@ namespace Mankalah
             }
 
             ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-            /// HEURISTIC CONDITION TWO
+            /// HEURISTIC CONDITION TWO - Increase value of position(s) that permit go-agains.
 
             // Determine if we can go again from making a move at this position.
             List<int> goAgainPositionsTop = new List<int>();
@@ -502,7 +621,7 @@ namespace Mankalah
             }
 
             ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-            /// HEURISTIC CONDITION THREE
+            /// HEURISTIC CONDITION THREE - Increase value of position(s) that permit captures.
 
             // Determine if the hole is empty. If yes, add to list of empty positions and add the number of stones in 
             // its opposing position.
@@ -740,7 +859,7 @@ namespace Mankalah
         /// Setter for class field optimalMove.
         /// </summary>
         /// <param name="move">integer value representing the optimal move</param>
-        private void SetOptimalMove(int move)
+        public void SetOptimalMove(int move)
         {
             _optimalMove = move;
         }
@@ -758,7 +877,7 @@ namespace Mankalah
         /// Setter for class field optimalMoveScore.
         /// </summary>
         /// <param name="score">integer value representing the score for the optimal move</param>
-        private void SetOptimalMoveScore(int score)
+        public void SetOptimalMoveScore(int score)
         {
             _optimalMoveScore = score;
         }
