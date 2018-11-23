@@ -1,0 +1,201 @@
+CS-262 Software Engineering
+Date: 11-08-18
+Reviewer: Joseph Jinn
+Team being reviewed: Team E - CalUber
+Sprint 3 Review
+
+=================================================================================================================================================
+
+Note: This review is reflective of the exact date the review was done.  Changes may have occurred in the intervening time since.
+
+Note: I haven't run this through a spell-checker.  There are probably spelling mistakes.
+
+=================================================================================================================================================
+=================================================================================================================================================
+
+Trello Board Activity:
+
+-People seem to be logging their hours on a regular basis for each card.
+
+-Tasks are labeled according to categories.
+
+-Nate Gamble seems to be the Trello dungeon master in charge of keeping Trello organized and up-to-date.
+
+-Still tidy and neat.
+
+-Basically everything I said last sprint review, left as is.
+
+-Some imbalance in user hours logged, nate gamble and jae young choi seem to be speeding ahead of others.
+
+-There appears to be a duplicate user for kelly oh (two of the same person).
+
+-Is the "card" user keeping track of total hours logged for the entire team?
+
+-Not sure as to the purpose of the "board" user.
+
+-There seems to be 7 users total, going by non-duplicate names, and minus the two  users I mentioned above.
+
+=================================================================================================================================================
+=================================================================================================================================================
+
+User Stories:
+
+-There are currently 9 user stories modeled in Trello.  This is a increase from the 3 I saw during the last sprint review.
+
+-They seem to follow the 5 W's format and appear viable.
+
+-Not all the user stories are implemented in the layout.xml of the Android Studio App Prototype I am reviewing.  For example, there is no way
+to delete a user account yet, based on one of your user stories.  But this is a work in progress, so I assume you guys will implement them one-by-one.
+
+-It will become plausible to implement account deletion and other functionalities once your back-end is up and operational.
+
+-Otherwise, it looks like you have the basics covered for what the user should be able to do.
+
+=================================================================================================================================================
+=================================================================================================================================================
+
+Domain Model:
+
+-The domain model is definitely still the pencil/pen and paper sketch I saw from last sprint that was previous on Trello.
+
+-I suggest you update the domain model to reflect your current database schema.  This document needs to be updated.
+
+-Not much else to say, as it hasn't changed since the last time.
+
+=================================================================================================================================================
+=================================================================================================================================================
+
+User Interface Model:
+
+-The UI model is still the pencil/pen and paper sketch I saw from the last sprint?
+
+-I suggest you update it to reflect the current state of your layout.xml files that I reviewed for your prototype.  This version in your GitHub
+repo is definitely out-of-date/deprecated.
+
+-One suggestion is to use screen captures of the different activites/fragments in your app prototype and add directional arrows indicating the
+relationship of each screen to the other in the app.  This is what my team decided to do.
+
+-Of course, it's hard to keep this model up to do date as changes are often continuous as development proceeds on a semi-regular basis.
+
+=================================================================================================================================================
+=================================================================================================================================================
+
+Supplemental technical requirements documentation:
+
+-Please change the location of this document to the appropriate repository (refer to Miscellaneous section at the bottom of this review)
+
+-It has improved from the rough draft I reviewed during the last sprint.
+
+-Sounds pretty professional to me, at least.
+
+-Succintly states the purpose of the application in the first and second paragraph, then lists the actual specifications below.
+
+-It looks like you combined your vision statemetn and the actual technical requirements into one document.
+
+-All specifications seem to be testable requirements.
+
+-Looks good overall.
+	
+=================================================================================================================================================
+=================================================================================================================================================
+
+GitHub data repository - Database Schema
+
+-From what little I know of relational database, it looks like they have a working schema in place.
+
+-The three relations, User, Passengers, and Ride, seems to cover the necessary information needed in order to schedule rides between users.
+
+-I would suggest inserting more placeholder test values in each of the tables for when you begin implementing your back-end and testing that it
+functions as intended.  Right now, you have entried inserted for Users but none for Ride or Passenger.
+
+-I suggest you create a separate file for your query statements instead of including them along with your database schema.
+
+-I suggest usecing "CASCADE" to drop tables so you don't need to worry about foreign constraints, etc.
+
+-Otherwise, it looks good.
+
+=================================================================================================================================================
+=================================================================================================================================================
+
+=================================================================================================================================================
+=================================================================================================================================================
+
+GitHub client repository - Android App
+
+-Prototype compiles, runs, and has placeholder functionality.
+
+-Login screen is the launcher activity and provides a user name and password editTextView.
+
+-Account creation activity provides editTextView for first name, last name, Calvin ID, user name, and password.
+
+-I created an account and tried to login, but a toast message indicated my information was invalid.
+
+-I attempted to create another account and login, same result.  Hence, I cannot see the rest of the app as I am blocked.
+
+-Looking at the code-base, it is clean but lacks comments indicating what all the methods and classes are intended to do.
+
+-I looked at the layout.xml files in order to get a better sense of what the app looks like.
+
+-I recommend that in cativity_create_ride.xml you do not use yellow background and white text.  It probably won't read that well on a actual device.
+
+-I recommend that in activity_user_profile.xml you do not use yellow background and whit etext.  It probably won't read that well on a actual device.
+
+-From what I can tell, all the necessary screens to provide the full functionality of the app are in place.  Now, it's a matter of getting the 
+back-end up and running and beginning integration.
+
+=================================================================================================================================================
+=================================================================================================================================================
+
+RESTful Web Service
+
+-I see no indication it has been implemented, thus a review is not possible at this point in time.
+
+=================================================================================================================================================
+=================================================================================================================================================
+
+Design Presentation
+
+-Overall, it was an effective presentation.  It easily generated enough interest to invite a entire sequence of questions from the audience.
+(even if part of that is motivated by the graded aspect of event participation)
+
+-I would say the delivery of the presentation fell around the mean value relative to the entire set of presentations for Teams A-H.
+
+-The presentation slides themselves did their job, otherwise weren't particularly noteworthy in either a good or bad way.
+
+-There wasn't anything that stood out to me as a spectacular success or a spectacular failure.
+
+-As I'm finishing this section of the team review on Saturday, the finer details from Friday have sort of faded in memory.
+
+-I noticed that on one of their slides they had "Domain Model - UI model" as the header while showing their UI model.  I was under the impression that those
+two models are two very different kinds of models.
+
+-Text and picture size could be larger on some slides, for ease of reading, especially for those sitting in the back rows.  Then again, I'm terribly
+nearsighted with a lack of 20/20 vision wearing these 6+ year old pair of glasses, so individual mileage may vary.
+
+-They effectively used their vision statement as their introductory speech for the presentation.  It provided a clear direction and idea behind
+the app.
+
+-Not particularly noteworthy, but there were consistent "Uhm's" during Nate Gamble's part of the presentation (before the Q & A session)
+
+-They were the only team to use a stylus with their smartphone to demo their app prototype.
+
+-Some team members could have been somewhat better-dressed for the occasion, with slightly more formal fashion sense.
+
+-Positioning wise, they might have been blocking some people's view of the slides who sat on the side of the room facing the goldfish fountain,
+on the far right.
+
+-I don't expect everyone to sound as enthusiastic as Andrew Thomas, but there could have perhaps been more voice fluctuation (tonal changes) and
+use of body language (gestures, etc.).
+
+-Everyone seemed to maintain decent eye contact with the audience.
+
+=================================================================================================================================================
+=================================================================================================================================================
+
+Miscellaneous:
+
+-Suggest including your supplemental technical requirements documentation in your CS-262-Materials repository alongside your other documents.
+Right now, it is in your CS-262-Client repository and thus I had to go lookint for it in order to find it when I expected it in the other repository.
+	
+=================================================================================================================================================
+=================================================================================================================================================
