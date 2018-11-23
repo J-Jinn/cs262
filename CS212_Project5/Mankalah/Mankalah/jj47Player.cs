@@ -813,16 +813,20 @@ namespace Mankalah
 
             ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
             /// HEURISTIC CONDITION FOUR - If positions have the same optimal weight value, randomly select one as the optimal move.
-            
-            // TODO: implement this heuristic.
 
-            ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-            /// DETERMINE OPTIMAL MOVE AND VALUE AND RETURN IT
+            // TODO - confirm that this is working properly.
+
+            // Determine which move(s) are optimal, and randomly select one, if there are multiple choices.
+            SortedDictionary<int, int> optimalMovesTop = new SortedDictionary<int, int>();
+            SortedDictionary<int, int> optimalMovesBottom = new SortedDictionary<int, int>();
 
             // Store the optimal position to move.
             int optimalMove = 0;
             // Store the value for the optimal position to move.
             int optimalMoveValue = 0;
+
+            // Random number generator.
+            Random random = new Random();
 
             // Determine the move with the highest or lowest associated value.
             int currentMaxValue = int.MinValue;
@@ -831,36 +835,79 @@ namespace Mankalah
             // If we are evaluating the optimal move for the TOP player.
             if (b.WhoseMove() == Position.Top)
             {
+                // Set to highest weight value found.
+                currentMaxValue = positionOptimalValueMAX.Values.Max();
+
+                // Search for multiple instances of the highest weight value.
                 foreach (KeyValuePair<int, int> entry in positionOptimalValueMAX)
                 {
-                    if (entry.Value > currentMaxValue)
+                    if (entry.Value == currentMaxValue)
                     {
-                        currentMaxValue = entry.Value;
-                        optimalMove = entry.Key;
-                        optimalMoveValue = entry.Value;
+                        optimalMovesTop.Add(entry.Key, entry.Value);
                     }
                 }
+
+                List<int> keys = optimalMovesTop.Keys.ToList();
+   
+                // Randomly select one of the moves with same highest weight value.
+                optimalMove = keys[random.Next(keys.Count)];
+                optimalMoveValue = optimalMovesTop[optimalMove];
             }
 
             // If we are evaluating the optimal move for the BOTTOM player.
             if (b.WhoseMove() == Position.Bottom)
             {
+                // Set to lowest weight value found.
+                currentMinValue = positionOptimalValueMIN.Values.Min();
+
+                // Search for multiple isntances of the lowest weight value.
                 foreach (KeyValuePair<int, int> entry in positionOptimalValueMIN)
                 {
-                    if (entry.Value < currentMinValue)
+                    if (entry.Value == currentMinValue)
                     {
-                        currentMinValue = entry.Value;
-                        optimalMove = entry.Key;
-                        optimalMoveValue = entry.Value;
+                        optimalMovesBottom.Add(entry.Key, entry.Value);
                     }
                 }
-            }
 
+                List<int> keys = optimalMovesBottom.Keys.ToList();
+
+                // Randomly select one of the moves with the same lowest weight value.
+                optimalMove = keys[random.Next(keys.Count)];
+                optimalMoveValue = optimalMovesBottom[optimalMove];
+            }
+            
             bool debugCheckOptimalMoveAndOptimalMoveValue = false;
 
             // Debug - check that our optimal move is what we expect it to be.
             if (debugCheckOptimalMoveAndOptimalMoveValue == true)
             {
+                Console.WriteLine("\n\nUpdated optimal position weight values for TOP player:");
+                foreach (KeyValuePair<int, int> entry in positionOptimalValueMAX)
+                {
+                    Console.WriteLine("MAX - Position: {0}, Optimal Value: {1}", entry.Key, entry.Value);
+                }
+                Console.WriteLine("\n\nUpdated optimal position weight values for BOTTOM player:");
+                foreach (KeyValuePair<int, int> entry in positionOptimalValueMIN)
+                {
+                    Console.WriteLine("MIN - Position: {0}, Optimal Value: {1}", entry.Key, entry.Value);
+                }
+                Console.WriteLine("\n\n");
+
+                Console.WriteLine("\n\nOptimal move positions for TOP player:");
+                foreach (KeyValuePair<int, int> entry in optimalMovesTop)
+                {
+                    Console.WriteLine("MAX - Optimal Position: {0}", entry);
+                }
+                Console.WriteLine("\n\nOptimal move positions for BOTTOM player:");
+                foreach (KeyValuePair<int, int> entry in optimalMovesBottom)
+                {
+                    Console.WriteLine("MIN - Optimal Position: {0}", entry);
+                }
+                Console.WriteLine("\n\n");
+
+                // Confirm we have stored all optimal positions.
+                b.Display();
+
                 Console.WriteLine("\n\n");
                 Console.WriteLine("The optimal move is: {0}", optimalMove);
                 Console.WriteLine("The value for the optimal move is: {0}", optimalMoveValue);

@@ -26,14 +26,20 @@ namespace Mankalah
         // Turn time limit calculated in milliseconds
         private const int TurnTimeLimit = 1000;
 
-        // The default AI player on the TOP (MAX)
-        private static readonly Player AIPlayerBonzo = new BonzoPlayer(Position.Top, TurnTimeLimit);
+        // The default AI player on TOP (MAX).
+        private static readonly Player AIPlayerBonzoTop = new BonzoPlayer(Position.Top, TurnTimeLimit);
 
-        // The custom AI player on the TOP (MAX)
-        private static readonly Player AIPlayerJJ47 = new jj47Player(Position.Top, TurnTimeLimit);
+        // The custom AI player on TOP (MAX).
+        private static readonly Player AIPlayerJJ47Top = new jj47Player(Position.Top, TurnTimeLimit);
 
-        // The Human player on the BOTTOM (MIN)
-        private static readonly Player HumanPlayer = new HumanPlayer(Position.Bottom, TurnTimeLimit);
+        // The custom AI player on BOTTOM (MIN).
+        private static readonly Player AIPlayerJJ47Bottom = new jj47Player(Position.Bottom, TurnTimeLimit);
+
+        // The Human player on TOP (MAX).
+        private static readonly Player HumanPlayerTop = new HumanPlayer(Position.Top, TurnTimeLimit);
+
+        // The Human player on BOTTOM (MIN).
+        private static readonly Player HumanPlayerBottom = new HumanPlayer(Position.Bottom, TurnTimeLimit);
 
         // The game board.
         private static Board _board;
@@ -136,7 +142,10 @@ namespace Mankalah
         {
             // Boolean variables for debugging purposes.
             bool playDefaultGame = false;
-            bool playCustomGame = true;
+            bool playCustomGameHumanOnBottomGoesFirst = true;
+            bool playCustomGameAIOnTopGoesFirst = false;
+            bool playCustomGameHumanOnTopGoesFirst = false;
+            bool playCustomGameAIOnBottomGoesFirst = false;
             bool debugHeuristicEvaluationFunctionTOP = false;
             bool debugHeuristicEvaluationFunctionBOTTOM = false;
             bool debugChooseMoveMiniMaxAlgorithmFunctionTop = false;
@@ -151,10 +160,10 @@ namespace Mankalah
                 int finalScore;
 
                 Console.WriteLine("\n================ Game 1 ================");
-                finalScore = PlayGame(AIPlayerBonzo, HumanPlayer, Position.Bottom);
+                finalScore = PlayGame(AIPlayerBonzoTop, HumanPlayerBottom, Position.Bottom);
 
                 Console.WriteLine("\n================ Game 2 ================");
-                finalScore += PlayGame(AIPlayerBonzo, HumanPlayer, Position.Top);
+                finalScore += PlayGame(AIPlayerBonzoTop, HumanPlayerBottom, Position.Top);
 
                 Console.WriteLine("\n========================================");
                 Console.Write("Match result: ");
@@ -164,13 +173,13 @@ namespace Mankalah
 
                 if (finalScore > 48)
                 {
-                    Console.WriteLine(AIPlayerBonzo.GetName() + " wins " + finalScore + " to " + botScore);
-                    AIPlayerBonzo.Gloat();
+                    Console.WriteLine(AIPlayerBonzoTop.GetName() + " wins " + finalScore + " to " + botScore);
+                    AIPlayerBonzoTop.Gloat();
                 }
                 else if (botScore > 48)
                 {
-                    Console.WriteLine(HumanPlayer.GetName() + " wins " + botScore + " to " + finalScore);
-                    HumanPlayer.Gloat();
+                    Console.WriteLine(HumanPlayerBottom.GetName() + " wins " + botScore + " to " + finalScore);
+                    HumanPlayerBottom.Gloat();
                 }
                 else
                     Console.WriteLine("Match was a tie, 48-48!");
@@ -178,16 +187,16 @@ namespace Mankalah
                 Console.Read();
             }
 
-            if (playCustomGame == true)
+            if (playCustomGameHumanOnBottomGoesFirst == true)
             {
                 // Obtain final score for the TOP and BOTTOM player.
                 int finalScore;
 
                 Console.WriteLine("\n================ Game 1 ================");
-                finalScore = PlayGame(AIPlayerJJ47, HumanPlayer, Position.Bottom);
+                finalScore = PlayGame(AIPlayerJJ47Top, HumanPlayerBottom, Position.Bottom);
 
                 Console.WriteLine("\n================ Game 2 ================");
-                finalScore += PlayGame(AIPlayerJJ47, HumanPlayer, Position.Top);
+                finalScore += PlayGame(AIPlayerJJ47Top, HumanPlayerBottom, Position.Top);
 
                 Console.WriteLine("\n========================================");
                 Console.Write("Match result: ");
@@ -197,13 +206,13 @@ namespace Mankalah
 
                 if (finalScore > 48)
                 {
-                    Console.WriteLine(AIPlayerJJ47.GetName() + " wins " + finalScore + " to " + botScore);
-                    AIPlayerJJ47.Gloat();
+                    Console.WriteLine(AIPlayerJJ47Top.GetName() + " wins " + finalScore + " to " + botScore);
+                    AIPlayerJJ47Top.Gloat();
                 }
                 else if (botScore > 48)
                 {
-                    Console.WriteLine(HumanPlayer.GetName() + " wins " + botScore + " to " + finalScore);
-                    HumanPlayer.Gloat();
+                    Console.WriteLine(HumanPlayerBottom.GetName() + " wins " + botScore + " to " + finalScore);
+                    HumanPlayerBottom.Gloat();
                 }
                 else
                     Console.WriteLine("Match was a tie, 48-48!");
@@ -211,6 +220,104 @@ namespace Mankalah
                 Console.Read();
             }
 
+            if (playCustomGameAIOnTopGoesFirst == true)
+            {
+                // Obtain final score for the TOP and BOTTOM player.
+                int finalScore;
+
+                Console.WriteLine("\n================ Game 1 ================");
+                finalScore = PlayGame(AIPlayerJJ47Top, HumanPlayerBottom, Position.Top);
+
+                Console.WriteLine("\n================ Game 2 ================");
+                finalScore += PlayGame(AIPlayerJJ47Top, HumanPlayerBottom, Position.Bottom);
+
+                Console.WriteLine("\n========================================");
+                Console.Write("Match result: ");
+
+                // Determine the winner and loser.
+                int botScore = 96 - finalScore;
+
+                if (finalScore > 48)
+                {
+                    Console.WriteLine(AIPlayerJJ47Top.GetName() + " wins " + finalScore + " to " + botScore);
+                    AIPlayerJJ47Top.Gloat();
+                }
+                else if (botScore > 48)
+                {
+                    Console.WriteLine(HumanPlayerBottom.GetName() + " wins " + botScore + " to " + finalScore);
+                    HumanPlayerBottom.Gloat();
+                }
+                else
+                    Console.WriteLine("Match was a tie, 48-48!");
+
+                Console.Read();
+            }
+
+            if (playCustomGameHumanOnTopGoesFirst == true)
+            {
+                // Obtain final score for the TOP and BOTTOM player.
+                int finalScore;
+
+                Console.WriteLine("\n================ Game 1 ================");
+                finalScore = PlayGame(HumanPlayerTop, AIPlayerJJ47Bottom, Position.Top);
+
+                Console.WriteLine("\n================ Game 2 ================");
+                finalScore += PlayGame(HumanPlayerTop, AIPlayerJJ47Bottom, Position.Bottom);
+
+                Console.WriteLine("\n========================================");
+                Console.Write("Match result: ");
+
+                // Determine the winner and loser.
+                int botScore = 96 - finalScore;
+
+                if (finalScore > 48)
+                {
+                    Console.WriteLine(AIPlayerJJ47Bottom.GetName() + " wins " + finalScore + " to " + botScore);
+                    AIPlayerJJ47Bottom.Gloat();
+                }
+                else if (botScore > 48)
+                {
+                    Console.WriteLine(HumanPlayerTop.GetName() + " wins " + botScore + " to " + finalScore);
+                    HumanPlayerTop.Gloat();
+                }
+                else
+                    Console.WriteLine("Match was a tie, 48-48!");
+
+                Console.Read();
+            }
+
+            if (playCustomGameAIOnBottomGoesFirst == true)
+            {
+                // Obtain final score for the TOP and BOTTOM player.
+                int finalScore;
+
+                Console.WriteLine("\n================ Game 1 ================");
+                finalScore = PlayGame(HumanPlayerTop, AIPlayerJJ47Bottom, Position.Bottom);
+
+                Console.WriteLine("\n================ Game 2 ================");
+                finalScore += PlayGame(HumanPlayerTop, AIPlayerJJ47Bottom, Position.Top);
+
+                Console.WriteLine("\n========================================");
+                Console.Write("Match result: ");
+
+                // Determine the winner and loser.
+                int botScore = 96 - finalScore;
+
+                if (finalScore > 48)
+                {
+                    Console.WriteLine(AIPlayerJJ47Bottom.GetName() + " wins " + finalScore + " to " + botScore);
+                    AIPlayerJJ47Bottom.Gloat();
+                }
+                else if (botScore > 48)
+                {
+                    Console.WriteLine(HumanPlayerTop.GetName() + " wins " + botScore + " to " + finalScore);
+                    HumanPlayerTop.Gloat();
+                }
+                else
+                    Console.WriteLine("Match was a tie, 48-48!");
+
+                Console.Read();
+            }
             ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
             /// Test to see that heuristic evaluation function In jj47Player works as intended.
 
