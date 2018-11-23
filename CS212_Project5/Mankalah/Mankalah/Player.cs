@@ -45,8 +45,6 @@ namespace Mankalah
         /// <summary>
         /// Default constructor.
         /// Note: Can override constructor to perform any necessary tasks before game-play begins.
-        /// 
-        /// TODO: implement enforcement of time limit to prevent disqualification.
         /// </summary>
         /// 
         /// <param name="position">Position (TOP or BOTTOM) the player is to play</param>

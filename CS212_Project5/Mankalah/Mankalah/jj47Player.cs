@@ -24,6 +24,7 @@ namespace Mankalah
     /// Class jj47Player defines a hopefully less psychologically deficient Mankalah player then BonzoPlayer.
     /// This hopefully less sorry excuse for a player implements a heuristic evaluation function and the mini-max
     /// algorithm to choose the most optimal move to make. (will hopefully make Skynet proud)
+    /// TODO: make AI at least as intelligent as a 10 year old...
     /// </summary>
     public class jj47Player : Player
     {
@@ -150,7 +151,7 @@ namespace Mankalah
             int initialDepth = int.MaxValue;
 
             // Call mini-max algorithm.
-            int optimalMove = MiniMaxAlgorithm(b, initialDepth, elapsedTime).GetOptimalMove();
+            //int optimalMove = MiniMaxAlgorithm(b, initialDepth, elapsedTime).GetOptimalMove();
 
             // Initial alpha and beta values.
             int alpha = int.MinValue;
@@ -169,7 +170,7 @@ namespace Mankalah
         /// <summary>
         /// Method implements the mini-max algorithm via a staged (limited) depth-first search.
         /// Supports alpha-beta pruning.
-        /// TODO - not functional yet!
+        /// TODO - confirm it is actually pruning...
         /// </summary>
         /// 
         /// <param name="board">Game Board object.</param>
@@ -214,7 +215,7 @@ namespace Mankalah
                         int moveValue = MiniMaxAlgorithmWithAlphaBetaPruning(predictionBoard, depth - 1, time, Alpha, Beta).GetOptimalMoveScore();
 
                         Alpha = Math.Max(Alpha, optimalMoveValue);
-                        
+
                         // Set the best possible predicted move.
                         if (moveValue > optimalMoveValue)
                         {
@@ -250,7 +251,7 @@ namespace Mankalah
                         int moveValue = MiniMaxAlgorithmWithAlphaBetaPruning(predictionBoard, depth - 1, time, Alpha, Beta).GetOptimalMoveScore();
 
                         Beta = Math.Min(Beta, optimalMoveValue);
-                        
+
                         // Set the best possible predicted move.
                         if (moveValue < optimalMoveValue)
                         {
@@ -425,14 +426,14 @@ namespace Mankalah
             {
                 if (b.StonesAt(entry.Value) != 0)
                 {
-                    positionOptimalValueMAX[entry.Value] += 100000;
+                    positionOptimalValueMAX[entry.Value] += 1000000000;
                 }
             }
             foreach (KeyValuePair<string, int> entry in _positionLabelsBottom)
             {
                 if (b.StonesAt(entry.Value) != 0)
                 {
-                    positionOptimalValueMIN[entry.Value] -= 100000;
+                    positionOptimalValueMIN[entry.Value] -= 1000000000;
                 }
             }
 
@@ -694,7 +695,7 @@ namespace Mankalah
                 }
             }
 
-            // Increase or decrease optimality value of empty position with the most stones in opposing position.
+            // Increase or decrease optimality value of empty position(s) with the most stones in opposing position.
             foreach (int entry in topEmptyPositionWithMostStones)
             {
                 positionOptimalValueMAX[entry] += 100;
@@ -722,18 +723,98 @@ namespace Mankalah
                 Console.WriteLine("\n\n");
             }
 
-            // TODO: Implement way to check to see if we can reach the empty position based on # of stones in other positions.
+            List<int> topCanCapturePositions = new List<int>();
+            List<int> bottomCanCapturePositions = new List<int>();
+
+            // TODO: does this properly take into account skipping past a opponent's cache?
+            // TODO: does this properly account for potential multiple skips of opponent's cache, if # of stones high enough?
+            // TODO: this part is O(n^2), reduce to O(n) if possible.
 
             // Determine if we can reach the empty position(s) on our side of the board.
             foreach (KeyValuePair<int, int> entry in topPositionsCurrentNumStones)
             {
+                int skipOpponentMankalah = 0;
 
+                // Check if we need to skip opponent's cache.
+                for (int i = 0; i <= entry.Value; i++)
+                {
+                    if (entry.Key + i % 13 == 6)
+                    {
+                        skipOpponentMankalah++;
+                    }
+                }
+
+                // If we skip opponent's cache, we move one additional position to drop a stone.
+                int total = entry.Key + entry.Value + skipOpponentMankalah % 13;
+
+                if (total < 13 && total > 6 && entry.Value != 0 && total != 13 && total != 6)
+                {
+                    if (topPositionsCurrentNumStones[total] == 0)
+                    {
+                        topCanCapturePositions.Add(entry.Key);
+                    }
+                }
             }
-            foreach (KeyValuePair<int, int> entry in topPositionsCurrentNumStones)
+            foreach (KeyValuePair<int, int> entry in bottomPositionsCurrentNumStones)
             {
+                int skipOpponentMankalah = 0;
 
+                // Check if we need to skip opponent's cache.
+                for (int i = 0; i <= entry.Value; i++)
+                {
+                    if (entry.Key + i % 13 == 13)
+                    {
+                        skipOpponentMankalah++;
+                    }
+                }
+
+                // If we skip opponent's cache, we move one additional position to drop a stone.
+                int total = entry.Key + entry.Value + skipOpponentMankalah % 13;
+
+                if (total < 6 && total >= 0 && entry.Value != 0 && total != 13 && total != 6)
+                {
+                    if (bottomPositionsCurrentNumStones[total] == 0)
+                    {
+                        bottomCanCapturePositions.Add(entry.Key);
+                    }
+                }
             }
 
+            bool debugShowPotentialCapturePositions = false;
+
+            if (debugShowPotentialCapturePositions == true)
+            {
+                Console.WriteLine("\n\nPositions that can be used to capture for TOP player:");
+                foreach (int entry in topCanCapturePositions)
+                {
+                    Console.WriteLine("MAX - Position: {0}", entry);
+                }
+                Console.WriteLine("\n\nPositions that can be used to capture for BOTTOM player");
+                foreach (int entry in bottomCanCapturePositions)
+                {
+                    Console.WriteLine("MIN - Position: {0}", entry);
+                }
+                Console.WriteLine("\n\n");
+
+                // Confirm we have stored all possible capture positions.
+                b.Display();
+            }
+
+            // Increase or decrease optimality value of position(s) that can be used to capture by ending in an empty position.
+            foreach (int entry in topCanCapturePositions)
+            {
+                positionOptimalValueMAX[entry] += 100000;
+            }
+
+            foreach (int entry in bottomCanCapturePositions)
+            {
+                positionOptimalValueMIN[entry] -= 100000;
+            }
+
+            ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+            /// HEURISTIC CONDITION FOUR - If positions have the same optimal weight value, randomly select one as the optimal move.
+            
+            // TODO: implement this heuristic.
 
             ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
             /// DETERMINE OPTIMAL MOVE AND VALUE AND RETURN IT
