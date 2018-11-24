@@ -1,5 +1,5 @@
 CS-262 Software Engineering
-Date: 11-08-18
+Date: 11-24-18
 Reviewer: Joseph Jinn
 Team being reviewed: Team E - CalUber
 Sprint 3 Review
@@ -8,7 +8,7 @@ Sprint 3 Review
 
 Note: This review is reflective of the exact date the review was done.  Changes may have occurred in the intervening time since.
 
-Note: I haven't run this through a spell-checker.  There are probably spelling mistakes.
+Note: Ran this through Grammerly.  Automated spell-checking should have caught the worst of my grammatical errors.
 
 =================================================================================================================================================
 =================================================================================================================================================
@@ -35,6 +35,20 @@ Trello Board Activity:
 
 -There seems to be 7 users total, going by non-duplicate names, and minus the two  users I mentioned above.
 
+******************Same as above, with additions below for Review 4**********************************
+
+-From what I can see, it's going to be tough for the team to achieve all of their Sprint 4 backlog tasks that still need doing.
+    From experience, it isn't easy to get the RESTful web service up and running for your personal database and from there, begin
+    using network code to integrate the back-end with the front-end Android Studio application.  Honestly, unless people have been
+    working on the team project over Thanksgiving or they're willing to pull all-nighters next week before the end of Sprint 4, it
+    is not feasible to do everything they have planned including code refactoring, code documentation, project document maintenance,
+    write the usability test script for the usability test coming up, modify RESTful web service template for app database schema, etc.
+
+-They seem to have a card still up in Sprint 4: Doing for getting Google Cloud Service working.  There are no details so I'm not sure if that
+    means an all-encompassing task for the RESTful web service and database or if they're having other issues with GCP.
+
+-Otherwise, same as everything since the Sprint 3 Review.
+
 =================================================================================================================================================
 =================================================================================================================================================
 
@@ -51,6 +65,17 @@ to delete a user account yet, based on one of your user stories.  But this is a 
 
 -Otherwise, it looks like you have the basics covered for what the user should be able to do.
 
+******************Same as above, with additions below for Review 4**********************************
+
+-The existing ones I saw during my Sprint 3 Review do not appear to have changed at all.  There are an additional 3 user stories up for a total of
+    11 user stories since my Sprint 3 Review for Team H.
+
+-Looking at the Trello Plus! Board Reports and Charts, the last user story they added was on Novermber 08, 2018, so that means they probably
+    added the additional 3 a short while after I did my review.
+
+-I will comment more on whether they have implemented more of their user stories in the section below on their app prototype, provided I can get
+    past the login screen, unlike last time.
+
 =================================================================================================================================================
 =================================================================================================================================================
 
@@ -61,6 +86,13 @@ Domain Model:
 -I suggest you update the domain model to reflect your current database schema.  This document needs to be updated.
 
 -Not much else to say, as it hasn't changed since the last time.
+
+******************Same as above, with additions below for Review 4**********************************
+
+-At this point in time, I highly suggest you start considering making a vector-based graphic of your domain model or something other than the
+    initial pen/pencil paper sketch that I have seen the entire semester.  No reason to lose points for the next deliverable turn-in due to a 
+    lack of progress in documentation.  If I remember correctly, you had updated project documentation in your power point presentation so
+    you might as well upload the specific slide pertaining to the Domain Model as your Domain Model Document.
 
 =================================================================================================================================================
 =================================================================================================================================================
@@ -76,6 +108,11 @@ repo is definitely out-of-date/deprecated.
 relationship of each screen to the other in the app.  This is what my team decided to do.
 
 -Of course, it's hard to keep this model up to do date as changes are often continuous as development proceeds on a semi-regular basis.
+
+******************Same as above, with additions below for Review 4**********************************
+
+-Similar to what I mentioned for the domain model, simply upload the slide pertaining to your UI model from your Power Point presentation as your
+UI model in place of this pen/pencil paper sketch that has been in the repository since the beginning of the semester.
 
 =================================================================================================================================================
 =================================================================================================================================================
@@ -96,10 +133,17 @@ Supplemental technical requirements documentation:
 
 -Looks good overall.
 	
+******************Same as above, with additions below for Review 4**********************************
+
+-As stated previously, please change the location of this document to its proper location in your CS-262-Materials repository instead of its
+    current location in your CS-262-Client repository.
+
+-From what I can see, it is still the same as since my Sprint 3 Review.
+
 =================================================================================================================================================
 =================================================================================================================================================
 
-GitHub data repository - Database Schema
+GitHub data repository - Database Schema and RESTful Web Service API
 
 -From what little I know of relational database, it looks like they have a working schema in place.
 
@@ -114,13 +158,32 @@ functions as intended.  Right now, you have entried inserted for Users but none 
 
 -Otherwise, it looks good.
 
-=================================================================================================================================================
-=================================================================================================================================================
+******************Same as above, with additions below for Review 4**********************************
+
+-I suggest you re-name your RESTful web service prototype from "Lab09" to something along the lines of "CalUber RESTful Prototype".
+
+-Your database schema, caluberDatabase.sql, does not appear to have chcanged since my Sprint 3 Review since the last date of update is slated at
+    17 days, which would be November 07, 2018.  So, I assume what I mentioned above is still relevant.
+
+-It appears you are working on the RESTful web service prototype as the last commit was dated 22 minutes ago at the time of this review.
+
+-Taking a brief look at the code for your RESTful Web Service, I recommend you change the package name from edu.calvin.cs262.lab09 to something
+    more appropriate, such as "edu.calvin.cs262.CalUber" or something along those names.  In turn, change the ownerDomain and ownerName field
+    to the same.
+
+-Update the comments so they do not refere to the Monopoly database template and instead to your own database.
+
+-Looks like you guys still need to implement the actual GET, PUT, POST, DELETE, CRUD operations for your own project database.
+
+-I wish your team the best of luck in getting everything functional! (it was a PITA for me too)
 
 =================================================================================================================================================
 =================================================================================================================================================
 
-GitHub client repository - Android App
+=================================================================================================================================================
+=================================================================================================================================================
+
+GitHub client repository - Android Studio CalUber App
 
 -Prototype compiles, runs, and has placeholder functionality.
 
@@ -143,12 +206,56 @@ GitHub client repository - Android App
 -From what I can tell, all the necessary screens to provide the full functionality of the app are in place.  Now, it's a matter of getting the 
 back-end up and running and beginning integration.
 
+******************Same as above, with additions below for Review 4**********************************
+
+-Nice, you have JavaDoc headers for each class describing the function of each .java file.  This is more than what we have for Team E at the
+    moment.
+
+-Good use of "TODO" statement as reminders of what changes need to be made.
+
+-Still can't make it past your login page, tried looking in strings.xml for a potential hard-coded user name and password without success.
+
+-I bypassed the login page by deleting the code that does user name and password validation. ;DELETE
+
+-The person icon, which I assume is for your account page, has placeholder fields for user name and user e-mail.  I recommend hard-coding some
+    data values for usability testing purposes.
+
+-I suggest renaming the activity that lists Upcoming and Past Rides to something other than "BasketActivity" in the toolbar, unless it's an 
+    inside joke I don't quite understand.
+
+-I like how the "Pick Date" button launches a calender widget by which you can choose a date for when the ride will occur.  It even populates
+    the field below the "pick date" button with the date selected.
+
+-I suggest increasing the # of passesengers permitted in case someone has a larger vehicle that is capable of supporting more than 5 maximum
+    passengers.
+
+-In the "Join A Ride" activity, I suggest having a placeholder button or other widget is labeled "join ride" unless it is your intention that
+    when the user clicks on a ride in the list it automatically joins or bring up some sort of confirmation and/or information screen.
+
+-I suggest enabling up navigationa and adding parent activity support in AndroidManifest.xml so the user can back-track to the main hub screen
+     of the app.  Right now, the user has to use back navigation to navigate back to the previous screen from the activity that is loaded after
+     login.
+
+-Otherwise, looks good and gives a definitive view of what the application should do.
+
 =================================================================================================================================================
 =================================================================================================================================================
 
 RESTful Web Service
 
 -I see no indication it has been implemented, thus a review is not possible at this point in time.
+
+******************Same as above, with additions below for Review 4**********************************
+
+-It is still not implemented yet, so I cannot comment on its functionality at the moment.  Refer to the above section on the GitHub data
+    repository for comments on the template code provided in Lab 09 for the RESTful Web Service.
+
+=================================================================================================================================================
+=================================================================================================================================================
+
+Usability Test Script and User testing
+
+-Upcoming; will comment on this when the time comes.
 
 =================================================================================================================================================
 =================================================================================================================================================
@@ -189,6 +296,12 @@ use of body language (gestures, etc.).
 
 -Everyone seemed to maintain decent eye contact with the audience.
 
+******************Same as above, with additions below for Review 4**********************************
+
+-As mentioned in above section, use the material from your Power Point presentation as project documentation if you don't have enough time to
+    update and maintain the project documentation for the domain model, UI model, etc., as what you showed during your presentation is more
+    updated than what you have in your repositories (if I remember correctly)
+
 =================================================================================================================================================
 =================================================================================================================================================
 
@@ -197,5 +310,9 @@ Miscellaneous:
 -Suggest including your supplemental technical requirements documentation in your CS-262-Materials repository alongside your other documents.
 Right now, it is in your CS-262-Client repository and thus I had to go lookint for it in order to find it when I expected it in the other repository.
 	
+******************Same as above, with additions below for Review 4**********************************
+
+-I hope to see your app in action among the Calvin College student body before I graduate in Spring of 2020! ;D
+
 =================================================================================================================================================
 =================================================================================================================================================
