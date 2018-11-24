@@ -365,6 +365,8 @@ namespace Mankalah
             // What does this do?
             position--;
 
+            /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
             // Determine if there was a capture by TOP player. 
             if (_playerToMove == Position.Top && position > 6 && position < 13 && BoardPositions[position] == 1 && BoardPositions[12 - position] > 0)
             {
@@ -394,6 +396,8 @@ namespace Mankalah
                     Console.WriteLine("BOTTOM captured {0} stones!", stonesCaptured);
                 }
             }
+
+            /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
             // Determine who gets the next move.
             if (_playerToMove == Position.Top)

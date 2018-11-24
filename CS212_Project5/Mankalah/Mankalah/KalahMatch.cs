@@ -187,144 +187,84 @@ namespace Mankalah
                 Console.Read();
             }
 
-            if (playCustomGameHumanOnBottomGoesFirst == true)
+            // For testing purposes.
+
+            PlayCustomGameHumanOnBottomGoesFirst(playCustomGameHumanOnBottomGoesFirst);
+
+            PlayCustomGameAiOnTopGoesFirst(playCustomGameAIOnTopGoesFirst);
+
+            PlayCustomGameHumanOnTopGoesFirst(playCustomGameHumanOnTopGoesFirst);
+
+            PlayCustomGameAiOnBottomGoesFirst(playCustomGameAIOnBottomGoesFirst);
+
+            DebugHeuristicEvaluationFunction(debugHeuristicEvaluationFunctionTOP, debugHeuristicEvaluationFunctionBOTTOM);
+
+            DebugChooseMoveMiniMaxAlgorithmFunction(debugChooseMoveMiniMaxAlgorithmFunctionTop, debugChooseMoveMiniMaxAlgorithmFunctionBottom);
+
+            while (true)
             {
-                // Obtain final score for the TOP and BOTTOM player.
-                int finalScore;
+                //Do nothing.  Keep terminal open.
+            }
+        }
 
-                Console.WriteLine("\n================ Game 1 ================");
-                finalScore = PlayGame(AIPlayerJJ47Top, HumanPlayerBottom, Position.Bottom);
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        // METHOD SEPARATOR METHOD SEPARATOR METHOD SEPARATOR METHOD SEPARATOR METHOD SEPARATOR METHOD SEPARATOR METHOD SEPARATOR
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-                Console.WriteLine("\n================ Game 2 ================");
-                finalScore += PlayGame(AIPlayerJJ47Top, HumanPlayerBottom, Position.Top);
+        /// <summary>
+        /// Test to see that mini-max algorithm function In jj47Player works as intended.
+        /// </summary>
+        /// <param name="debugChooseMoveMiniMaxAlgorithmFunctionTop">enable or disable for TOP player</param>
+        /// <param name="debugChooseMoveMiniMaxAlgorithmFunctionBottom">enable or disable for BOTTOM player</param>
+        private static void DebugChooseMoveMiniMaxAlgorithmFunction(bool debugChooseMoveMiniMaxAlgorithmFunctionTop,
+            bool debugChooseMoveMiniMaxAlgorithmFunctionBottom)
+        {
+            // Test for TOP player.
+            if (debugChooseMoveMiniMaxAlgorithmFunctionTop == true)
+            {
+                // Create new game board.
+                Board testBoardMiniMaxTOP = new Board(Position.Top);
 
-                Console.WriteLine("\n========================================");
-                Console.Write("Match result: ");
+                // Test as TOP Player.
+                jj47Player testTopPlayer = new jj47Player(Position.Top, 3000);
 
-                // Determine the winner and loser.
-                int botScore = 96 - finalScore;
+                // Calls method that implement mini-max algorithm to predict the optimal move.
+                int optimalMove = testTopPlayer.ChooseMove(testBoardMiniMaxTOP);
 
-                if (finalScore > 48)
-                {
-                    Console.WriteLine(AIPlayerJJ47Top.GetName() + " wins " + finalScore + " to " + botScore);
-                    AIPlayerJJ47Top.Gloat();
-                }
-                else if (botScore > 48)
-                {
-                    Console.WriteLine(HumanPlayerBottom.GetName() + " wins " + botScore + " to " + finalScore);
-                    HumanPlayerBottom.Gloat();
-                }
-                else
-                    Console.WriteLine("Match was a tie, 48-48!");
-
-                Console.Read();
+                Console.WriteLine("TOP Player AI determined optimal board move was: {0}", optimalMove);
             }
 
-            if (playCustomGameAIOnTopGoesFirst == true)
+            // Test for BOTTOM player.
+            if (debugChooseMoveMiniMaxAlgorithmFunctionBottom == true)
             {
-                // Obtain final score for the TOP and BOTTOM player.
-                int finalScore;
+                // Create new game board.
+                Board testBoardMiniMaxBottom = new Board(Position.Bottom);
 
-                Console.WriteLine("\n================ Game 1 ================");
-                finalScore = PlayGame(AIPlayerJJ47Top, HumanPlayerBottom, Position.Top);
+                // Test as TOP Player.
+                jj47Player testBottomPlayer = new jj47Player(Position.Bottom, 3000);
 
-                Console.WriteLine("\n================ Game 2 ================");
-                finalScore += PlayGame(AIPlayerJJ47Top, HumanPlayerBottom, Position.Bottom);
+                // Calls method that implement mini-max algorithm to predict the optimal move.
+                int optimalMove = testBottomPlayer.ChooseMove(testBoardMiniMaxBottom);
 
-                Console.WriteLine("\n========================================");
-                Console.Write("Match result: ");
-
-                // Determine the winner and loser.
-                int botScore = 96 - finalScore;
-
-                if (finalScore > 48)
-                {
-                    Console.WriteLine(AIPlayerJJ47Top.GetName() + " wins " + finalScore + " to " + botScore);
-                    AIPlayerJJ47Top.Gloat();
-                }
-                else if (botScore > 48)
-                {
-                    Console.WriteLine(HumanPlayerBottom.GetName() + " wins " + botScore + " to " + finalScore);
-                    HumanPlayerBottom.Gloat();
-                }
-                else
-                    Console.WriteLine("Match was a tie, 48-48!");
-
-                Console.Read();
+                Console.WriteLine("BOTTOM Player AI determined optimal board move was: {0}", optimalMove);
             }
+        }
 
-            if (playCustomGameHumanOnTopGoesFirst == true)
-            {
-                // Obtain final score for the TOP and BOTTOM player.
-                int finalScore;
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        // METHOD SEPARATOR METHOD SEPARATOR METHOD SEPARATOR METHOD SEPARATOR METHOD SEPARATOR METHOD SEPARATOR METHOD SEPARATOR
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-                Console.WriteLine("\n================ Game 1 ================");
-                finalScore = PlayGame(HumanPlayerTop, AIPlayerJJ47Bottom, Position.Top);
-
-                Console.WriteLine("\n================ Game 2 ================");
-                finalScore += PlayGame(HumanPlayerTop, AIPlayerJJ47Bottom, Position.Bottom);
-
-                Console.WriteLine("\n========================================");
-                Console.Write("Match result: ");
-
-                // Determine the winner and loser.
-                int botScore = 96 - finalScore;
-
-                if (finalScore > 48)
-                {
-                    Console.WriteLine(AIPlayerJJ47Bottom.GetName() + " wins " + finalScore + " to " + botScore);
-                    AIPlayerJJ47Bottom.Gloat();
-                }
-                else if (botScore > 48)
-                {
-                    Console.WriteLine(HumanPlayerTop.GetName() + " wins " + botScore + " to " + finalScore);
-                    HumanPlayerTop.Gloat();
-                }
-                else
-                    Console.WriteLine("Match was a tie, 48-48!");
-
-                Console.Read();
-            }
-
-            if (playCustomGameAIOnBottomGoesFirst == true)
-            {
-                // Obtain final score for the TOP and BOTTOM player.
-                int finalScore;
-
-                Console.WriteLine("\n================ Game 1 ================");
-                finalScore = PlayGame(HumanPlayerTop, AIPlayerJJ47Bottom, Position.Bottom);
-
-                Console.WriteLine("\n================ Game 2 ================");
-                finalScore += PlayGame(HumanPlayerTop, AIPlayerJJ47Bottom, Position.Top);
-
-                Console.WriteLine("\n========================================");
-                Console.Write("Match result: ");
-
-                // Determine the winner and loser.
-                int botScore = 96 - finalScore;
-
-                if (finalScore > 48)
-                {
-                    Console.WriteLine(AIPlayerJJ47Bottom.GetName() + " wins " + finalScore + " to " + botScore);
-                    AIPlayerJJ47Bottom.Gloat();
-                }
-                else if (botScore > 48)
-                {
-                    Console.WriteLine(HumanPlayerTop.GetName() + " wins " + botScore + " to " + finalScore);
-                    HumanPlayerTop.Gloat();
-                }
-                else
-                    Console.WriteLine("Match was a tie, 48-48!");
-
-                Console.Read();
-            }
-            ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-            /// Test to see that heuristic evaluation function In jj47Player works as intended.
-
+        /// <summary>
+        /// Test to see that heuristic evaluation function In jj47Player works as intended.
+        /// </summary>
+        /// <param name="debugHeuristicEvaluationFunctionTOP">enable or disable for TOP player</param>
+        /// <param name="debugHeuristicEvaluationFunctionBOTTOM">enable or disable for BOTTOM player</param>
+        private static void DebugHeuristicEvaluationFunction(bool debugHeuristicEvaluationFunctionTOP,
+            bool debugHeuristicEvaluationFunctionBOTTOM)
+        {
             // Test for TOP player.
             if (debugHeuristicEvaluationFunctionTOP == true)
             {
-
                 // Create new game board.
                 Board testBoardHeuristicTop = new Board(Position.Top);
 
@@ -383,43 +323,181 @@ namespace Mankalah
 
                 Console.WriteLine("BOTTOM Player AI determined optimal board value was: {0}", moveBottomValue);
             }
+        }
 
-            ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-            /// Test to see that mini-max algorithm function In jj47Player works as intended.
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        // METHOD SEPARATOR METHOD SEPARATOR METHOD SEPARATOR METHOD SEPARATOR METHOD SEPARATOR METHOD SEPARATOR METHOD SEPARATOR
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-            // Test for TOP player.
-            if (debugChooseMoveMiniMaxAlgorithmFunctionTop == true)
+        /// <summary>
+        /// Play a human versus AI match where the human player is the TOP player and the AI goes first.
+        /// </summary>
+        /// <param name="playCustomGameAIOnBottomGoesFirst">turn method on or off</param>
+        private static void PlayCustomGameAiOnBottomGoesFirst(bool playCustomGameAIOnBottomGoesFirst)
+        {
+            if (playCustomGameAIOnBottomGoesFirst == true)
             {
-                // Create new game board.
-                Board testBoardMiniMaxTOP = new Board(Position.Top);
+                // Obtain final score for the TOP and BOTTOM player.
+                int finalScore;
 
-                // Test as TOP Player.
-                jj47Player testTopPlayer = new jj47Player(Position.Top, 3000);
+                Console.WriteLine("\n================ Game 1 ================");
+                finalScore = PlayGame(HumanPlayerTop, AIPlayerJJ47Bottom, Position.Bottom);
 
-                // Calls method that implement mini-max algorithm to predict the optimal move.
-                int optimalMove = testTopPlayer.ChooseMove(testBoardMiniMaxTOP);
+                Console.WriteLine("\n================ Game 2 ================");
+                finalScore += PlayGame(HumanPlayerTop, AIPlayerJJ47Bottom, Position.Top);
 
-                Console.WriteLine("TOP Player AI determined optimal board move was: {0}", optimalMove);
+                Console.WriteLine("\n========================================");
+                Console.Write("Match result: ");
+
+                // Determine the winner and loser.
+                int botScore = 96 - finalScore;
+
+                if (finalScore > 48)
+                {
+                    Console.WriteLine(AIPlayerJJ47Bottom.GetName() + " wins " + finalScore + " to " + botScore);
+                    AIPlayerJJ47Bottom.Gloat();
+                }
+                else if (botScore > 48)
+                {
+                    Console.WriteLine(HumanPlayerTop.GetName() + " wins " + botScore + " to " + finalScore);
+                    HumanPlayerTop.Gloat();
+                }
+                else
+                    Console.WriteLine("Match was a tie, 48-48!");
+
+                Console.Read();
             }
+        }
 
-            // Test for BOTTOM player.
-            if (debugChooseMoveMiniMaxAlgorithmFunctionBottom == true)
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        // METHOD SEPARATOR METHOD SEPARATOR METHOD SEPARATOR METHOD SEPARATOR METHOD SEPARATOR METHOD SEPARATOR METHOD SEPARATOR
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        /// <summary>
+        /// Play a human versus AI match where the human player is the TOP player and the human goes first.
+        /// </summary>
+        /// <param name="playCustomGameHumanOnTopGoesFirst">turn method on or off</param>
+        private static void PlayCustomGameHumanOnTopGoesFirst(bool playCustomGameHumanOnTopGoesFirst)
+        {
+            if (playCustomGameHumanOnTopGoesFirst == true)
             {
-                // Create new game board.
-                Board testBoardMiniMaxBottom = new Board(Position.Bottom);
+                // Obtain final score for the TOP and BOTTOM player.
+                int finalScore;
 
-                // Test as TOP Player.
-                jj47Player testBottomPlayer = new jj47Player(Position.Bottom, 3000);
+                Console.WriteLine("\n================ Game 1 ================");
+                finalScore = PlayGame(HumanPlayerTop, AIPlayerJJ47Bottom, Position.Top);
 
-                // Calls method that implement mini-max algorithm to predict the optimal move.
-                int optimalMove = testBottomPlayer.ChooseMove(testBoardMiniMaxBottom);
+                Console.WriteLine("\n================ Game 2 ================");
+                finalScore += PlayGame(HumanPlayerTop, AIPlayerJJ47Bottom, Position.Bottom);
 
-                Console.WriteLine("BOTTOM Player AI determined optimal board move was: {0}", optimalMove);
+                Console.WriteLine("\n========================================");
+                Console.Write("Match result: ");
+
+                // Determine the winner and loser.
+                int botScore = 96 - finalScore;
+
+                if (finalScore > 48)
+                {
+                    Console.WriteLine(AIPlayerJJ47Bottom.GetName() + " wins " + finalScore + " to " + botScore);
+                    AIPlayerJJ47Bottom.Gloat();
+                }
+                else if (botScore > 48)
+                {
+                    Console.WriteLine(HumanPlayerTop.GetName() + " wins " + botScore + " to " + finalScore);
+                    HumanPlayerTop.Gloat();
+                }
+                else
+                    Console.WriteLine("Match was a tie, 48-48!");
+
+                Console.Read();
             }
+        }
 
-            while (true)
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        // METHOD SEPARATOR METHOD SEPARATOR METHOD SEPARATOR METHOD SEPARATOR METHOD SEPARATOR METHOD SEPARATOR METHOD SEPARATOR
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        /// <summary>
+        /// Play a human versus AI match where the human player is the BOTTOM player and the AI goes first.
+        /// </summary>
+        /// <param name="playCustomGameAIOnTopGoesFirst">turn method on or off</param>
+        private static void PlayCustomGameAiOnTopGoesFirst(bool playCustomGameAIOnTopGoesFirst)
+        {
+            if (playCustomGameAIOnTopGoesFirst == true)
             {
-                //Do nothing.  Keep terminal open.
+                // Obtain final score for the TOP and BOTTOM player.
+                int finalScore;
+
+                Console.WriteLine("\n================ Game 1 ================");
+                finalScore = PlayGame(AIPlayerJJ47Top, HumanPlayerBottom, Position.Top);
+
+                Console.WriteLine("\n================ Game 2 ================");
+                finalScore += PlayGame(AIPlayerJJ47Top, HumanPlayerBottom, Position.Bottom);
+
+                Console.WriteLine("\n========================================");
+                Console.Write("Match result: ");
+
+                // Determine the winner and loser.
+                int botScore = 96 - finalScore;
+
+                if (finalScore > 48)
+                {
+                    Console.WriteLine(AIPlayerJJ47Top.GetName() + " wins " + finalScore + " to " + botScore);
+                    AIPlayerJJ47Top.Gloat();
+                }
+                else if (botScore > 48)
+                {
+                    Console.WriteLine(HumanPlayerBottom.GetName() + " wins " + botScore + " to " + finalScore);
+                    HumanPlayerBottom.Gloat();
+                }
+                else
+                    Console.WriteLine("Match was a tie, 48-48!");
+
+                Console.Read();
+            }
+        }
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        // METHOD SEPARATOR METHOD SEPARATOR METHOD SEPARATOR METHOD SEPARATOR METHOD SEPARATOR METHOD SEPARATOR METHOD SEPARATOR
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        /// <summary>
+        /// Play a human versus AI match where the human player is the BOTTOM player and the human goes first.
+        /// </summary>
+        /// <param name="playCustomGameHumanOnBottomGoesFirst">turn method on or off</param>
+        private static void PlayCustomGameHumanOnBottomGoesFirst(bool playCustomGameHumanOnBottomGoesFirst)
+        {
+            if (playCustomGameHumanOnBottomGoesFirst == true)
+            {
+                // Obtain final score for the TOP and BOTTOM player.
+                int finalScore;
+
+                Console.WriteLine("\n================ Game 1 ================");
+                finalScore = PlayGame(AIPlayerJJ47Top, HumanPlayerBottom, Position.Bottom);
+
+                Console.WriteLine("\n================ Game 2 ================");
+                finalScore += PlayGame(AIPlayerJJ47Top, HumanPlayerBottom, Position.Top);
+
+                Console.WriteLine("\n========================================");
+                Console.Write("Match result: ");
+
+                // Determine the winner and loser.
+                int botScore = 96 - finalScore;
+
+                if (finalScore > 48)
+                {
+                    Console.WriteLine(AIPlayerJJ47Top.GetName() + " wins " + finalScore + " to " + botScore);
+                    AIPlayerJJ47Top.Gloat();
+                }
+                else if (botScore > 48)
+                {
+                    Console.WriteLine(HumanPlayerBottom.GetName() + " wins " + botScore + " to " + finalScore);
+                    HumanPlayerBottom.Gloat();
+                }
+                else
+                    Console.WriteLine("Match was a tie, 48-48!");
+
+                Console.Read();
             }
         }
 
