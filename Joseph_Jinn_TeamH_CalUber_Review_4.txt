@@ -8,7 +8,7 @@ Sprint 3 Review
 
 Note: This review is reflective of the exact date the review was done.  Changes may have occurred in the intervening time since.
 
-Note: Ran this through Grammerly.  Automated spell-checking should have caught the worst of my grammatical errors.
+Note: Ran this through Grammarly.  Automated spell-checking should have caught the worst of my grammatical errors.
 
 =================================================================================================================================================
 =================================================================================================================================================
@@ -25,7 +25,7 @@ Trello Board Activity:
 
 -Basically everything I said last sprint review, left as is.
 
--Some imbalance in user hours logged, nate gamble and jae young choi seem to be speeding ahead of others.
+-Some imbalance in user hours logged, Nate gamble and jae young choi seem to be speeding ahead of others.
 
 -There appears to be a duplicate user for kelly oh (two of the same person).
 
@@ -33,7 +33,7 @@ Trello Board Activity:
 
 -Not sure as to the purpose of the "board" user.
 
--There seems to be 7 users total, going by non-duplicate names, and minus the two  users I mentioned above.
+-There seems to be 7 users total, going by non-duplicate names, and minus the two users I mentioned above.
 
 ******************Same as above, with additions below for Review 4**********************************
 
@@ -54,7 +54,7 @@ Trello Board Activity:
 
 User Stories:
 
--There are currently 9 user stories modeled in Trello.  This is a increase from the 3 I saw during the last sprint review.
+-There are currently 9 user stories modeled in Trello.  This is an increase from the 3 I saw during the last sprint review.
 
 -They seem to follow the 5 W's format and appear viable.
 
@@ -70,7 +70,7 @@ to delete a user account yet, based on one of your user stories.  But this is a 
 -The existing ones I saw during my Sprint 3 Review do not appear to have changed at all.  There are an additional 3 user stories up for a total of
     11 user stories since my Sprint 3 Review for Team H.
 
--Looking at the Trello Plus! Board Reports and Charts, the last user story they added was on Novermber 08, 2018, so that means they probably
+-Looking at the Trello Plus! Board Reports and Charts, the last user story they added was on November 08, 2018, so that means they probably
     added the additional 3 a short while after I did my review.
 
 -I will comment more on whether they have implemented more of their user stories in the section below on their app prototype, provided I can get
@@ -81,7 +81,7 @@ to delete a user account yet, based on one of your user stories.  But this is a 
 
 Domain Model:
 
--The domain model is definitely still the pencil/pen and paper sketch I saw from last sprint that was previous on Trello.
+-The domain model is definitely still the pencil/pen and paper sketch I saw from the last sprint that was previously on Trello.
 
 -I suggest you update the domain model to reflect your current database schema.  This document needs to be updated.
 
@@ -91,7 +91,7 @@ Domain Model:
 
 -At this point in time, I highly suggest you start considering making a vector-based graphic of your domain model or something other than the
     initial pen/pencil paper sketch that I have seen the entire semester.  No reason to lose points for the next deliverable turn-in due to a 
-    lack of progress in documentation.  If I remember correctly, you had updated project documentation in your power point presentation so
+    lack of progress in the documentation.  If I remember correctly, you had updated project documentation in your powerpoint presentation so
     you might as well upload the specific slide pertaining to the Domain Model as your Domain Model Document.
 
 =================================================================================================================================================
@@ -104,14 +104,14 @@ User Interface Model:
 -I suggest you update it to reflect the current state of your layout.xml files that I reviewed for your prototype.  This version in your GitHub
 repo is definitely out-of-date/deprecated.
 
--One suggestion is to use screen captures of the different activites/fragments in your app prototype and add directional arrows indicating the
+-One suggestion is to use screen captures of the different activities/fragments in your app prototype and add directional arrows indicating the
 relationship of each screen to the other in the app.  This is what my team decided to do.
 
 -Of course, it's hard to keep this model up to do date as changes are often continuous as development proceeds on a semi-regular basis.
 
 ******************Same as above, with additions below for Review 4**********************************
 
--Similar to what I mentioned for the domain model, simply upload the slide pertaining to your UI model from your Power Point presentation as your
+-Similar to what I mentioned for the domain model, simply upload the slide pertaining to your UI model from your PowerPoint presentation as your
 UI model in place of this pen/pencil paper sketch that has been in the repository since the beginning of the semester.
 
 =================================================================================================================================================
@@ -119,15 +119,15 @@ UI model in place of this pen/pencil paper sketch that has been in the repositor
 
 Supplemental technical requirements documentation:
 
--Please change the location of this document to the appropriate repository (refer to Miscellaneous section at the bottom of this review)
+-Please change the location of this document to the appropriate repository (refer to the Miscellaneous section at the bottom of this review)
 
 -It has improved from the rough draft I reviewed during the last sprint.
 
 -Sounds pretty professional to me, at least.
 
--Succintly states the purpose of the application in the first and second paragraph, then lists the actual specifications below.
+-Succinctly states the purpose of the application in the first and second paragraph, then lists the actual specifications below.
 
--It looks like you combined your vision statemetn and the actual technical requirements into one document.
+-It looks like you combined your vision statement and the actual technical requirements into one document.
 
 -All specifications seem to be testable requirements.
 
@@ -145,16 +145,16 @@ Supplemental technical requirements documentation:
 
 GitHub data repository - Database Schema and RESTful Web Service API
 
--From what little I know of relational database, it looks like they have a working schema in place.
+-From what little I know of relational databases, it looks like they have a working schema in place.
 
 -The three relations, User, Passengers, and Ride, seems to cover the necessary information needed in order to schedule rides between users.
 
 -I would suggest inserting more placeholder test values in each of the tables for when you begin implementing your back-end and testing that it
-functions as intended.  Right now, you have entried inserted for Users but none for Ride or Passenger.
+functions as intended.  Right now, you have entries inserted for Users but none for Ride or Passenger.
 
 -I suggest you create a separate file for your query statements instead of including them along with your database schema.
 
--I suggest usecing "CASCADE" to drop tables so you don't need to worry about foreign constraints, etc.
+-I suggest using "CASCADE" to drop tables so you don't need to worry about foreign constraints, etc.
 
 -Otherwise, it looks good.
 
@@ -162,7 +162,7 @@ functions as intended.  Right now, you have entried inserted for Users but none 
 
 -I suggest you re-name your RESTful web service prototype from "Lab09" to something along the lines of "CalUber RESTful Prototype".
 
--Your database schema, caluberDatabase.sql, does not appear to have chcanged since my Sprint 3 Review since the last date of update is slated at
+-Your database schema, caluberDatabase.sql, does not appear to have changed since my Sprint 3 Review since the last date of update is slated at
     17 days, which would be November 07, 2018.  So, I assume what I mentioned above is still relevant.
 
 -It appears you are working on the RESTful web service prototype as the last commit was dated 22 minutes ago at the time of this review.
@@ -171,7 +171,7 @@ functions as intended.  Right now, you have entried inserted for Users but none 
     more appropriate, such as "edu.calvin.cs262.CalUber" or something along those names.  In turn, change the ownerDomain and ownerName field
     to the same.
 
--Update the comments so they do not refere to the Monopoly database template and instead to your own database.
+-Update the comments so they do not refer to the Monopoly database template and instead to your own database.
 
 -Looks like you guys still need to implement the actual GET, PUT, POST, DELETE, CRUD operations for your own project database.
 
@@ -185,23 +185,23 @@ functions as intended.  Right now, you have entried inserted for Users but none 
 
 GitHub client repository - Android Studio CalUber App
 
--Prototype compiles, runs, and has placeholder functionality.
+-Prototype compiles runs and has placeholder functionality.
 
--Login screen is the launcher activity and provides a user name and password editTextView.
+-The login screen is the launcher activity and provides a username and password editTextView.
 
--Account creation activity provides editTextView for first name, last name, Calvin ID, user name, and password.
+-Account creation activity provides editTextView for first name, last name, Calvin ID, username, and password.
 
--I created an account and tried to login, but a toast message indicated my information was invalid.
+-I created an account and tried to log in, but a toast message indicated my information was invalid.
 
--I attempted to create another account and login, same result.  Hence, I cannot see the rest of the app as I am blocked.
+-I attempted to create another account and log in, the same result.  Hence, I cannot see the rest of the app as I am blocked.
 
 -Looking at the code-base, it is clean but lacks comments indicating what all the methods and classes are intended to do.
 
 -I looked at the layout.xml files in order to get a better sense of what the app looks like.
 
--I recommend that in cativity_create_ride.xml you do not use yellow background and white text.  It probably won't read that well on a actual device.
+-I recommend that in cativity_create_ride.xml you do not use yellow background and white text.  It probably won't read that well on an actual device.
 
--I recommend that in activity_user_profile.xml you do not use yellow background and whit etext.  It probably won't read that well on a actual device.
+-I recommend that in activity_user_profile.xml you do not use yellow background and white text.  It probably won't read that well on an actual device.
 
 -From what I can tell, all the necessary screens to provide the full functionality of the app are in place.  Now, it's a matter of getting the 
 back-end up and running and beginning integration.
@@ -213,24 +213,24 @@ back-end up and running and beginning integration.
 
 -Good use of "TODO" statement as reminders of what changes need to be made.
 
--Still can't make it past your login page, tried looking in strings.xml for a potential hard-coded user name and password without success.
+-Still can't make it past your login page, tried looking in strings.xml for a potential hard-coded username and password without success.
 
--I bypassed the login page by deleting the code that does user name and password validation. ;DELETE
+-I bypassed the login page by deleting the code that does username and password validation. ; DELETE
 
--The person icon, which I assume is for your account page, has placeholder fields for user name and user e-mail.  I recommend hard-coding some
+-The person icon, which I assume is for your account page, has placeholder fields for username and user e-mail.  I recommend hard-coding some
     data values for usability testing purposes.
 
--I suggest renaming the activity that lists Upcoming and Past Rides to something other than "BasketActivity" in the toolbar, unless it's an 
-    inside joke I don't quite understand.
+-I suggest renaming the activity that lists Upcoming and Past Rides to something other than "BasketActivity" in the toolbar unless it's an 
+    inside joke, I don't quite understand.
 
--I like how the "Pick Date" button launches a calender widget by which you can choose a date for when the ride will occur.  It even populates
+-I like how the "Pick Date" button launches a calendar widget by which you can choose a date for when the ride will occur.  It even populates
     the field below the "pick date" button with the date selected.
 
--I suggest increasing the # of passesengers permitted in case someone has a larger vehicle that is capable of supporting more than 5 maximum
+-I suggest increasing the # of passengers permitted in case someone has a larger vehicle that is capable of supporting more than 5 maximum
     passengers.
 
 -In the "Join A Ride" activity, I suggest having a placeholder button or other widget is labeled "join ride" unless it is your intention that
-    when the user clicks on a ride in the list it automatically joins or bring up some sort of confirmation and/or information screen.
+    when the user clicks on a ride in the list it automatically joins or brings up some sort of confirmation and/or information screen.
 
 -I suggest enabling up navigationa and adding parent activity support in AndroidManifest.xml so the user can back-track to the main hub screen
      of the app.  Right now, the user has to use back navigation to navigate back to the previous screen from the activity that is loaded after
@@ -257,12 +257,37 @@ Usability Test Script and User testing
 
 -Upcoming; will comment on this when the time comes.
 
+-There was a minor hiccup at the beginning with getting the app installed on an Android smartphone.  It was resolved speedily and my user testing
+    started only a few minutes late.
+
+-They had a nice 2-page printed handout for each test subject with an introduction explaining the purpose of the "test" and a "thank you" section
+    at the end.  The tasks were listed via a numbered list and provided a clear explanation of what the test subject was supposed to find and do.
+
+-They asked the test subject to "think aloud" as they went through the usability test and included a clause saying the test subject was able to 
+    quit whenever he or she felt like it.
+
+-The app had limited functionality as the back-end for their team isn't quite up and running yet.  Most of the data were still hard-coded though
+    they did implement some local data transfer such as the name of the ride the test subject was supposed to create appearing in the list of
+    ride that someone could join.
+
+-The account login and creation page was still using hard-coded default values as seen during the presentations, with the test subject instructed
+    to enter a very specific username and password in order to get past the login screen.
+
+-I made a suggestion to change their user account page from having white text and a bright yellow background to something with a darker
+    background.
+
+-The 2 members of the team attending to my testing were polite and readily answered any questions I had concerning the application if I was
+    unclear on anything.
+
+-Overall, I would say they were pretty well-prepared for the usability test and I was their first test subject of the week.  The test didn't quite
+    take the whole of the 15-minute time slot.
+
 =================================================================================================================================================
 =================================================================================================================================================
 
 Design Presentation
 
--Overall, it was an effective presentation.  It easily generated enough interest to invite a entire sequence of questions from the audience.
+-Overall, it was an effective presentation.  It easily generated enough interest to invite an entire sequence of questions from the audience.
 (even if part of that is motivated by the graded aspect of event participation)
 
 -I would say the delivery of the presentation fell around the mean value relative to the entire set of presentations for Teams A-H.
@@ -277,7 +302,7 @@ Design Presentation
 two models are two very different kinds of models.
 
 -Text and picture size could be larger on some slides, for ease of reading, especially for those sitting in the back rows.  Then again, I'm terribly
-nearsighted with a lack of 20/20 vision wearing these 6+ year old pair of glasses, so individual mileage may vary.
+nearsighted with a lack of 20/20 vision wearing this 6+-year-old pair of glasses, so individual mileage may vary.
 
 -They effectively used their vision statement as their introductory speech for the presentation.  It provided a clear direction and idea behind
 the app.
@@ -298,7 +323,7 @@ use of body language (gestures, etc.).
 
 ******************Same as above, with additions below for Review 4**********************************
 
--As mentioned in above section, use the material from your Power Point presentation as project documentation if you don't have enough time to
+-As mentioned in the above section, use the material from your PowerPoint presentation as project documentation if you don't have enough time to
     update and maintain the project documentation for the domain model, UI model, etc., as what you showed during your presentation is more
     updated than what you have in your repositories (if I remember correctly)
 
@@ -308,7 +333,7 @@ use of body language (gestures, etc.).
 Miscellaneous:
 
 -Suggest including your supplemental technical requirements documentation in your CS-262-Materials repository alongside your other documents.
-Right now, it is in your CS-262-Client repository and thus I had to go lookint for it in order to find it when I expected it in the other repository.
+Right now, it is in your CS-262-Client repository and thus I had to go looking for it in order to find it when I expected it in the other repository.
 	
 ******************Same as above, with additions below for Review 4**********************************
 
