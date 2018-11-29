@@ -25,6 +25,7 @@ namespace Mankalah
     /// This hopefully less sorry excuse for a player implements a heuristic evaluation function and the mini-max
     /// algorithm to choose the most optimal move to make. (will hopefully make Skynet proud)
     /// TODO: make AI at least as intelligent as a 10 year old... (gets rekted by Bonzo B and Bonzo C in tournament player)
+    /// TODO: remember to rename functions/methods to default template names when attempting to create .dll file.
     /// </summary>
     public class jj47Player : Player
     {
@@ -285,6 +286,7 @@ namespace Mankalah
 
         /// <summary>
         /// Method implements the mini-max algorithm via a staged (limited) depth-first search.
+        /// Does not support alpha-beta pruning.
         /// </summary>
         /// 
         /// <param name="board">Game Board object</param>
@@ -379,6 +381,9 @@ namespace Mankalah
         /// 
         /// Note: TOP player = MAX --> most positive scores are better.
         /// Note: BOTTOM player = MIN --> most negative scores are better.
+        ///
+        /// Changelog: Modified to return the optimality of the board instead of the best move possible based on the optimality of
+        /// all positions in comparison to each other. (I think I misunderstood how the heuristic function was supposed to work)
         /// </summary>
         /// 
         /// <param name="b">Game Board object</param>
@@ -390,14 +395,16 @@ namespace Mankalah
 
             foreach (KeyValuePair<string, int> entry in _positionLabelsTop)
             {
-                positionOptimalValueMAX.Add(entry.Value, int.MinValue);
+                //positionOptimalValueMAX.Add(entry.Value, int.MinValue);
+                positionOptimalValueMAX.Add(entry.Value, 0);
             }
             // Store and update the optimality weight value of each position during heuristic evaluation for BOTTOM player.
             SortedDictionary<int, int> positionOptimalValueMIN = new SortedDictionary<int, int>();
 
             foreach (KeyValuePair<string, int> entry in _positionLabelsBottom)
             {
-                positionOptimalValueMIN.Add(entry.Value, int.MaxValue);
+                //positionOptimalValueMIN.Add(entry.Value, int.MaxValue);
+                positionOptimalValueMIN.Add(entry.Value, 0);
             }
 
             ///////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -432,8 +439,140 @@ namespace Mankalah
             // Heuristic Condition 3.
             IncreaseValueOfPositionsWithCaptures(b, positionOptimalValueMAX, positionOptimalValueMIN);
 
-            // Heuristic Condition 4.
-            return SelectOptimalMove(b, positionOptimalValueMAX, positionOptimalValueMIN);
+            // Heuristic Condition 4. (deprecated)
+            //return SelectOptimalMove(b, positionOptimalValueMAX, positionOptimalValueMIN);
+
+            // Heuristic Results.
+            return CalculateBoardOptimalityValue(b, positionOptimalValueMAX, positionOptimalValueMIN);
+        }
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        // METHOD SEPARATOR METHOD SEPARATOR METHOD SEPARATOR METHOD SEPARATOR METHOD SEPARATOR METHOD SEPARATOR METHOD SEPARATOR
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        /// <summary>
+        /// HEURISTIC CONDITION FIVE - Increase or Decrease value of board if own more stones than opponent.
+        /// TODO - keep track of the # of stones owned from previous move compared to # owned for current move.
+        /// </summary>
+        /// <param name="b">Game Board object</param>
+        private static int IncreaseValueOfBoardBasedOnNumStonedOwnedVersusOpponent(Board b, int boardValue)
+        {
+            // Get the # of stones in each player's Kalah.
+            int stonesOwnedTop = b.StonesAt(13);
+            int stonesOwnedBottom = b.StonesAt(6);
+
+            if (b.WhoseMove() == Position.Top)
+            {
+                // If the move keeps us ahead of our opponent in # of stones owned.
+                if (stonesOwnedTop > stonesOwnedBottom)
+                {
+                    boardValue += 100000000;
+                }
+            }
+            if (b.WhoseMove() == Position.Bottom)
+            {
+                // If the move keeps us ahead of our opponent in # of stones owned.
+                if (stonesOwnedBottom > stonesOwnedTop)
+                {
+                    boardValue -= 100000000;
+                }
+            }
+
+            ///////////////////////////////////////////////////////////////////////////////////////////////////////
+
+            bool debugCheckBoardOptimalityValue = false;
+
+            // Debug - check that our summed values make sense.
+            if (debugCheckBoardOptimalityValue == true)
+            {
+                Console.WriteLine("\n\nNumber of stones in TOP player's Kalah:");
+                Console.WriteLine("MAX - Position 13: # of stones: {0}", b.StonesAt(13));
+
+                Console.WriteLine("\n\nNumber of stones in BOTTOM player's Kalah:");
+                Console.WriteLine("MIN - Position 6: # of stones: {0}", b.StonesAt(6));
+
+                Console.WriteLine("\n\n");
+                Console.WriteLine("The board optimality value is: {0}", boardValue);
+                Console.WriteLine("\n\n");
+            }
+            return boardValue;
+        }
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        // METHOD SEPARATOR METHOD SEPARATOR METHOD SEPARATOR METHOD SEPARATOR METHOD SEPARATOR METHOD SEPARATOR METHOD SEPARATOR
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        /// <summary>
+        /// HEURISTIC RESULTS - Calculate the optimality of the current state of the game board.
+        /// </summary>
+        /// <param name="b">Game Board object</param>
+        /// <param name="positionOptimalValueMAX">Store and update the optimality weight value of each position during heuristic evaluation for TOP player</param>
+        /// <param name="positionOptimalValueMIN">Store and update the optimality weight value of each position during heuristic evaluation for BOTTOM player</param>
+        /// <returns>the value of the optimal move selected</returns>
+        private static int CalculateBoardOptimalityValue(Board b, SortedDictionary<int, int> positionOptimalValueMAX,
+            SortedDictionary<int, int> positionOptimalValueMIN)
+        {
+            // Store the optimality for the game board.
+            int boardOptimalityValue = 0;
+            int boardOptimalityValueTop = 0;
+            int boardOptimalityValueBottom = 0;
+
+            // If we are evaluating the optimal move for the TOP player.
+            if (b.WhoseMove() == Position.Top)
+            {
+                // Sum the optimality values for all TOP board positions.
+                foreach (KeyValuePair<int, int> entry in positionOptimalValueMAX)
+                {
+                    boardOptimalityValueTop += entry.Value;
+                }
+                boardOptimalityValue = boardOptimalityValueTop;
+            }
+
+            // If we are evaluating the optimal move for the BOTTOM player.
+            if (b.WhoseMove() == Position.Bottom)
+            {
+                // Sum the optimality values for all BOTTOM board positions.
+                foreach (KeyValuePair<int, int> entry in positionOptimalValueMIN)
+                {
+                    boardOptimalityValueBottom += entry.Value;
+                }
+                boardOptimalityValue = boardOptimalityValueBottom;
+            }
+
+            ///////////////////////////////////////////////////////////////////////////////////////////////////////
+
+            bool debugCheckOptimalityValues = false;
+
+            // Debug - check that our summed values make sense.
+            if (debugCheckOptimalityValues == true)
+            {
+                Console.WriteLine("\n\nUpdated optimal position weight values for TOP player:");
+                foreach (KeyValuePair<int, int> entry in positionOptimalValueMAX)
+                {
+                    Console.WriteLine("MAX - Position: {0}, Optimal Value: {1}", entry.Key, entry.Value);
+                }
+
+                Console.WriteLine("\n\nUpdated optimal position weight values for BOTTOM player:");
+                foreach (KeyValuePair<int, int> entry in positionOptimalValueMIN)
+                {
+                    Console.WriteLine("MIN - Position: {0}, Optimal Value: {1}", entry.Key, entry.Value);
+                }
+                Console.WriteLine("\n\n");
+
+                // Display current state of the game board.
+                b.Display();
+
+                Console.WriteLine("\n\n");
+                Console.WriteLine("The board optimality value is: {0}", boardOptimalityValue);
+                Console.WriteLine("\n\n");
+            }
+
+            ///////////////////////////////////////////////////////////////////////////////////////////////////////
+
+            // Heuristic Condition 5.
+            boardOptimalityValue = IncreaseValueOfBoardBasedOnNumStonedOwnedVersusOpponent(b, boardOptimalityValue);
+
+            return boardOptimalityValue;
         }
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -443,6 +582,8 @@ namespace Mankalah
         /// <summary>
         /// HEURISTIC CONDITION FOUR - If positions have the same optimal weight value, randomly select one as the optimal move.
         /// TODO - confirm that this is working properly.
+        /// Note: deprecated; using function to calculate the optimality of the entire game board and returning that value instead
+        /// of the optimality value of just a single move, which is probably what the heuristic was supposed to do in the first place.
         /// </summary>
         /// <param name="b">Game Board object</param>
         /// <param name="positionOptimalValueMAX">Store and update the optimality weight value of each position during heuristic evaluation for TOP player</param>
@@ -1020,7 +1161,7 @@ namespace Mankalah
             {
                 if (b.StonesAt(entry.Value) != 0)
                 {
-                    positionOptimalValueMAX[entry.Value] += 1000000000;
+                    positionOptimalValueMAX[entry.Value] += 10000000;
                 }
             }
 
@@ -1028,7 +1169,7 @@ namespace Mankalah
             {
                 if (b.StonesAt(entry.Value) != 0)
                 {
-                    positionOptimalValueMIN[entry.Value] -= 1000000000;
+                    positionOptimalValueMIN[entry.Value] -= 10000000;
                 }
             }
 
