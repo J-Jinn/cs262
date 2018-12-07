@@ -1208,7 +1208,7 @@ namespace Mankalah
         public override string getImage()
         {
             // Orc peons generally aren't very smart but are still probably smarter than Bonzo.
-            return "OrcPeonPortrait.png";
+            return "OrcPeonPortrait.jpg";
         }
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

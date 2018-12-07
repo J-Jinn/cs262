@@ -1,9 +1,11 @@
 CS-262 Software Engineering
-Date: 10-12-18
+Date: 12-07-18
 Reviewer: Joseph Jinn
 Team being reviewed: Team E - CalUber
 Sprint 5 Review (final semester review)
 
+=================================================================================================================================================
+=================================================================================================================================================
 =================================================================================================================================================
 
 Note: This review is reflective of the exact date the review was done.  Changes may have occurred in the intervening time since.
@@ -12,8 +14,12 @@ Note: Ran this through Grammarly.  Automated spell-checking should have caught t
 
 =================================================================================================================================================
 =================================================================================================================================================
+=================================================================================================================================================
+=================================================================================================================================================
 
 Trello - User Board Activity:
+
+=================================================================================================================================================
 
 -People seem to be logging their hours on a regular basis for each card.
 
@@ -53,10 +59,39 @@ Trello - User Board Activity:
 ******************Updates and Additions below for Review 5 (final semester review)**********************************
 ****************************************************************************************************************************
 
+-Nate Gamble and Jae Young Choi have the most hours logged so far, with Jae Young Choi somewhat in the lead.
+
+-The rest of the team taper off sequentially from there.
+
+-I'm still not sure what the "card" and "board" users are, except for maybe tracking total hours for all users or something else.
+
+-There's still 7 distinct users listed when the teams are at largest 6 people.
+
+-Kelly Oh has two user account, though one appears to be inactive in terms of logging hours.
+
+-I think people might have forgotten to log all their hours as they look a bit low for the whole of the semester.
+
+-They appear to be grinding through all their "connect this" tasks in order to integrate their back-end with their front-end.
+
+-From what I can see, they have successfully connected a few of their essential database relations to screens in their app.
+
+-They have a "final presentation" task card up, so it looks like they are keeping the tasks up-to-date as to what needs to get done.
+
+-Looks like they also now have a "Trello Management" card similar to one I put up a long while back.
+
+-If I understand correctly, Nate is using a Trello Plus feature to add everyone's hours for them using "plus! @jaeyoungchoi19 @laurenebels @lukesteffen2 @kellyoh @me @vamc2 .6/.6"
+by specifying people's user names with "@"
+
+-Otherwise, it seems they are using Trello as intended for a project management tool.
+
+=================================================================================================================================================
+=================================================================================================================================================
 =================================================================================================================================================
 =================================================================================================================================================
 
 Trello - User Stories:
+
+=================================================================================================================================================
 
 -There are currently 9 user stories modeled in Trello.  This is an increase from the 3 I saw during the last sprint review.
 
@@ -84,10 +119,16 @@ to delete a user account yet, based on one of your user stories.  But this is a 
 ******************Updates and Additions below for Review 5 (final semester review)**********************************
 ****************************************************************************************************************************
 
+-These are still at 11 user stories and have not changed since my Sprint 4 Review.
+
+=================================================================================================================================================
+=================================================================================================================================================
 =================================================================================================================================================
 =================================================================================================================================================
 
 UML Domain Model Documentation:
+
+=================================================================================================================================================
 
 -The domain model is definitely still the pencil/pen and paper sketch I saw from the last sprint that was previously on Trello.
 
@@ -106,10 +147,25 @@ UML Domain Model Documentation:
 ******************Updates and Additions below for Review 5 (final semester review)**********************************
 ****************************************************************************************************************************
 
+-Yay, they finally have a digitalized non hand-drawn version of their domain model in their repository!
+
+-It looks to be fully furnished and finalized now.  It has the "user", "rides", and "passenger" classes along with the associateda attributes
+for each class.
+
+-I like their use of purple for the boxes. (tints, tones, and shades of purple are my favorite colors)
+
+-It's pretty readable with a darker purple on white text and a completely black background.
+
+-Thumbs up for finally updating from that hand-drawn half-finished rought sketch of their initial domain model.
+
+=================================================================================================================================================
+=================================================================================================================================================
 =================================================================================================================================================
 =================================================================================================================================================
 
 UML User Interface Model Documentation:
+
+=================================================================================================================================================
 
 -The UI model is still the pencil/pen and paper sketch I saw from the last sprint?
 
@@ -130,17 +186,32 @@ UI model in place of this pen/pencil paper sketch that has been in the repositor
 ******************Updates and Additions below for Review 5 (final semester review)**********************************
 ****************************************************************************************************************************
 
+-Uh oh, they haven't updated their UI model yet.  It's still the pencil and paper sketch that has been there the whole semester.
+
+-Not much else to say besides what has already been said till they update this one as they did their domain model.
+
+=================================================================================================================================================
+=================================================================================================================================================
 =================================================================================================================================================
 =================================================================================================================================================
 
 UML Deployment Model Documentation:
 
+=================================================================================================================================================
 
+-This is not yet implemented.  I will update this section at a later date assuming they remember to upload a copy of this diagram to their 
+repository.
 
+TODO: update this section once Team H creates their Deployment Model Diagram.
+
+=================================================================================================================================================
+=================================================================================================================================================
 =================================================================================================================================================
 =================================================================================================================================================
 
 UML Supplemental Technical Requirements Documentation:
+
+=================================================================================================================================================
 
 -Please change the location of this document to the appropriate repository (refer to the Miscellaneous section at the bottom of this review)
 
@@ -167,10 +238,36 @@ UML Supplemental Technical Requirements Documentation:
 ******************Updates and Additions below for Review 5 (final semester review)**********************************
 ****************************************************************************************************************************
 
+-Yay, they have finally moved the supplemental speccs from its location in the client repository, where it had been for the majority of the semester.
+
+-The contents of the supplemental specifications seem to be unchanged from when it was initially written at the beginning of the semester.
+
+-I'm not sure they ever got around to implementing test-driven development and writing unit tests, integration tests, etc.
+
+-From what I've seen of their demo, the app should definitely be learnable in under five minutes.
+
+=================================================================================================================================================
+=================================================================================================================================================
 =================================================================================================================================================
 =================================================================================================================================================
 
-GitHub Data Repository - Database Schema and RESTful Web Service API Cdoebase
+Online Help System Documentation:
+
+=================================================================================================================================================
+
+-Present in the "materials" respository on Github.
+
+-The document currently features technical instructions on how to create a ride.  I suggest implementing instructions for how to join a ride,
+as well as instructions on editing user profile information and accessing the lists of upcoming rides and ride history.
+
+=================================================================================================================================================
+=================================================================================================================================================
+=================================================================================================================================================
+=================================================================================================================================================
+
+GitHub Data Repository - Database Schema and RESTful Web Service API Codebase
+
+=================================================================================================================================================
 
 -From what little I know of relational databases, it looks like they have a working schema in place.
 
@@ -208,13 +305,40 @@ functions as intended.  Right now, you have entries inserted for Users but none 
 ******************Updates and Additions below for Review 5 (final semester review)**********************************
 ****************************************************************************************************************************
 
-=================================================================================================================================================
-=================================================================================================================================================
+-Last changes were made 11 days ago at the time of this review.
 
+-They still have sample queries in the same file as their database schema.  I still suggest separating them into two separate files.
+
+-I suggest adding some comments to each Relation (table) indicating the overall purpose of each table.
+
+-Otherwise, it's a short and sweet database schema.
+
+-I suggest changing the name of your project folder from "Lab09" to "CalUber RESTful web service" or something along those lines.
+
+-As you have your web service functional, your pom.xml should be good to go.
+
+-I suggest you change the below lines of code by re-factoring to a more appropriate path (i.e. edu.calvin.cs262.TeamH.CalUber)
+
+package edu.calvin.cs262.lab09;
+
+ @ApiNamespace(
+                ownerDomain = "lab09.cs262.calvin.edu",
+                ownerName = "lab09.cs262.calvin.edu",
+                packagePath = ""
+        ),
+
+-I suggest changing the JavaDoc headers so it isn't stating information concerning the template Monopoly database.
+
+-Basically, the above suggestoins should be implemented for each DAO - data access object, and Resource.java file in your RESTful web service API.
+
+=================================================================================================================================================
+=================================================================================================================================================
 =================================================================================================================================================
 =================================================================================================================================================
 
 GitHub Client Repository - Android Studio CalUber Application - Final System
+
+=================================================================================================================================================
 
 -Prototype compiles runs and has placeholder functionality.
 
@@ -273,10 +397,58 @@ back-end up and running and beginning integration.
 ******************Updates and Additions below for Review 5 (final semester review)**********************************
 ****************************************************************************************************************************
 
+-This is probably not the final final system at the time of this review.
+
+-Awesome work, guys!  I just attempted to create an account and log in, and it worked!  This suggests you have it fully integrated with your
+RESTful web service and the database back-end.
+
+-Much improved from hard-coded account user-name and password.
+
+-I noticed that the keyboard won't go down unless I click the back button.
+
+-The user account information screen does not yet seem to have a way of saving the e-mail address and name the user enters into the e-mail and
+name field.
+
+-Also, there appears to be two additional fields where the user can edit their name and password.  Is this referencing their account user-name 
+or their actual name?
+
+-I suggest clarifying what "name" the user is editing.
+
+-The icon that leads to the listings of upcoming rides as a driver/passenger, and ride history, does not yet have a way of returning to the main
+screen of the app except by back navigation.
+
+-These are still placeholder data entries, so I assume these will be removed so the lists are empty until they are populated from the database
+after the user(s) create or join the relevant rides.
+
+-In the create ride screen, I suggest increasing the number of passengers in case someone has a larger vehicle capable of seating more than the
+current limit of 6.
+
+-For the time field, I suggest not having an editTextField and instead just having a click-able TextView or button that will allow the user to
+select the time, and where another TextView will display the selected results.  That seems to be your intention as after clicking into the field,
+a keyboard pops up, which is then replaced by the time widget.
+
+-Hitting the "Create a Ride" button returns the user to the main app screen with a toast message indicating the ride has been created.  As to 
+whether that ride has been added to the database via the RESTful web service, I have no idea without looking at your code behind the class.
+
+-Going to the "Join a Ride" screen, these appear to be placeholder values as the ride I just created was not added to and did not populate this
+list of available rides.
+
+-Nice, you now have a search rides by destination feature at the top.  This will make it easier if the list of rides becomes exceedingly long
+with a large user base.
+
+-The search feature appears to be non-functional at the moment as when I tried to use it nothing happened.
+
+-As your "Join a Ride" screen is not integrated with your back-end and fully operational, your screen displaying a list of upcoming and past rides
+is not operational yet either.
+
+=================================================================================================================================================
+=================================================================================================================================================
 =================================================================================================================================================
 =================================================================================================================================================
 
 RESTful Web Service - Google Cloud Platform Implementation
+
+=================================================================================================================================================
 
 -I see no indication it has been implemented, thus a review is not possible at this point in time.
 
@@ -289,10 +461,18 @@ RESTful Web Service - Google Cloud Platform Implementation
 ******************Updates and Additions below for Review 5 (final semester review)**********************************
 ****************************************************************************************************************************
 
+-Account Creation screen is fully integrated with RESTful web service.  Any user can create a new account.
+
+-Account Login screen is fully integrated with RESTful web srevice.  Any user can log in with their personal account.
+
+=================================================================================================================================================
+=================================================================================================================================================
 =================================================================================================================================================
 =================================================================================================================================================
 
 Usability Test Script and User Testing - Report and Results
+
+=================================================================================================================================================
 
 -Upcoming; will comment on this when the time comes.
 
@@ -325,10 +505,23 @@ Usability Test Script and User Testing - Report and Results
 ******************Updates and Additions below for Review 5 (final semester review)**********************************
 ****************************************************************************************************************************
 
+-I was sent a summary of the usability test report.
+
+-The report provided meaningful findings.
+
+-I suggest adding your usability test report and usability test script as part of the documentation in your CS-262-Materials Repository.
+
+-Initially, you guys forgot to sent Professor VanderLinden a list of participants so I did not receive 50% of the points for that homework/lab09
+assignment.  Thank you for correcting that omissions soon afterwards as the Professor was grading.
+
+=================================================================================================================================================
+=================================================================================================================================================
 =================================================================================================================================================
 =================================================================================================================================================
 
 Design and Prototype Presentation - Final
+
+=================================================================================================================================================
 
 -Overall, it was an effective presentation.  It easily generated enough interest to invite an entire sequence of questions from the audience.
 (even if part of that is motivated by the graded aspect of event participation)
@@ -374,10 +567,18 @@ use of body language (gestures, etc.).
 ******************Updates and Additions below for Review 5 (final semester review)**********************************
 ****************************************************************************************************************************
 
+-The final presentation has not occurred at the time of this review, so I will update this section later.
+
+TODO: update this section after viewing Team H - CalUber's final presentation.
+
+=================================================================================================================================================
+=================================================================================================================================================
 =================================================================================================================================================
 =================================================================================================================================================
 
 Miscellaneous:
+
+=================================================================================================================================================
 
 -Suggest including your supplemental technical requirements documentation in your CS-262-Materials repository alongside your other documents.
 Right now, it is in your CS-262-Client repository and thus I had to go looking for it in order to find it when I expected it in the other repository.
@@ -390,5 +591,9 @@ Right now, it is in your CS-262-Client repository and thus I had to go looking f
 ******************Updates and Additions below for Review 5 (final semester review)**********************************
 ****************************************************************************************************************************
 
+-I wonder how much coffee and how many late nights people pulled to get everything as ship-shape as possible for finals?
+
+=================================================================================================================================================
+=================================================================================================================================================
 =================================================================================================================================================
 =================================================================================================================================================
