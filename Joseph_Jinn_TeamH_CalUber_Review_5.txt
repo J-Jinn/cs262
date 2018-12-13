@@ -1,5 +1,5 @@
 CS-262 Software Engineering
-Date: 12-07-18
+Date: 12-07-18 with updates for certain sections on 12-13-18
 Reviewer: Joseph Jinn
 Team being reviewed: Team E - CalUber
 Sprint 5 Review (final semester review)
@@ -48,7 +48,7 @@ Trello - User Board Activity:
     using network code to integrate the back-end with the front-end Android Studio application.  Honestly, unless people have been
     working on the team project over Thanksgiving or they're willing to pull all-nighters next week before the end of Sprint 4, it
     is not feasible to do everything they have planned including code refactoring, code documentation, project document maintenance,
-    write the usability test script for the usability test coming up, modify RESTful web service template for app database schema, etc.
+    write the usability test script for the usability test coming up, modify RESTful web service template for the app database schema, etc.
 
 -They seem to have a card still up in Sprint 4: Doing for getting Google Cloud Service working.  There are no details so I'm not sure if that
     means an all-encompassing task for the RESTful web service and database or if they're having other issues with GCP.
@@ -65,7 +65,7 @@ Trello - User Board Activity:
 
 -I'm still not sure what the "card" and "board" users are, except for maybe tracking total hours for all users or something else.
 
--There's still 7 distinct users listed when the teams are at largest 6 people.
+-There are still 7 distinct users listed when the teams are at largest 6 people.
 
 -Kelly Oh has two user account, though one appears to be inactive in terms of logging hours.
 
@@ -77,10 +77,10 @@ Trello - User Board Activity:
 
 -They have a "final presentation" task card up, so it looks like they are keeping the tasks up-to-date as to what needs to get done.
 
--Looks like they also now have a "Trello Management" card similar to one I put up a long while back.
+-Looks like they also now have a "Trello Management" card similar to the one I put up a long while back.
 
 -If I understand correctly, Nate is using a Trello Plus feature to add everyone's hours for them using "plus! @jaeyoungchoi19 @laurenebels @lukesteffen2 @kellyoh @me @vamc2 .6/.6"
-by specifying people's user names with "@"
+by specifying people's usernames with "@"
 
 -Otherwise, it seems they are using Trello as intended for a project management tool.
 
@@ -147,16 +147,16 @@ UML Domain Model Documentation:
 ******************Updates and Additions below for Review 5 (final semester review)**********************************
 ****************************************************************************************************************************
 
--Yay, they finally have a digitalized non hand-drawn version of their domain model in their repository!
+-Yay, they finally have a digitalized non-hand-drawn version of their domain model in their repository!
 
--It looks to be fully furnished and finalized now.  It has the "user", "rides", and "passenger" classes along with the associateda attributes
+-It looks to be fully furnished and finalized now.  It has the "user", "rides", and "passenger" classes along with the associated attributes
 for each class.
 
 -I like their use of purple for the boxes. (tints, tones, and shades of purple are my favorite colors)
 
 -It's pretty readable with a darker purple on white text and a completely black background.
 
--Thumbs up for finally updating from that hand-drawn half-finished rought sketch of their initial domain model.
+-Thumbs up for finally updating from that hand-drawn half-finished rough sketch of their initial domain model.
 
 =================================================================================================================================================
 =================================================================================================================================================
@@ -204,6 +204,8 @@ repository.
 
 TODO: update this section once Team H creates their Deployment Model Diagram.
 
+-I cannot find this documentation in any of their repositories, so I cannot review it.
+
 =================================================================================================================================================
 =================================================================================================================================================
 =================================================================================================================================================
@@ -238,7 +240,7 @@ UML Supplemental Technical Requirements Documentation:
 ******************Updates and Additions below for Review 5 (final semester review)**********************************
 ****************************************************************************************************************************
 
--Yay, they have finally moved the supplemental speccs from its location in the client repository, where it had been for the majority of the semester.
+-Yay, they have finally moved the supplemental specs from its location in the client repository, where it had been for the majority of the semester.
 
 -The contents of the supplemental specifications seem to be unchanged from when it was initially written at the beginning of the semester.
 
@@ -255,7 +257,7 @@ Online Help System Documentation:
 
 =================================================================================================================================================
 
--Present in the "materials" respository on Github.
+-Present in the "materials" repository on Github.
 
 -The document currently features technical instructions on how to create a ride.  I suggest implementing instructions for how to join a ride,
 as well as instructions on editing user profile information and accessing the lists of upcoming rides and ride history.
@@ -317,7 +319,7 @@ functions as intended.  Right now, you have entries inserted for Users but none 
 
 -As you have your web service functional, your pom.xml should be good to go.
 
--I suggest you change the below lines of code by re-factoring to a more appropriate path (i.e. edu.calvin.cs262.TeamH.CalUber)
+-I suggest you change the below lines of code by refactoring to a more appropriate path (i.e. edu.calvin.cs262.TeamH.CalUber)
 
 package edu.calvin.cs262.lab09;
 
@@ -329,7 +331,7 @@ package edu.calvin.cs262.lab09;
 
 -I suggest changing the JavaDoc headers so it isn't stating information concerning the template Monopoly database.
 
--Basically, the above suggestoins should be implemented for each DAO - data access object, and Resource.java file in your RESTful web service API.
+-Basically, the above suggestions should be implemented for each DAO - data access object, and Resource.java file in your RESTful web service API.
 
 =================================================================================================================================================
 =================================================================================================================================================
@@ -387,7 +389,7 @@ back-end up and running and beginning integration.
 -In the "Join A Ride" activity, I suggest having a placeholder button or other widget is labeled "join ride" unless it is your intention that
     when the user clicks on a ride in the list it automatically joins or brings up some sort of confirmation and/or information screen.
 
--I suggest enabling up navigationa and adding parent activity support in AndroidManifest.xml so the user can back-track to the main hub screen
+-I suggest enabling up navigation and adding parent activity support in AndroidManifest.xml so the user can back-track to the main hub screen
      of the app.  Right now, the user has to use back navigation to navigate back to the previous screen from the activity that is loaded after
      login.
 
@@ -397,7 +399,7 @@ back-end up and running and beginning integration.
 ******************Updates and Additions below for Review 5 (final semester review)**********************************
 ****************************************************************************************************************************
 
--This is probably not the final final system at the time of this review.
+-This is probably not the final system at the time of this review.
 
 -Awesome work, guys!  I just attempted to create an account and log in, and it worked!  This suggests you have it fully integrated with your
 RESTful web service and the database back-end.
@@ -409,7 +411,7 @@ RESTful web service and the database back-end.
 -The user account information screen does not yet seem to have a way of saving the e-mail address and name the user enters into the e-mail and
 name field.
 
--Also, there appears to be two additional fields where the user can edit their name and password.  Is this referencing their account user-name 
+-Also, there appear to be two additional fields where the user can edit their name and password.  Is this referencing their account user-name 
 or their actual name?
 
 -I suggest clarifying what "name" the user is editing.
@@ -442,6 +444,22 @@ with a large user base.
 is not operational yet either.
 
 =================================================================================================================================================
+
+-Updates for after the final presentation.
+
+=================================================================================================================================================
+
+-Join a ride screen is fully integrated with back-end and displays a list of available rides.
+
+-Upcoming rides and ride history is currently non-functional.
+
+-User profile screen allows changing the user name and user password, but not the registered e-mail associated with the user account.
+
+-Create a ride is fully operational.
+
+-Refer to the final presentation section for further notes and comments on the application.
+
+=================================================================================================================================================
 =================================================================================================================================================
 =================================================================================================================================================
 =================================================================================================================================================
@@ -463,7 +481,7 @@ RESTful Web Service - Google Cloud Platform Implementation
 
 -Account Creation screen is fully integrated with RESTful web service.  Any user can create a new account.
 
--Account Login screen is fully integrated with RESTful web srevice.  Any user can log in with their personal account.
+-The account Login screen is fully integrated with RESTful web service.  Any user can log in with their personal account.
 
 =================================================================================================================================================
 =================================================================================================================================================
@@ -512,7 +530,7 @@ Usability Test Script and User Testing - Report and Results
 -I suggest adding your usability test report and usability test script as part of the documentation in your CS-262-Materials Repository.
 
 -Initially, you guys forgot to sent Professor VanderLinden a list of participants so I did not receive 50% of the points for that homework/lab09
-assignment.  Thank you for correcting that omissions soon afterwards as the Professor was grading.
+assignment.  Thank you for correcting that omission soon afterward as the Professor was grading.
 
 =================================================================================================================================================
 =================================================================================================================================================
@@ -567,9 +585,52 @@ use of body language (gestures, etc.).
 ******************Updates and Additions below for Review 5 (final semester review)**********************************
 ****************************************************************************************************************************
 
--The final presentation has not occurred at the time of this review, so I will update this section later.
+-Presenters were well-dressed.
 
-TODO: update this section after viewing Team H - CalUber's final presentation.
+-A minor last-minute technical difficulty before the start of the presentation.
+
+-The presenter mentioned a couple of existing bugs, including populating the upcoming rides and ride history screen.
+
+-Join A Ride, Create A Ride, and BasketActivity screen all have help systems implemented.
+
+-Presentation slides were nicely designed and easily readable, for the most part.
+
+-One of the presenters demo'ed and spoke at the same time, which was advised against.
+
+-Additional features have been implemented since I last viewed their application.
+
+-The presenter mentioned that currently there is no way to measure driver skill level, in case of poor drivers.
+
+-Presenter incorporated one of Postman's ideas on technological changes.
+
+-The presenter mentioned students senate has shown interest in making this app production-ready.
+
+-The presenter mentioned implementing additional security features to ensure the app is isolated only to Calvin students.
+
+-The presenter mentioned there is a long roadmap before the CalUber app is ready for release on the Google PlayStore.
+
+-The presenter mentioned petitioning the student Senate to get a grant to continue working the app.
+
+-Possible to charge for rides via miscellaneous account for Calvin students.
+
+-Plans to port the app over to IOS.
+
+-A definite improvement over the first presentation.  Presenters were fully formally dressed.
+
+-Position in the room was better; didn't block my vision or other people's vision of the projected slides.
+
+-The app is definitely more functional than during the initial presentation.
+
+-Interjected some humor into the presentation, which helped to generate audience interest (ride to the moon; stop by Meijers for supplies)
+
+-Possibly less "uhms" during Nate Gamble's speech.
+
+-Powerpoint slides were an improvement over the slides in the initial presentation.
+
+-The overall presentation was on par with the other final presentations.
+
+-I overheard they had some technical hiccups while preparing for the presentation this morning which might have limited the features they
+could showcase during their technical demo.
 
 =================================================================================================================================================
 =================================================================================================================================================
